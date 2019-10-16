@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-rm .env.local
-cp .env.docker .env.local
+docker-compose exec app rm .env.local
+docker-compose exec app cp .env.docker .env.local
 
-composer install
+docker-compose exec app composer install
 
 # start fresh
-bin/console doctrine:database:drop --force
-bin/console doctrine:database:create
-bin/console doctrine:schema:create
-bin/console doctrine:fixtures:load -n
+docker-compose exec app bin/console doctrine:database:drop --force
+docker-compose exec app bin/console doctrine:database:create
+docker-compose exec app bin/console doctrine:schema:create
+docker-compose exec app bin/console doctrine:fixtures:load -n
 
-yarn install
-yarn dev
+docker-compose exec app yarn install
+docker-compose exec app yarn dev
