@@ -4,7 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Setting;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class SettingFixtures extends BaseFixture implements DependentFixtureInterface
 {

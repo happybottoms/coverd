@@ -6,7 +6,7 @@ use App\Entity\Address;
 use App\Entity\Contact;
 use App\Entity\ValueObjects\Name;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
 

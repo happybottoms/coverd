@@ -4,10 +4,10 @@ namespace App\DataFixtures;
 
 use App\Entity\Orders\PartnerOrder;
 use App\Entity\Orders\PartnerOrderLineItem;
-use App\Entity\Product;
 use App\Entity\Partner;
+use App\Entity\Product;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class PartnerOrderFixtures extends BaseFixture implements DependentFixtureInterface
 {

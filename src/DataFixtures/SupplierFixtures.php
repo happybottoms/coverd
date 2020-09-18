@@ -5,7 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Supplier;
 use App\Entity\SupplierAddress;
 use App\Entity\SupplierContact;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class SupplierFixtures extends BaseFixture
 {

@@ -7,7 +7,7 @@ use App\Entity\Orders\SupplyOrderLineItem;
 use App\Entity\Product;
 use App\Entity\Supplier;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class SupplyOrderFixtures extends BaseFixture implements DependentFixtureInterface
 {

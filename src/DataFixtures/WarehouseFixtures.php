@@ -4,8 +4,8 @@ namespace App\DataFixtures;
 
 use App\Entity\StorageLocationAddress;
 use App\Entity\StorageLocationContact;
-use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Warehouse;
+use Doctrine\Persistence\ObjectManager;
 
 class WarehouseFixtures extends BaseFixture
 {

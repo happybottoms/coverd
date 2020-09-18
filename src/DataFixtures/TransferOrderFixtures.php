@@ -4,11 +4,11 @@ namespace App\DataFixtures;
 
 use App\Entity\Orders\TransferOrder;
 use App\Entity\Orders\TransferOrderLineItem;
-use App\Entity\Product;
 use App\Entity\Partner;
+use App\Entity\Product;
 use App\Entity\StorageLocation;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class TransferOrderFixtures extends BaseFixture implements DependentFixtureInterface
 {

@@ -7,7 +7,7 @@ use App\Entity\EAV\ClientDefinition;
 use App\Entity\Partner;
 use App\Entity\ValueObjects\Name;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\Workflow\Registry;
 

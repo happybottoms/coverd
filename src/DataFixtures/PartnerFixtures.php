@@ -7,7 +7,7 @@ use App\Entity\PartnerDistributionMethod;
 use App\Entity\PartnerFulfillmentPeriod;
 use App\Entity\StorageLocationAddress;
 use App\Entity\StorageLocationContact;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Workflow\Registry;
 
 class PartnerFixtures extends BaseFixture

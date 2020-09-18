@@ -7,7 +7,7 @@ use App\Entity\Orders\BulkDistributionLineItem;
 use App\Entity\Partner;
 use App\Entity\Product;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Moment\Moment;
 
 class BulkDistributionFixtures extends BaseFixture implements DependentFixtureInterface

@@ -3,10 +3,10 @@
 namespace App\DataFixtures;
 
 use App\Entity\EAV\PartnerProfileDefinition;
+use App\Entity\Partner;
 use App\Entity\PartnerProfile;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
-use App\Entity\Partner;
+use Doctrine\Persistence\ObjectManager;
 
 class PartnerProfileFixtures extends BaseFixture implements DependentFixtureInterface
 {

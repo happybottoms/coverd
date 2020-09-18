@@ -5,7 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use App\Entity\ValueObjects\Name;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class UserFixtures extends BaseFixture implements DependentFixtureInterface
 {
