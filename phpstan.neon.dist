@@ -2,12 +2,12 @@ includes:
     - phpstan-baseline.neon
 
 parameters:
-    autoload_files:
-        - %rootDir%/../../../bin/.phpunit/phpunit-7.5/vendor/autoload.php
     doctrine:
         objectManagerLoader: %rootDir%/../../../tests/object-manager.php
     inferPrivatePropertyTypeFromConstructor: true
     level: max
+    scanFiles:
+        - %rootDir%/../../../bin/.phpunit/phpunit-7.5-0/vendor/autoload.php
     symfony:
         container_xml_path: %rootDir%/../../../var/cache/dev/srcApp_KernelDevDebugContainer.xml
         console_application_loader: %rootDir%/../../../tests/console-application.php
