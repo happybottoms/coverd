@@ -6,9 +6,6 @@ parameters:
         - %rootDir%/../../../bin/.phpunit/phpunit-7.5/vendor/autoload.php
     doctrine:
         objectManagerLoader: %rootDir%/../../../tests/object-manager.php
-    ignoreErrors:
-        - message: '#^Service "[^"]+" is private.$#'
-          path: %rootDir%/../../../tests/
     inferPrivatePropertyTypeFromConstructor: true
     level: max
     symfony:
