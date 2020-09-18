@@ -91,10 +91,7 @@
             "@auto-scripts"
         ],
         "analyze": "phpstan analyse --memory-limit=-1",
-        "analyze-baseline": [
-            "echo '' > phpstan-baseline.neon",
-            "phpstan analyze --memory-limit=-1 --configuration phpstan.neon.dist --error-format baselineNeon > phpstan-baseline.neon  || true"
-        ],
+        "analyze-baseline": "@analyze --generate-baseline",
         "lint": "phpcs",
         "lint-fix": "phpcbf"
     },
