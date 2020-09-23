@@ -6,11 +6,10 @@ use App\Entity\User;
 use App\Entity\ValueObjects\Name;
 use App\Tests\AbstractWebTestCase;
 use Faker\Factory;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 class UserTest extends AbstractWebTestCase
 {
-    public function testSetPassword(UserPasswordEncoder $encoder): void
+    public function testSetPassword(): void
     {
         $faker = Factory::create();
 
@@ -22,7 +21,7 @@ class UserTest extends AbstractWebTestCase
         $this->objectManager->persist($user);
 
         $this->assertNotEquals($plainTextPassword, $user->getPassword());
-        $this->assertTrue($encoder->isPasswordValid($user, $plainTextPassword));
+        $this->assertTrue(self::$container->get('security.password_encoder')->isPasswordValid($user, $plainTextPassword));
 
         // Ensure that the plainTextPassword is no longer set
         $this->assertNull($user->getPlainTextPassword());
