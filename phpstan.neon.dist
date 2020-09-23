@@ -9,7 +9,7 @@ parameters:
     inferPrivatePropertyTypeFromConstructor: true
     level: max
     bootstrapFiles:
-        - %rootDir%/../../../bin/.phpunit/phpunit/vendor/autoload.php
+        - %rootDir%/../../../bin/.phpunit/phpunit-7.5-0/vendor/autoload.php
     symfony:
         container_xml_path: %rootDir%/../../../var/cache/dev/srcApp_KernelDevDebugContainer.xml
         console_application_loader: %rootDir%/../../../tests/console-application.php
