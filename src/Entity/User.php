@@ -138,10 +138,11 @@ class User extends CoreEntity implements UserInterface
 
     /**
      * @param Group[]|Collection $groups
+     * @return $this
      */
     public function setGroups($groups): self
     {
-        if (is_array($groups)) {
+        if (is_array($groups) && !$groups instanceof Collection) {
             $groups = new ArrayCollection($groups);
         }
 

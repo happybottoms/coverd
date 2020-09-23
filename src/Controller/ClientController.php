@@ -3,8 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Client;
-use App\Entity\Partner;
 use App\Entity\Orders\BulkDistributionLineItem;
+use App\Entity\Partner;
+use App\Entity\User;
 use App\Entity\ValueObjects\Name;
 use App\Transformers\ClientTransformer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -275,14 +276,13 @@ class ClientController extends BaseController
      */
     public function merge(Request $request)
     {
-
-        $request = $this->getParams($request);
+        $params = $this->getParams($request);
 
         /** @var Client $target */
-        $target = $this->getRepository()->findOneByUuid($request['targetClient']);
+        $target = $this->getRepository()->findOneByUuid($params['targetClient']);
         /** @var Client[] $sources */
-        $sources = $this->getRepository()->findByUuids($request['sourceClients']);
-        $context = $request['context'];
+        $sources = $this->getRepository()->findByUuids($params['sourceClients']);
+        $context = $params['context'];
 
         foreach ($sources as $source) {
             $line_items = $this->getEm()

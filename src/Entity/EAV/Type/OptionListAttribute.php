@@ -27,7 +27,7 @@ class OptionListAttribute extends Attribute
     }
 
     /**
-     * @param Option $value
+     * @param ?Option $value
      *
      * @return Attribute
      */

@@ -36,11 +36,6 @@ parameters:
 			path: src/Controller/BaseController.php
 
 		-
-			message: "#^Method App\\\\Controller\\\\BaseController\\:\\:getRepository\\(\\) return type with generic class Doctrine\\\\ORM\\\\EntityRepository does not specify its types\\: TEntityClass$#"
-			count: 1
-			path: src/Controller/BaseController.php
-
-		-
 			message: "#^Variable \\$entityName in isset\\(\\) is always null\\.$#"
 			count: 1
 			path: src/Controller/BaseController.php
@@ -52,11 +47,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Controller\\\\BaseController\\:\\:serialize\\(\\) has parameter \\$entities with no typehint specified\\.$#"
-			count: 1
-			path: src/Controller/BaseController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\BaseController\\:\\:serialize\\(\\) has parameter \\$meta with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Controller/BaseController.php
 
@@ -77,11 +67,6 @@ parameters:
 
 		-
 			message: "#^PHPDoc tag @param has invalid value \\(\\$message\\)\\: Unexpected token \"\\$message\", expected type at offset 76$#"
-			count: 1
-			path: src/Controller/BaseController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\BaseController\\:\\:getParams\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Controller/BaseController.php
 
@@ -117,26 +102,6 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\:\\:findAllPaged\\(\\)\\.$#"
-			count: 1
-			path: src/Controller/ClientController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\ClientController\\:\\:buildFilterParams\\(\\) return type has no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
-			count: 1
-			path: src/Controller/ClientController.php
-
-		-
-			message: "#^PHPDoc tag @var for variable \\$user contains unknown class App\\\\Controller\\\\User\\.$#"
-			count: 1
-			path: src/Controller/ClientController.php
-
-		-
-			message: "#^Call to method hasRole\\(\\) on an unknown class App\\\\Controller\\\\User\\.$#"
-			count: 1
-			path: src/Controller/ClientController.php
-
-		-
-			message: "#^Call to method getActivePartner\\(\\) on an unknown class App\\\\Controller\\\\User\\.$#"
 			count: 1
 			path: src/Controller/ClientController.php
 
@@ -386,17 +351,7 @@ parameters:
 			path: src/Controller/OrderController.php
 
 		-
-			message: "#^Method App\\\\Controller\\\\OrderController\\:\\:extraLineItemProcessing\\(\\) has parameter \\$lineItemArray with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
 			message: "#^Method App\\\\Controller\\\\OrderController\\:\\:checkEditable\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\OrderController\\:\\:buildFilterParams\\(\\) return type has no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
 			count: 1
 			path: src/Controller/OrderController.php
 
@@ -446,11 +401,6 @@ parameters:
 			path: src/Controller/PartnerDistributionController.php
 
 		-
-			message: "#^Method App\\\\Controller\\\\PartnerDistributionController\\:\\:extraLineItemProcessing\\(\\) has parameter \\$lineItemArray with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Controller/PartnerDistributionController.php
-
-		-
 			message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Client\\|null\\.$#"
 			count: 1
 			path: src/Controller/PartnerDistributionController.php
@@ -462,11 +412,6 @@ parameters:
 
 		-
 			message: "#^PHPDoc tag @param has invalid value \\(\\$id\\)\\: Unexpected token \"\\$id\", expected type at offset 151$#"
-			count: 1
-			path: src/Controller/PartnerDistributionController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\PartnerDistributionController\\:\\:buildFilterParams\\(\\) return type has no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
 			count: 1
 			path: src/Controller/PartnerDistributionController.php
 
@@ -516,11 +461,6 @@ parameters:
 			path: src/Controller/PartnerOrderController.php
 
 		-
-			message: "#^Method App\\\\Controller\\\\PartnerOrderController\\:\\:buildFilterParams\\(\\) return type has no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
-			count: 1
-			path: src/Controller/PartnerOrderController.php
-
-		-
 			message: "#^Parameter \\#1 \\$entityName of method App\\\\Controller\\\\BaseController\\:\\:getRepository\\(\\) expects null, string given\\.$#"
 			count: 1
 			path: src/Controller/PartnerOrderController.php
@@ -552,11 +492,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Controller\\\\ProductController\\:\\:update\\(\\) has parameter \\$id with no typehint specified\\.$#"
-			count: 1
-			path: src/Controller/ProductController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\ProductController\\:\\:update\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Controller/ProductController.php
 
@@ -646,86 +581,6 @@ parameters:
 			path: src/Controller/ReportController.php
 
 		-
-			message: "#^PHPDoc tag @var for variable \\$repo contains unknown class App\\\\Entity\\\\InventoryTransactionRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method findAllPaged\\(\\) on an unknown class App\\\\Entity\\\\InventoryTransactionRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method findAllCount\\(\\) on an unknown class App\\\\Entity\\\\InventoryTransactionRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^PHPDoc tag @var for variable \\$repo contains unknown class App\\\\Entity\\\\Orders\\\\SupplyOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method supplierTotals\\(\\) on an unknown class App\\\\Entity\\\\Orders\\\\SupplyOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method findSupplierTotalsCount\\(\\) on an unknown class App\\\\Entity\\\\Orders\\\\SupplyOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^PHPDoc tag @var for variable \\$repo contains unknown class App\\\\Entity\\\\Orders\\\\BulkDistributionOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method distributionTotals\\(\\) on an unknown class App\\\\Entity\\\\Orders\\\\BulkDistributionOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method findDistributionTotalsCount\\(\\) on an unknown class App\\\\Entity\\\\Orders\\\\BulkDistributionOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^PHPDoc tag @var for variable \\$repo contains unknown class App\\\\Entity\\\\Orders\\\\PartnerOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method partnerOrderTotals\\(\\) on an unknown class App\\\\Entity\\\\Orders\\\\PartnerOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method findPartnerOrderTotalsCount\\(\\) on an unknown class App\\\\Entity\\\\Orders\\\\PartnerOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^PHPDoc tag @var for variable \\$transactionRepo contains unknown class App\\\\Entity\\\\InventoryTransactionRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^PHPDoc tag @var for variable \\$distributionRepo contains unknown class App\\\\Entity\\\\Orders\\\\BulkDistributionOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method getStockLevels\\(\\) on an unknown class App\\\\Entity\\\\InventoryTransactionRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method getDistributionsForForcasting\\(\\) on an unknown class App\\\\Entity\\\\Orders\\\\BulkDistributionOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
 			message: "#^Parameter \\#1 \\$entityName of method App\\\\Controller\\\\BaseController\\:\\:getRepository\\(\\) expects null, string given\\.$#"
 			count: 4
 			path: src/Controller/StockLevelsController.php
@@ -739,11 +594,6 @@ parameters:
 			message: "#^Method App\\\\Controller\\\\StockLevelsController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Controller/StockLevelsController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\StorageLocationController\\:\\:store\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Controller/StorageLocationController.php
 
 		-
 			message: "#^Method App\\\\Controller\\\\StorageLocationController\\:\\:inventoryLevels\\(\\) has no return typehint specified\\.$#"
@@ -846,11 +696,6 @@ parameters:
 			path: src/Controller/SupplierController.php
 
 		-
-			message: "#^Method App\\\\Controller\\\\SupplierController\\:\\:buildFilterParams\\(\\) return type has no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
-			count: 1
-			path: src/Controller/SupplierController.php
-
-		-
 			message: "#^Method App\\\\Controller\\\\SupplierController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Controller/SupplierController.php
@@ -906,17 +751,7 @@ parameters:
 			path: src/Controller/UserController.php
 
 		-
-			message: "#^Parameter \\#1 \\$groups of method App\\\\Entity\\\\User\\:\\:setGroups\\(\\) expects Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\Group\\>, array\\<int, mixed\\> given\\.$#"
-			count: 1
-			path: src/Controller/UserController.php
-
-		-
-			message: "#^Variable \\$groups might not be defined\\.$#"
-			count: 1
-			path: src/Controller/UserController.php
-
-		-
-			message: "#^Variable \\$partners might not be defined\\.$#"
+			message: "#^Parameter \\#1 \\$groups of method App\\\\Entity\\\\User\\:\\:setGroups\\(\\) expects Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\Group\\>, array\\<App\\\\Entity\\\\Group\\> given\\.$#"
 			count: 1
 			path: src/Controller/UserController.php
 
@@ -1016,11 +851,6 @@ parameters:
 			path: src/DataFixtures/ClientAttributeFixtures.php
 
 		-
-			message: "#^Method App\\\\DataFixtures\\\\ClientAttributeFixtures\\:\\:getData\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/DataFixtures/ClientAttributeFixtures.php
-
-		-
 			message: "#^Method App\\\\DataFixtures\\\\ClientFixtures\\:\\:loadData\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/DataFixtures/ClientFixtures.php
@@ -1047,11 +877,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\DataFixtures\\\\ClientFixtures\\:\\:randomArrayValue\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/DataFixtures/ClientFixtures.php
-
-		-
-			message: "#^Method App\\\\DataFixtures\\\\ClientFixtures\\:\\:randomArrayValue\\(\\) has parameter \\$arr with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/DataFixtures/ClientFixtures.php
 
@@ -1101,19 +926,9 @@ parameters:
 			path: src/DataFixtures/PartnerProfileAttributeFixtures.php
 
 		-
-			message: "#^Method App\\\\DataFixtures\\\\PartnerProfileAttributeFixtures\\:\\:getData\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/DataFixtures/PartnerProfileAttributeFixtures.php
-
-		-
 			message: "#^Method App\\\\DataFixtures\\\\PartnerProfileFixtures\\:\\:loadData\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/DataFixtures/PartnerProfileFixtures.php
-
-		-
-			message: "#^Method App\\\\DataFixtures\\\\PartnerUserFixtures\\:\\:getDependencies\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/DataFixtures/PartnerUserFixtures.php
 
 		-
 			message: "#^Parameter \\#1 \\$groups of method App\\\\Entity\\\\User\\:\\:setGroups\\(\\) expects Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\Group\\>, array\\<int, object\\> given\\.$#"
@@ -1181,11 +996,6 @@ parameters:
 			path: src/DataFixtures/TransferOrderFixtures.php
 
 		-
-			message: "#^Method App\\\\DataFixtures\\\\UserFixtures\\:\\:getData\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/DataFixtures/UserFixtures.php
-
-		-
 			message: "#^Method App\\\\DataFixtures\\\\WarehouseFixtures\\:\\:loadData\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/DataFixtures/WarehouseFixtures.php
@@ -1251,11 +1061,6 @@ parameters:
 			path: src/Entity/Client.php
 
 		-
-			message: "#^Property App\\\\Entity\\\\Client\\:\\:\\$distributionLineItems with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/Client.php
-
-		-
 			message: "#^Property App\\\\Entity\\\\Client\\:\\:\\$ageExpiresAt type mapping mismatch\\: database can contain DateTime\\|null but property expects DateTime\\.$#"
 			count: 1
 			path: src/Entity/Client.php
@@ -1311,16 +1116,6 @@ parameters:
 			path: src/Entity/Client.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\Client\\:\\:applyChangesFromArray\\(\\) has parameter \\$changes with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Entity/Client.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Client\\:\\:getDistributionLineItems\\(\\) return type with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/Client.php
-
-		-
 			message: "#^Method App\\\\Entity\\\\Client\\:\\:calculateAgeExpiration\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Entity/Client.php
@@ -1351,17 +1146,7 @@ parameters:
 			path: src/Entity/Client.php
 
 		-
-			message: "#^Property App\\\\Entity\\\\Client\\:\\:\\$attributes with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/Client.php
-
-		-
 			message: "#^Method App\\\\Entity\\\\Client\\:\\:addAttributes\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Client.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Client\\:\\:addAttributes\\(\\) has parameter \\$attributes with no value type specified in iterable type iterable\\.$#"
 			count: 1
 			path: src/Entity/Client.php
 
@@ -1382,11 +1167,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Entity\\\\Client\\:\\:removeAttribute\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Client.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Client\\:\\:getAttributes\\(\\) return type with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
 			count: 1
 			path: src/Entity/Client.php
 
@@ -1521,22 +1301,7 @@ parameters:
 			path: src/Entity/Contact.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\CoreEntity\\:\\:applyChangesFromArray\\(\\) has parameter \\$changes with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Entity/CoreEntity.php
-
-		-
 			message: "#^Method App\\\\Entity\\\\CoreEntity\\:\\:processChildren\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/CoreEntity.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\CoreEntity\\:\\:processChildren\\(\\) has parameter \\$children with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Entity/CoreEntity.php
-
-		-
-			message: "#^PHPDoc tag @var for variable \\$collection contains generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but does not specify its types\\: TKey, T$#"
 			count: 1
 			path: src/Entity/CoreEntity.php
 
@@ -1626,11 +1391,6 @@ parameters:
 			path: src/Entity/EAV/Attribute.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Attribute\\:\\:getDisplayInterfaces\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Entity/EAV/Attribute.php
-
-		-
 			message: "#^Property App\\\\Entity\\\\EAV\\\\Attribute\\:\\:\\$definition \\(App\\\\Entity\\\\EAV\\\\Definition\\) does not accept App\\\\Entity\\\\EAV\\\\Definition\\|null\\.$#"
 			count: 1
 			path: src/Entity/EAV/Attribute.php
@@ -1646,17 +1406,7 @@ parameters:
 			path: src/Entity/PartnerProfile.php
 
 		-
-			message: "#^Property App\\\\Entity\\\\PartnerProfile\\:\\:\\$attributes with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/PartnerProfile.php
-
-		-
 			message: "#^Method App\\\\Entity\\\\PartnerProfile\\:\\:addAttributes\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/PartnerProfile.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\PartnerProfile\\:\\:addAttributes\\(\\) has parameter \\$attributes with no value type specified in iterable type iterable\\.$#"
 			count: 1
 			path: src/Entity/PartnerProfile.php
 
@@ -1677,11 +1427,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Entity\\\\PartnerProfile\\:\\:removeAttribute\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/PartnerProfile.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\PartnerProfile\\:\\:getAttributes\\(\\) return type with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
 			count: 1
 			path: src/Entity/PartnerProfile.php
 
@@ -1736,11 +1481,6 @@ parameters:
 			path: src/Entity/PartnerProfile.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\PartnerProfile\\:\\:applyChangesFromArray\\(\\) has parameter \\$changes with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Entity/PartnerProfile.php
-
-		-
 			message: "#^Property App\\\\Entity\\\\EAV\\\\ClientDefinition\\:\\:\\$defaultEntityName has no typehint specified\\.$#"
 			count: 1
 			path: src/Entity/EAV/ClientDefinition.php
@@ -1772,11 +1512,6 @@ parameters:
 
 		-
 			message: "#^Property App\\\\Entity\\\\EAV\\\\Definition\\:\\:\\$options type mapping mismatch\\: property can contain Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but database expects Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\EAV\\\\Option\\>\\.$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Definition\\:\\:\\$options with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
 			count: 1
 			path: src/Entity/EAV/Definition.php
 
@@ -1816,11 +1551,6 @@ parameters:
 			path: src/Entity/EAV/Definition.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Definition\\:\\:getOptions\\(\\) return type with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
 			message: "#^Cannot access an offset on App\\\\Entity\\\\EAV\\\\Attribute\\.$#"
 			count: 1
 			path: src/Entity/EAV/Definition.php
@@ -1836,27 +1566,12 @@ parameters:
 			path: src/Entity/EAV/Definition.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Definition\\:\\:getAttributes\\(\\) return type with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
 			message: "#^Method App\\\\Entity\\\\EAV\\\\Definition\\:\\:getAttributes\\(\\) should return Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but returns App\\\\Entity\\\\EAV\\\\Attribute\\.$#"
 			count: 1
 			path: src/Entity/EAV/Definition.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Definition\\:\\:getAttributeTypes\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
 			message: "#^Method App\\\\Entity\\\\EAV\\\\Definition\\:\\:createAttribute\\(\\) has parameter \\$value with no typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Definition\\:\\:applyChangesFromArray\\(\\) has parameter \\$changes with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Entity/EAV/Definition.php
 
@@ -1891,11 +1606,6 @@ parameters:
 			path: src/Entity/EAV/Type/AddressAttribute.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Type\\\\AddressAttribute\\:\\:setValue\\(\\) has parameter \\$value with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/AddressAttribute.php
-
-		-
 			message: "#^Result of && is always false\\.$#"
 			count: 1
 			path: src/Entity/EAV/Type/AddressAttribute.php
@@ -1916,22 +1626,12 @@ parameters:
 			path: src/Entity/EAV/Type/AddressAttribute.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Type\\\\AddressAttribute\\:\\:getDisplayInterfaces\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/AddressAttribute.php
-
-		-
 			message: "#^Property App\\\\Entity\\\\EAV\\\\Type\\\\BooleanAttribute\\:\\:\\$value type mapping mismatch\\: database can contain bool\\|null but property expects bool\\.$#"
 			count: 1
 			path: src/Entity/EAV/Type/BooleanAttribute.php
 
 		-
 			message: "#^Method App\\\\Entity\\\\EAV\\\\Type\\\\BooleanAttribute\\:\\:fixtureData\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/BooleanAttribute.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Type\\\\BooleanAttribute\\:\\:getDisplayInterfaces\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Entity/EAV/Type/BooleanAttribute.php
 
@@ -1961,22 +1661,12 @@ parameters:
 			path: src/Entity/EAV/Type/DatetimeAttribute.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Type\\\\DatetimeAttribute\\:\\:getDisplayInterfaces\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/DatetimeAttribute.php
-
-		-
 			message: "#^Property App\\\\Entity\\\\EAV\\\\Type\\\\FloatAttribute\\:\\:\\$value type mapping mismatch\\: database can contain float\\|null but property expects float\\.$#"
 			count: 1
 			path: src/Entity/EAV/Type/FloatAttribute.php
 
 		-
 			message: "#^Method App\\\\Entity\\\\EAV\\\\Type\\\\FloatAttribute\\:\\:fixtureData\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/FloatAttribute.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Type\\\\FloatAttribute\\:\\:getDisplayInterfaces\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Entity/EAV/Type/FloatAttribute.php
 
@@ -1991,27 +1681,12 @@ parameters:
 			path: src/Entity/EAV/Type/IntegerAttribute.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Type\\\\IntegerAttribute\\:\\:getDisplayInterfaces\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/IntegerAttribute.php
-
-		-
 			message: "#^Property App\\\\Entity\\\\EAV\\\\Type\\\\OptionListAttribute\\:\\:\\$value type mapping mismatch\\: database can contain App\\\\Entity\\\\EAV\\\\Option\\|null but property expects App\\\\Entity\\\\EAV\\\\Option\\.$#"
 			count: 1
 			path: src/Entity/EAV/Type/OptionListAttribute.php
 
 		-
-			message: "#^Result of && is always false\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/OptionListAttribute.php
-
-		-
 			message: "#^Strict comparison using \\=\\=\\= between App\\\\Entity\\\\EAV\\\\Option and false will always evaluate to false\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/OptionListAttribute.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Type\\\\OptionListAttribute\\:\\:\\$value \\(App\\\\Entity\\\\EAV\\\\Option\\) does not accept App\\\\Entity\\\\EAV\\\\Option\\|null\\.$#"
 			count: 1
 			path: src/Entity/EAV/Type/OptionListAttribute.php
 
@@ -2031,22 +1706,12 @@ parameters:
 			path: src/Entity/EAV/Type/OptionListAttribute.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Type\\\\OptionListAttribute\\:\\:getDisplayInterfaces\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/OptionListAttribute.php
-
-		-
 			message: "#^Property App\\\\Entity\\\\EAV\\\\Type\\\\StringAttribute\\:\\:\\$value type mapping mismatch\\: database can contain string\\|null but property expects string\\.$#"
 			count: 1
 			path: src/Entity/EAV/Type/StringAttribute.php
 
 		-
 			message: "#^Method App\\\\Entity\\\\EAV\\\\Type\\\\StringAttribute\\:\\:fixtureData\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/StringAttribute.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Type\\\\StringAttribute\\:\\:getDisplayInterfaces\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Entity/EAV/Type/StringAttribute.php
 
@@ -2061,11 +1726,6 @@ parameters:
 			path: src/Entity/EAV/Type/TextAttribute.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Type\\\\TextAttribute\\:\\:getDisplayInterfaces\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/TextAttribute.php
-
-		-
 			message: "#^Property App\\\\Entity\\\\Group\\:\\:\\$users type mapping mismatch\\: database can contain Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\User\\> but property expects App\\\\Entity\\\\User\\.$#"
 			count: 1
 			path: src/Entity/Group.php
@@ -2076,27 +1736,12 @@ parameters:
 			path: src/Entity/Group.php
 
 		-
-			message: "#^Property App\\\\Entity\\\\Group\\:\\:\\$roles type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Entity/Group.php
-
-		-
 			message: "#^Method App\\\\Entity\\\\Group\\:\\:setName\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Entity/Group.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\Group\\:\\:getRoles\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Entity/Group.php
-
-		-
 			message: "#^Method App\\\\Entity\\\\Group\\:\\:setRoles\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Group.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Group\\:\\:setRoles\\(\\) has parameter \\$roles with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Entity/Group.php
 
@@ -2186,11 +1831,6 @@ parameters:
 			path: src/Entity/LineItem.php
 
 		-
-			message: "#^Property App\\\\Entity\\\\LineItem\\:\\:\\$transactions with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/LineItem.php
-
-		-
 			message: "#^Property App\\\\Entity\\\\LineItem\\:\\:\\$product type mapping mismatch\\: database can contain App\\\\Entity\\\\Product\\|null but property expects App\\\\Entity\\\\Product\\.$#"
 			count: 1
 			path: src/Entity/LineItem.php
@@ -2217,11 +1857,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Entity\\\\LineItem\\:\\:setOrder\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/LineItem.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\LineItem\\:\\:getTransactions\\(\\) return type with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
 			count: 1
 			path: src/Entity/LineItem.php
 
@@ -2289,11 +1924,6 @@ parameters:
 			message: "#^Method App\\\\Entity\\\\ListOption\\:\\:setStatus\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Entity/ListOption.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\Order\\:\\:\\$lineItems with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/Order.php
 
 		-
 			message: "#^Method App\\\\Entity\\\\Order\\:\\:getLineItems\\(\\) has no return typehint specified\\.$#"
@@ -2606,17 +2236,7 @@ parameters:
 			path: src/Entity/Partner.php
 
 		-
-			message: "#^Property App\\\\Entity\\\\Partner\\:\\:\\$clients with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/Partner.php
-
-		-
 			message: "#^Property App\\\\Entity\\\\Partner\\:\\:\\$users type mapping mismatch\\: property can contain Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but database expects Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\User\\>\\.$#"
-			count: 1
-			path: src/Entity/Partner.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\Partner\\:\\:\\$users with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
 			count: 1
 			path: src/Entity/Partner.php
 
@@ -2657,21 +2277,6 @@ parameters:
 
 		-
 			message: "#^Property App\\\\Entity\\\\Partner\\:\\:\\$legacyId \\(int\\) does not accept int\\|null\\.$#"
-			count: 1
-			path: src/Entity/Partner.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Partner\\:\\:applyChangesFromArray\\(\\) has parameter \\$changes with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Entity/Partner.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Partner\\:\\:getClients\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/Partner.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Partner\\:\\:getUsers\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
 			count: 1
 			path: src/Entity/Partner.php
 
@@ -2861,11 +2466,6 @@ parameters:
 			path: src/Entity/ProductCategory.php
 
 		-
-			message: "#^Class App\\\\Entity\\\\ProductRepository extends generic class Doctrine\\\\ORM\\\\EntityRepository but does not specify its types\\: TEntityClass$#"
-			count: 1
-			path: src/Entity/ProductRepository.php
-
-		-
 			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:findAllSorted\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Entity/ProductRepository.php
@@ -2906,11 +2506,6 @@ parameters:
 			path: src/Entity/StorageLocation.php
 
 		-
-			message: "#^Property App\\\\Entity\\\\StorageLocation\\:\\:\\$contacts with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/StorageLocation.php
-
-		-
 			message: "#^Method App\\\\Entity\\\\StorageLocation\\:\\:setId\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Entity/StorageLocation.php
@@ -2936,22 +2531,12 @@ parameters:
 			path: src/Entity/StorageLocation.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\StorageLocation\\:\\:setContacts\\(\\) has parameter \\$contacts with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/StorageLocation.php
-
-		-
 			message: "#^Method App\\\\Entity\\\\StorageLocation\\:\\:addContact\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Entity/StorageLocation.php
 
 		-
 			message: "#^Method App\\\\Entity\\\\StorageLocation\\:\\:removeContact\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/StorageLocation.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\StorageLocation\\:\\:applyChangesFromArray\\(\\) has parameter \\$changes with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Entity/StorageLocation.php
 
@@ -2981,21 +2566,6 @@ parameters:
 			path: src/Entity/StorageLocationContact.php
 
 		-
-			message: "#^Property App\\\\Entity\\\\Supplier\\:\\:\\$addresses with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/Supplier.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\Supplier\\:\\:\\$contacts with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/Supplier.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\Supplier\\:\\:\\$supplyOrders with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/Supplier.php
-
-		-
 			message: "#^Property App\\\\Entity\\\\Supplier\\:\\:\\$supplierType type mapping mismatch\\: database can contain string\\|null but property expects string\\.$#"
 			count: 1
 			path: src/Entity/Supplier.php
@@ -3021,11 +2591,6 @@ parameters:
 			path: src/Entity/Supplier.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\Supplier\\:\\:getAddresses\\(\\) return type with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/Supplier.php
-
-		-
 			message: "#^Method App\\\\Entity\\\\Supplier\\:\\:addAddress\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Entity/Supplier.php
@@ -3041,17 +2606,7 @@ parameters:
 			path: src/Entity/Supplier.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\Supplier\\:\\:getContacts\\(\\) return type with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/Supplier.php
-
-		-
 			message: "#^Method App\\\\Entity\\\\Supplier\\:\\:setContacts\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Supplier.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Supplier\\:\\:setContacts\\(\\) has parameter \\$contacts with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but does not specify its types\\: TKey, T$#"
 			count: 1
 			path: src/Entity/Supplier.php
 
@@ -3071,17 +2626,7 @@ parameters:
 			path: src/Entity/Supplier.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\Supplier\\:\\:getSupplyOrders\\(\\) return type with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/Supplier.php
-
-		-
 			message: "#^Method App\\\\Entity\\\\Supplier\\:\\:setLegacyId\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Supplier.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Supplier\\:\\:applyChangesFromArray\\(\\) has parameter \\$changes with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Entity/Supplier.php
 
@@ -3136,16 +2681,6 @@ parameters:
 			path: src/Entity/User.php
 
 		-
-			message: "#^Property App\\\\Entity\\\\User\\:\\:\\$groups with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/User.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\User\\:\\:\\$partners with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/User.php
-
-		-
 			message: "#^Property App\\\\Entity\\\\User\\:\\:\\$activePartner type mapping mismatch\\: database can contain App\\\\Entity\\\\Partner\\|null but property expects App\\\\Entity\\\\Partner\\.$#"
 			count: 1
 			path: src/Entity/User.php
@@ -3156,12 +2691,17 @@ parameters:
 			path: src/Entity/User.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\User\\:\\:setGroups\\(\\) has parameter \\$groups with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection but does not specify its types\\: TKey, T$#"
+			message: "#^Call to function is_array\\(\\) with Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\Group\\> will always evaluate to false\\.$#"
 			count: 1
 			path: src/Entity/User.php
 
 		-
-			message: "#^Call to function is_array\\(\\) with Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\Group\\> will always evaluate to false\\.$#"
+			message: "#^Instanceof between \\*NEVER\\* and Doctrine\\\\Common\\\\Collections\\\\Collection will always evaluate to false\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Result of && is always false\\.$#"
 			count: 1
 			path: src/Entity/User.php
 
@@ -3172,16 +2712,6 @@ parameters:
 
 		-
 			message: "#^Property App\\\\Entity\\\\User\\:\\:\\$password \\(string\\) does not accept null\\.$#"
-			count: 1
-			path: src/Entity/User.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\User\\:\\:getPartners\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Entity/User.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\User\\:\\:setPartners\\(\\) has parameter \\$partners with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Entity/User.php
 
@@ -3254,11 +2784,6 @@ parameters:
 			message: "#^Method App\\\\Entity\\\\ValueObjects\\\\Name\\:\\:setLastname\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Entity/ValueObjects/Name.php
-
-		-
-			message: "#^Property App\\\\Helpers\\\\Bag\\:\\:\\$packs with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Helpers/Bag.php
 
 		-
 			message: "#^Method App\\\\Helpers\\\\Bag\\:\\:addPack\\(\\) has no return typehint specified\\.$#"
@@ -3391,17 +2916,7 @@ parameters:
 			path: src/Reports/DistributionTotalsExcel.php
 
 		-
-			message: "#^Property App\\\\Reports\\\\DistributionTotalsReport\\:\\:\\$rows with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Reports/DistributionTotalsReport.php
-
-		-
 			message: "#^Method App\\\\Reports\\\\DistributionTotalsReport\\:\\:getRow\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Reports/DistributionTotalsReport.php
-
-		-
-			message: "#^Method App\\\\Reports\\\\DistributionTotalsReport\\:\\:getRows\\(\\) return type with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
 			count: 1
 			path: src/Reports/DistributionTotalsReport.php
 
@@ -3426,17 +2941,7 @@ parameters:
 			path: src/Reports/PartnerInventoryExcel.php
 
 		-
-			message: "#^Property App\\\\Reports\\\\PartnerInventoryReport\\:\\:\\$rows with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Reports/PartnerInventoryReport.php
-
-		-
 			message: "#^Method App\\\\Reports\\\\PartnerInventoryReport\\:\\:getRow\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Reports/PartnerInventoryReport.php
-
-		-
-			message: "#^Method App\\\\Reports\\\\PartnerInventoryReport\\:\\:getRows\\(\\) return type with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
 			count: 1
 			path: src/Reports/PartnerInventoryReport.php
 
@@ -3496,17 +3001,7 @@ parameters:
 			path: src/Reports/PartnerOrderTotalsExcel.php
 
 		-
-			message: "#^Property App\\\\Reports\\\\PartnerOrderTotalsReport\\:\\:\\$rows with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Reports/PartnerOrderTotalsReport.php
-
-		-
 			message: "#^Method App\\\\Reports\\\\PartnerOrderTotalsReport\\:\\:getRow\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Reports/PartnerOrderTotalsReport.php
-
-		-
-			message: "#^Method App\\\\Reports\\\\PartnerOrderTotalsReport\\:\\:getRows\\(\\) return type with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
 			count: 1
 			path: src/Reports/PartnerOrderTotalsReport.php
 
@@ -3536,17 +3031,7 @@ parameters:
 			path: src/Reports/SupplierTotalsExcel.php
 
 		-
-			message: "#^Property App\\\\Reports\\\\SupplierTotalsReport\\:\\:\\$rows with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Reports/SupplierTotalsReport.php
-
-		-
 			message: "#^Method App\\\\Reports\\\\SupplierTotalsReport\\:\\:getRow\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Reports/SupplierTotalsReport.php
-
-		-
-			message: "#^Method App\\\\Reports\\\\SupplierTotalsReport\\:\\:getRows\\(\\) return type with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
 			count: 1
 			path: src/Reports/SupplierTotalsReport.php
 
@@ -3571,21 +3056,6 @@ parameters:
 			path: src/Reports/TransactionExcel.php
 
 		-
-			message: "#^Class App\\\\Repository\\\\ClientRepository extends generic class Doctrine\\\\ORM\\\\EntityRepository but does not specify its types\\: TEntityClass$#"
-			count: 1
-			path: src/Repository/ClientRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\ClientRepository\\:\\:findByUuids\\(\\) has parameter \\$ids with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Repository/ClientRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\ClientRepository\\:\\:findByUuids\\(\\) return type with generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Repository/ClientRepository.php
-
-		-
 			message: "#^Method App\\\\Repository\\\\ClientRepository\\:\\:findAllPaged\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Repository/ClientRepository.php
@@ -3597,11 +3067,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Repository\\\\ClientRepository\\:\\:findAllPaged\\(\\) has parameter \\$page with no typehint specified\\.$#"
-			count: 1
-			path: src/Repository/ClientRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\ClientRepository\\:\\:findAllPaged\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
 			count: 1
 			path: src/Repository/ClientRepository.php
 
@@ -3626,17 +3091,7 @@ parameters:
 			path: src/Repository/ClientRepository.php
 
 		-
-			message: "#^Method App\\\\Repository\\\\ClientRepository\\:\\:findAllCount\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
-			count: 1
-			path: src/Repository/ClientRepository.php
-
-		-
 			message: "#^Method App\\\\Repository\\\\ClientRepository\\:\\:addCriteria\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Repository/ClientRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\ClientRepository\\:\\:addCriteria\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
 			count: 1
 			path: src/Repository/ClientRepository.php
 
@@ -3656,19 +3111,9 @@ parameters:
 			path: src/Repository/ClientRepository.php
 
 		-
-			message: "#^Class App\\\\Repository\\\\DefinitionRepository extends generic class Doctrine\\\\ORM\\\\EntityRepository but does not specify its types\\: TEntityClass$#"
-			count: 1
-			path: src/Repository/DefinitionRepository.php
-
-		-
 			message: "#^Method App\\\\Repository\\\\DefinitionRepository\\:\\:findAllSorted\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Repository/DefinitionRepository.php
-
-		-
-			message: "#^Class App\\\\Repository\\\\InventoryTransactionRepository extends generic class Doctrine\\\\ORM\\\\EntityRepository but does not specify its types\\: TEntityClass$#"
-			count: 1
-			path: src/Repository/InventoryTransactionRepository.php
 
 		-
 			message: "#^Method App\\\\Repository\\\\InventoryTransactionRepository\\:\\:getStockLevels\\(\\) has no return typehint specified\\.$#"
@@ -3681,11 +3126,6 @@ parameters:
 			path: src/Repository/InventoryTransactionRepository.php
 
 		-
-			message: "#^Method App\\\\Repository\\\\InventoryTransactionRepository\\:\\:getStockLevels\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
-			count: 1
-			path: src/Repository/InventoryTransactionRepository.php
-
-		-
 			message: "#^Cannot call method has\\(\\) on Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\|null\\.$#"
 			count: 3
 			path: src/Repository/InventoryTransactionRepository.php
@@ -3693,11 +3133,6 @@ parameters:
 		-
 			message: "#^Cannot call method get\\(\\) on Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\|null\\.$#"
 			count: 4
-			path: src/Repository/InventoryTransactionRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\InventoryTransactionRepository\\:\\:getDailyStockLevels\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
 			path: src/Repository/InventoryTransactionRepository.php
 
 		-
@@ -3722,11 +3157,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Repository\\\\InventoryTransactionRepository\\:\\:getReportTransactions\\(\\) has parameter \\$includeAllocated with no typehint specified\\.$#"
-			count: 1
-			path: src/Repository/InventoryTransactionRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\InventoryTransactionRepository\\:\\:getReportTransactions\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
 			count: 1
 			path: src/Repository/InventoryTransactionRepository.php
 
@@ -3761,11 +3191,6 @@ parameters:
 			path: src/Repository/InventoryTransactionRepository.php
 
 		-
-			message: "#^Method App\\\\Repository\\\\InventoryTransactionRepository\\:\\:findAllPaged\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
-			count: 1
-			path: src/Repository/InventoryTransactionRepository.php
-
-		-
 			message: "#^Method App\\\\Repository\\\\InventoryTransactionRepository\\:\\:findAllPaged\\(\\) has parameter \\$sortDirection with no typehint specified\\.$#"
 			count: 1
 			path: src/Repository/InventoryTransactionRepository.php
@@ -3781,24 +3206,9 @@ parameters:
 			path: src/Repository/InventoryTransactionRepository.php
 
 		-
-			message: "#^Method App\\\\Repository\\\\InventoryTransactionRepository\\:\\:findAllCount\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
-			count: 1
-			path: src/Repository/InventoryTransactionRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\InventoryTransactionRepository\\:\\:addCriteria\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
-			count: 1
-			path: src/Repository/InventoryTransactionRepository.php
-
-		-
 			message: "#^PHPDoc tag @param has invalid value \\(\\$qb\\)\\: Unexpected token \"\\$qb\", expected type at offset 18$#"
 			count: 1
 			path: src/Repository/InventoryTransactionRepository.php
-
-		-
-			message: "#^Class App\\\\Repository\\\\ListOptionRepository extends generic class Doctrine\\\\ORM\\\\EntityRepository but does not specify its types\\: TEntityClass$#"
-			count: 1
-			path: src/Repository/ListOptionRepository.php
 
 		-
 			message: "#^Method App\\\\Repository\\\\ListOptionRepository\\:\\:findOneByName\\(\\) has no return typehint specified\\.$#"
@@ -3809,11 +3219,6 @@ parameters:
 			message: "#^Method App\\\\Repository\\\\ListOptionRepository\\:\\:findOneByName\\(\\) has parameter \\$name with no typehint specified\\.$#"
 			count: 1
 			path: src/Repository/ListOptionRepository.php
-
-		-
-			message: "#^Class App\\\\Repository\\\\OrderRepository extends generic class Doctrine\\\\ORM\\\\EntityRepository but does not specify its types\\: TEntityClass$#"
-			count: 1
-			path: src/Repository/OrderRepository.php
 
 		-
 			message: "#^Method App\\\\Repository\\\\OrderRepository\\:\\:findAllPaged\\(\\) has no return typehint specified\\.$#"
@@ -3827,11 +3232,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Repository\\\\OrderRepository\\:\\:findAllPaged\\(\\) has parameter \\$page with no typehint specified\\.$#"
-			count: 1
-			path: src/Repository/OrderRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\OrderRepository\\:\\:findAllPaged\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
 			count: 1
 			path: src/Repository/OrderRepository.php
 
@@ -3856,17 +3256,7 @@ parameters:
 			path: src/Repository/OrderRepository.php
 
 		-
-			message: "#^Method App\\\\Repository\\\\OrderRepository\\:\\:findAllCount\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
-			count: 1
-			path: src/Repository/OrderRepository.php
-
-		-
 			message: "#^Method App\\\\Repository\\\\OrderRepository\\:\\:addCriteria\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Repository/OrderRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\OrderRepository\\:\\:addCriteria\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
 			count: 1
 			path: src/Repository/OrderRepository.php
 
@@ -3891,11 +3281,6 @@ parameters:
 			path: src/Repository/Orders/BulkDistributionOrderRepository.php
 
 		-
-			message: "#^Method App\\\\Repository\\\\Orders\\\\BulkDistributionOrderRepository\\:\\:distributionTotals\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
-			count: 1
-			path: src/Repository/Orders/BulkDistributionOrderRepository.php
-
-		-
 			message: "#^Method App\\\\Repository\\\\Orders\\\\BulkDistributionOrderRepository\\:\\:distributionTotals\\(\\) has parameter \\$sortDirection with no typehint specified\\.$#"
 			count: 1
 			path: src/Repository/Orders/BulkDistributionOrderRepository.php
@@ -3916,17 +3301,7 @@ parameters:
 			path: src/Repository/Orders/BulkDistributionOrderRepository.php
 
 		-
-			message: "#^Method App\\\\Repository\\\\Orders\\\\BulkDistributionOrderRepository\\:\\:findDistributionTotalsCount\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
-			count: 1
-			path: src/Repository/Orders/BulkDistributionOrderRepository.php
-
-		-
 			message: "#^Method App\\\\Repository\\\\Orders\\\\BulkDistributionOrderRepository\\:\\:addCriteria\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Repository/Orders/BulkDistributionOrderRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\Orders\\\\BulkDistributionOrderRepository\\:\\:addCriteria\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
 			count: 1
 			path: src/Repository/Orders/BulkDistributionOrderRepository.php
 
@@ -3936,17 +3311,7 @@ parameters:
 			path: src/Repository/Orders/MerchandiseOrderRepository.php
 
 		-
-			message: "#^Class App\\\\Repository\\\\Orders\\\\PartnerOrderLineItemRepository extends generic class Doctrine\\\\ORM\\\\EntityRepository but does not specify its types\\: TEntityClass$#"
-			count: 1
-			path: src/Repository/Orders/PartnerOrderLineItemRepository.php
-
-		-
 			message: "#^Method App\\\\Repository\\\\Orders\\\\PartnerOrderLineItemRepository\\:\\:getOrderProductTotals\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Repository/Orders/PartnerOrderLineItemRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\Orders\\\\PartnerOrderLineItemRepository\\:\\:getOrderProductTotals\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
 			count: 1
 			path: src/Repository/Orders/PartnerOrderLineItemRepository.php
 
@@ -3957,11 +3322,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Repository\\\\Orders\\\\PartnerOrderRepository\\:\\:partnerOrderTotals\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Repository/Orders/PartnerOrderRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\Orders\\\\PartnerOrderRepository\\:\\:partnerOrderTotals\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
 			count: 1
 			path: src/Repository/Orders/PartnerOrderRepository.php
 
@@ -3986,17 +3346,7 @@ parameters:
 			path: src/Repository/Orders/PartnerOrderRepository.php
 
 		-
-			message: "#^Method App\\\\Repository\\\\Orders\\\\PartnerOrderRepository\\:\\:findPartnerOrderTotalsCount\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
-			count: 1
-			path: src/Repository/Orders/PartnerOrderRepository.php
-
-		-
 			message: "#^Method App\\\\Repository\\\\Orders\\\\PartnerOrderRepository\\:\\:addCriteria\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Repository/Orders/PartnerOrderRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\Orders\\\\PartnerOrderRepository\\:\\:addCriteria\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
 			count: 1
 			path: src/Repository/Orders/PartnerOrderRepository.php
 
@@ -4007,11 +3357,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Repository\\\\Orders\\\\SupplyOrderRepository\\:\\:supplierTotals\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Repository/Orders/SupplyOrderRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\Orders\\\\SupplyOrderRepository\\:\\:supplierTotals\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
 			count: 1
 			path: src/Repository/Orders/SupplyOrderRepository.php
 
@@ -4036,17 +3381,7 @@ parameters:
 			path: src/Repository/Orders/SupplyOrderRepository.php
 
 		-
-			message: "#^Method App\\\\Repository\\\\Orders\\\\SupplyOrderRepository\\:\\:findSupplierTotalsCount\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
-			count: 1
-			path: src/Repository/Orders/SupplyOrderRepository.php
-
-		-
 			message: "#^Method App\\\\Repository\\\\Orders\\\\SupplyOrderRepository\\:\\:addCriteria\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Repository/Orders/SupplyOrderRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\Orders\\\\SupplyOrderRepository\\:\\:addCriteria\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
 			count: 1
 			path: src/Repository/Orders/SupplyOrderRepository.php
 
@@ -4054,16 +3389,6 @@ parameters:
 			message: "#^Method App\\\\Repository\\\\Orders\\\\TransferOrderRepository\\:\\:joinRelatedTables\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Repository/Orders/TransferOrderRepository.php
-
-		-
-			message: "#^Class App\\\\Repository\\\\SettingRepository extends generic class Doctrine\\\\ORM\\\\EntityRepository but does not specify its types\\: TEntityClass$#"
-			count: 1
-			path: src/Repository/SettingRepository.php
-
-		-
-			message: "#^Class App\\\\Repository\\\\SupplierRepository extends generic class Doctrine\\\\ORM\\\\EntityRepository but does not specify its types\\: TEntityClass$#"
-			count: 1
-			path: src/Repository/SupplierRepository.php
 
 		-
 			message: "#^Method App\\\\Repository\\\\SupplierRepository\\:\\:findAllPaged\\(\\) has no return typehint specified\\.$#"
@@ -4077,11 +3402,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Repository\\\\SupplierRepository\\:\\:findAllPaged\\(\\) has parameter \\$page with no typehint specified\\.$#"
-			count: 1
-			path: src/Repository/SupplierRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\SupplierRepository\\:\\:findAllPaged\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
 			count: 1
 			path: src/Repository/SupplierRepository.php
 
@@ -4106,17 +3426,7 @@ parameters:
 			path: src/Repository/SupplierRepository.php
 
 		-
-			message: "#^Method App\\\\Repository\\\\SupplierRepository\\:\\:findAllCount\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
-			count: 1
-			path: src/Repository/SupplierRepository.php
-
-		-
 			message: "#^Method App\\\\Repository\\\\SupplierRepository\\:\\:addCriteria\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Repository/SupplierRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\SupplierRepository\\:\\:addCriteria\\(\\) has parameter \\$params with no value type specified in iterable type Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\.$#"
 			count: 1
 			path: src/Repository/SupplierRepository.php
 
@@ -4124,11 +3434,6 @@ parameters:
 			message: "#^Method App\\\\Repository\\\\SupplierRepository\\:\\:joinRelatedTables\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Repository/SupplierRepository.php
-
-		-
-			message: "#^Class App\\\\Repository\\\\UserRepository extends generic class Doctrine\\\\Bundle\\\\DoctrineBundle\\\\Repository\\\\ServiceEntityRepository but does not specify its types\\: TEntityClass$#"
-			count: 1
-			path: src/Repository/UserRepository.php
 
 		-
 			message: "#^Method App\\\\Repository\\\\UserRepository\\:\\:findByPartner\\(\\) has no return typehint specified\\.$#"
@@ -4211,37 +3516,12 @@ parameters:
 			path: src/Security/SupplyOrderVoter.php
 
 		-
-			message: "#^Class App\\\\Security\\\\TransferOrder not found\\.$#"
-			count: 1
-			path: src/Security/TransferOrderVoter.php
-
-		-
 			message: "#^Method App\\\\Security\\\\TransferOrderVoter\\:\\:canView\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Security/TransferOrderVoter.php
 
 		-
-			message: "#^Parameter \\$transferOrder of method App\\\\Security\\\\TransferOrderVoter\\:\\:canView\\(\\) has invalid typehint type App\\\\Security\\\\TransferOrder\\.$#"
-			count: 1
-			path: src/Security/TransferOrderVoter.php
-
-		-
-			message: "#^Access to constant ROLE_VIEW on an unknown class App\\\\Security\\\\TransferOrder\\.$#"
-			count: 1
-			path: src/Security/TransferOrderVoter.php
-
-		-
 			message: "#^Method App\\\\Security\\\\TransferOrderVoter\\:\\:canEdit\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Security/TransferOrderVoter.php
-
-		-
-			message: "#^Parameter \\$transferOrder of method App\\\\Security\\\\TransferOrderVoter\\:\\:canEdit\\(\\) has invalid typehint type App\\\\Security\\\\TransferOrder\\.$#"
-			count: 1
-			path: src/Security/TransferOrderVoter.php
-
-		-
-			message: "#^Access to constant ROLE_EDIT on an unknown class App\\\\Security\\\\TransferOrder\\.$#"
 			count: 1
 			path: src/Security/TransferOrderVoter.php
 
@@ -4256,26 +3536,6 @@ parameters:
 			path: src/Security/UserVoter.php
 
 		-
-			message: "#^Method App\\\\Serializer\\\\ApiSerializer\\:\\:collection\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Serializer/ApiSerializer.php
-
-		-
-			message: "#^Method App\\\\Serializer\\\\ApiSerializer\\:\\:collection\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Serializer/ApiSerializer.php
-
-		-
-			message: "#^Method App\\\\Serializer\\\\ApiSerializer\\:\\:item\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Serializer/ApiSerializer.php
-
-		-
-			message: "#^Method App\\\\Serializer\\\\ApiSerializer\\:\\:item\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Serializer/ApiSerializer.php
-
-		-
 			message: "#^Method App\\\\Service\\\\SequenceGenerator\\:\\:generateNext\\(\\) has parameter \\$entity with no typehint specified\\.$#"
 			count: 1
 			path: src/Service/SequenceGenerator.php
@@ -4284,21 +3544,6 @@ parameters:
 			message: "#^Method App\\\\Transformers\\\\AddressTransformer\\:\\:transform\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Transformers/AddressTransformer.php
-
-		-
-			message: "#^Property App\\\\Transformers\\\\AdjustmentOrderTransformer\\:\\:\\$availableIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/AdjustmentOrderTransformer.php
-
-		-
-			message: "#^Property App\\\\Transformers\\\\AdjustmentOrderTransformer\\:\\:\\$defaultIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/AdjustmentOrderTransformer.php
-
-		-
-			message: "#^Method App\\\\Transformers\\\\AdjustmentOrderTransformer\\:\\:transform\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/AdjustmentOrderTransformer.php
 
 		-
 			message: "#^Method App\\\\Transformers\\\\AdjustmentOrderTransformer\\:\\:includeStorageLocation\\(\\) has no return typehint specified\\.$#"
@@ -4311,11 +3556,6 @@ parameters:
 			path: src/Transformers/AttributeDefinitionOptionTransformer.php
 
 		-
-			message: "#^Property App\\\\Transformers\\\\AttributeDefinitionTransformer\\:\\:\\$defaultIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/AttributeDefinitionTransformer.php
-
-		-
 			message: "#^Method App\\\\Transformers\\\\AttributeDefinitionTransformer\\:\\:transform\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Transformers/AttributeDefinitionTransformer.php
@@ -4324,21 +3564,6 @@ parameters:
 			message: "#^Method App\\\\Transformers\\\\AttributeDefinitionTransformer\\:\\:includeOptions\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Transformers/AttributeDefinitionTransformer.php
-
-		-
-			message: "#^Property App\\\\Transformers\\\\AttributeTransformer\\:\\:\\$availableIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/AttributeTransformer.php
-
-		-
-			message: "#^Property App\\\\Transformers\\\\AttributeTransformer\\:\\:\\$defaultIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/AttributeTransformer.php
-
-		-
-			message: "#^Method App\\\\Transformers\\\\AttributeTransformer\\:\\:transform\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/AttributeTransformer.php
 
 		-
 			message: "#^Method App\\\\Transformers\\\\AttributeTransformer\\:\\:includeValue\\(\\) has no return typehint specified\\.$#"
@@ -4356,44 +3581,14 @@ parameters:
 			path: src/Transformers/BagTransformer.php
 
 		-
-			message: "#^Method App\\\\Transformers\\\\BulkDistributionLineItemTransformer\\:\\:getDefaultIncludes\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/BulkDistributionLineItemTransformer.php
-
-		-
 			message: "#^Method App\\\\Transformers\\\\BulkDistributionLineItemTransformer\\:\\:includeClient\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Transformers/BulkDistributionLineItemTransformer.php
 
 		-
-			message: "#^Property App\\\\Transformers\\\\BulkDistributionTransformer\\:\\:\\$availableIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/BulkDistributionTransformer.php
-
-		-
-			message: "#^Property App\\\\Transformers\\\\BulkDistributionTransformer\\:\\:\\$defaultIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/BulkDistributionTransformer.php
-
-		-
-			message: "#^Method App\\\\Transformers\\\\BulkDistributionTransformer\\:\\:transform\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/BulkDistributionTransformer.php
-
-		-
 			message: "#^Method App\\\\Transformers\\\\BulkDistributionTransformer\\:\\:includePartner\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Transformers/BulkDistributionTransformer.php
-
-		-
-			message: "#^Property App\\\\Transformers\\\\ClientTransformer\\:\\:\\$availableIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/ClientTransformer.php
-
-		-
-			message: "#^Method App\\\\Transformers\\\\ClientTransformer\\:\\:transform\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/ClientTransformer.php
 
 		-
 			message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"
@@ -4411,24 +3606,9 @@ parameters:
 			path: src/Transformers/ClientTransformer.php
 
 		-
-			message: "#^Property App\\\\Transformers\\\\GroupTransformer\\:\\:\\$availableIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/GroupTransformer.php
-
-		-
 			message: "#^Method App\\\\Transformers\\\\GroupTransformer\\:\\:transform\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Transformers/GroupTransformer.php
-
-		-
-			message: "#^Property App\\\\Transformers\\\\InventoryTransactionTransformer\\:\\:\\$defaultIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/InventoryTransactionTransformer.php
-
-		-
-			message: "#^Property App\\\\Transformers\\\\InventoryTransactionTransformer\\:\\:\\$availableIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/InventoryTransactionTransformer.php
 
 		-
 			message: "#^Method App\\\\Transformers\\\\InventoryTransactionTransformer\\:\\:transform\\(\\) has no return typehint specified\\.$#"
@@ -4449,11 +3629,6 @@ parameters:
 			message: "#^Method App\\\\Transformers\\\\InventoryTransactionTransformer\\:\\:includeStorageLocation\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Transformers/InventoryTransactionTransformer.php
-
-		-
-			message: "#^Property App\\\\Transformers\\\\LineItemTransformer\\:\\:\\$availableIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/LineItemTransformer.php
 
 		-
 			message: "#^Method App\\\\Transformers\\\\LineItemTransformer\\:\\:transform\\(\\) has no return typehint specified\\.$#"
@@ -4486,24 +3661,9 @@ parameters:
 			path: src/Transformers/ListOptionTransformer.php
 
 		-
-			message: "#^Property App\\\\Transformers\\\\MerchandiseOrderTransformer\\:\\:\\$availableIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/MerchandiseOrderTransformer.php
-
-		-
-			message: "#^Property App\\\\Transformers\\\\MerchandiseOrderTransformer\\:\\:\\$defaultIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/MerchandiseOrderTransformer.php
-
-		-
 			message: "#^Method App\\\\Transformers\\\\MerchandiseOrderTransformer\\:\\:includeWarehouse\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Transformers/MerchandiseOrderTransformer.php
-
-		-
-			message: "#^Property App\\\\Transformers\\\\OrderListTransformer\\:\\:\\$availableIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/OrderListTransformer.php
 
 		-
 			message: "#^Method App\\\\Transformers\\\\OrderListTransformer\\:\\:transform\\(\\) has no return typehint specified\\.$#"
@@ -4516,11 +3676,6 @@ parameters:
 			path: src/Transformers/OrderListTransformer.php
 
 		-
-			message: "#^Property App\\\\Transformers\\\\OrderTransformer\\:\\:\\$availableIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/OrderTransformer.php
-
-		-
 			message: "#^Method App\\\\Transformers\\\\OrderTransformer\\:\\:transform\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Transformers/OrderTransformer.php
@@ -4529,21 +3684,6 @@ parameters:
 			message: "#^Method App\\\\Transformers\\\\OrderTransformer\\:\\:includeLineItems\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Transformers/OrderTransformer.php
-
-		-
-			message: "#^Property App\\\\Transformers\\\\PartnerOrderTransformer\\:\\:\\$availableIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/PartnerOrderTransformer.php
-
-		-
-			message: "#^Property App\\\\Transformers\\\\PartnerOrderTransformer\\:\\:\\$defaultIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/PartnerOrderTransformer.php
-
-		-
-			message: "#^Method App\\\\Transformers\\\\PartnerOrderTransformer\\:\\:transform\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/PartnerOrderTransformer.php
 
 		-
 			message: "#^Method App\\\\Transformers\\\\PartnerOrderTransformer\\:\\:includePartner\\(\\) has no return typehint specified\\.$#"
@@ -4561,34 +3701,9 @@ parameters:
 			path: src/Transformers/PartnerOrderTransformer.php
 
 		-
-			message: "#^Method App\\\\Transformers\\\\PartnerProfileTransformer\\:\\:getDefaultIncludes\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/PartnerProfileTransformer.php
-
-		-
-			message: "#^Method App\\\\Transformers\\\\PartnerProfileTransformer\\:\\:transform\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/PartnerProfileTransformer.php
-
-		-
 			message: "#^Method App\\\\Transformers\\\\PartnerProfileTransformer\\:\\:includeAttributes\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Transformers/PartnerProfileTransformer.php
-
-		-
-			message: "#^Method App\\\\Transformers\\\\PartnerTransformer\\:\\:getAvailableIncludes\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/PartnerTransformer.php
-
-		-
-			message: "#^Method App\\\\Transformers\\\\PartnerTransformer\\:\\:getDefaultIncludes\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/PartnerTransformer.php
-
-		-
-			message: "#^Method App\\\\Transformers\\\\PartnerTransformer\\:\\:transform\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/PartnerTransformer.php
 
 		-
 			message: "#^Method App\\\\Transformers\\\\PartnerTransformer\\:\\:includeFulfillmentPeriod\\(\\) has no return typehint specified\\.$#"
@@ -4629,11 +3744,6 @@ parameters:
 			message: "#^Cannot call method isPartnerOrderable\\(\\) on App\\\\Entity\\\\ListOption\\|null\\.$#"
 			count: 1
 			path: src/Transformers/ProductCategoryTransformer.php
-
-		-
-			message: "#^Property App\\\\Transformers\\\\ProductTransformer\\:\\:\\$defaultIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/ProductTransformer.php
 
 		-
 			message: "#^Method App\\\\Transformers\\\\ProductTransformer\\:\\:transform\\(\\) has no return typehint specified\\.$#"
@@ -4691,11 +3801,6 @@ parameters:
 			path: src/Transformers/StorageLocationOptionTransformer.php
 
 		-
-			message: "#^Property App\\\\Transformers\\\\StorageLocationTransformer\\:\\:\\$defaultIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/StorageLocationTransformer.php
-
-		-
 			message: "#^Method App\\\\Transformers\\\\StorageLocationTransformer\\:\\:transform\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Transformers/StorageLocationTransformer.php
@@ -4731,11 +3836,6 @@ parameters:
 			path: src/Transformers/SupplierOptionTransformer.php
 
 		-
-			message: "#^Property App\\\\Transformers\\\\SupplierTransformer\\:\\:\\$availableIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/SupplierTransformer.php
-
-		-
 			message: "#^Method App\\\\Transformers\\\\SupplierTransformer\\:\\:transform\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Transformers/SupplierTransformer.php
@@ -4749,21 +3849,6 @@ parameters:
 			message: "#^Method App\\\\Transformers\\\\SupplierTransformer\\:\\:includeContacts\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Transformers/SupplierTransformer.php
-
-		-
-			message: "#^Property App\\\\Transformers\\\\SupplyOrderTransformer\\:\\:\\$availableIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/SupplyOrderTransformer.php
-
-		-
-			message: "#^Property App\\\\Transformers\\\\SupplyOrderTransformer\\:\\:\\$defaultIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/SupplyOrderTransformer.php
-
-		-
-			message: "#^Method App\\\\Transformers\\\\SupplyOrderTransformer\\:\\:transform\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/SupplyOrderTransformer.php
 
 		-
 			message: "#^Ternary operator condition is always true\\.$#"
@@ -4791,16 +3876,6 @@ parameters:
 			path: src/Transformers/SupplyOrderTransformer.php
 
 		-
-			message: "#^Property App\\\\Transformers\\\\TransferOrderTransformer\\:\\:\\$availableIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/TransferOrderTransformer.php
-
-		-
-			message: "#^Property App\\\\Transformers\\\\TransferOrderTransformer\\:\\:\\$defaultIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/TransferOrderTransformer.php
-
-		-
 			message: "#^Method App\\\\Transformers\\\\TransferOrderTransformer\\:\\:includeSourceLocation\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Transformers/TransferOrderTransformer.php
@@ -4809,11 +3884,6 @@ parameters:
 			message: "#^Method App\\\\Transformers\\\\TransferOrderTransformer\\:\\:includeTargetLocation\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Transformers/TransferOrderTransformer.php
-
-		-
-			message: "#^Property App\\\\Transformers\\\\UserTransformer\\:\\:\\$availableIncludes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Transformers/UserTransformer.php
 
 		-
 			message: "#^Method App\\\\Transformers\\\\UserTransformer\\:\\:transform\\(\\) has no return typehint specified\\.$#"
@@ -4836,28 +3906,23 @@ parameters:
 			path: src/Transformers/UserTransformer.php
 
 		-
-			message: "#^Property App\\\\Tests\\\\AbstractWebTestCase\\:\\:\\$client \\(Symfony\\\\Bundle\\\\FrameworkBundle\\\\KernelBrowser\\) does not accept null\\.$#"
+			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\ObjectManager\\:\\:close\\(\\)\\.$#"
 			count: 1
 			path: tests/AbstractWebTestCase.php
 
 		-
-			message: "#^Call to an undefined method object\\:\\:close\\(\\)\\.$#"
+			message: "#^Property App\\\\Tests\\\\AbstractWebTestCase\\:\\:\\$objectManager \\(Doctrine\\\\Persistence\\\\ObjectManager\\) does not accept null\\.$#"
 			count: 1
 			path: tests/AbstractWebTestCase.php
 
 		-
-			message: "#^Property App\\\\Tests\\\\AbstractWebTestCase\\:\\:\\$objectManager \\(object\\) does not accept null\\.$#"
+			message: "#^Cannot call method getCookieJar\\(\\) on Symfony\\\\Bundle\\\\FrameworkBundle\\\\KernelBrowser\\|null\\.$#"
 			count: 1
 			path: tests/AbstractWebTestCase.php
 
 		-
-			message: "#^Call to an undefined method object\\:\\:getRepository\\(\\)\\.$#"
-			count: 1
-			path: tests/AbstractWebTestCase.php
-
-		-
-			message: "#^Method App\\\\Tests\\\\AbstractWebTestCase\\:\\:getDecodedResponse\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
+			message: "#^Cannot call method getResponse\\(\\) on Symfony\\\\Bundle\\\\FrameworkBundle\\\\KernelBrowser\\|null\\.$#"
+			count: 2
 			path: tests/AbstractWebTestCase.php
 
 		-
@@ -4868,6 +3933,11 @@ parameters:
 		-
 			message: "#^Method App\\\\Tests\\\\Controller\\\\ClientControllerTest\\:\\:testShow\\(\\) has no return typehint specified\\.$#"
 			count: 1
+			path: tests/Controller/ClientControllerTest.php
+
+		-
+			message: "#^Cannot call method request\\(\\) on Symfony\\\\Bundle\\\\FrameworkBundle\\\\KernelBrowser\\|null\\.$#"
+			count: 3
 			path: tests/Controller/ClientControllerTest.php
 
 		-
@@ -4897,11 +3967,6 @@ parameters:
 
 		-
 			message: "#^Cannot access offset 'lastName' on array\\|stdClass\\|null\\.$#"
-			count: 1
-			path: tests/Controller/ClientControllerTest.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:getRepository\\(\\)\\.$#"
 			count: 1
 			path: tests/Controller/ClientControllerTest.php
 
@@ -4944,14 +4009,4 @@ parameters:
 			message: "#^Parameter \\#1 \\$postalCode of method App\\\\Entity\\\\Address\\:\\:setPostalCode\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: tests/Entity/SupplierAddressTest.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:persist\\(\\)\\.$#"
-			count: 1
-			path: tests/Entity/UserTest.php
-
-		-
-			message: "#^Service \"security\\.user_password_encoder\\.generic\" is private\\.$#"
-			count: 1
-			path: tests/Entity/UserTest.php
 

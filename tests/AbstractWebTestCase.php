@@ -3,7 +3,7 @@
 namespace App\Tests;
 
 use App\Entity\User;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
@@ -12,10 +12,10 @@ use Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken;
 
 class AbstractWebTestCase extends WebTestCase
 {
-    /** @var KernelBrowser */
+    /** @var ?KernelBrowser */
     protected $client;
 
-    /** @var ObjectManager|object */
+    /** @var ObjectManager */
     protected $objectManager;
 
     /**

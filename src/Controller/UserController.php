@@ -89,17 +89,17 @@ class UserController extends BaseController
         $user = new User($params["email"]);
 
         if ($params['groups']) {
-            foreach ($params['groups'] as $group) {
-                $groups[] = $this->getEm()->getReference(Group::class, $group['id']);
-            }
+            $groups = array_map(function (array $group): Group {
+                return $this->getEm()->getReference(Group::class, $group['id']);
+            }, $params['groups']);
 
             $user->setGroups($groups);
         }
 
         if ($params['partners']) {
-            foreach ($params['partners'] as $partner) {
-                $partners[] = $this->getEm()->getReference(Partner::class, $partner['id']);
-            }
+            $partners = array_map(function (array $partner): Partner {
+                return $this->getEm()->getReference(Partner::class, $partner['id']);
+            }, $params['partners']);
 
             $user->setPartners($partners);
         }

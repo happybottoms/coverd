@@ -2,7 +2,7 @@
 
 namespace App\Security;
 
-use App\Entity\Orders\AdjustmentOrder;
+use App\Entity\Orders\TransferOrder;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
