@@ -22,6 +22,7 @@ class Group extends CoreEntity
 {
     public const AVAILABLE_ROLES = [
         User::ROLE_ADMIN,
+        User::ROLE_PARTNER,
 
         Order::ROLE_MANAGE_OWN,
         Order::ROLE_VIEW_ALL,

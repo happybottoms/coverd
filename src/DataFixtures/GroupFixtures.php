@@ -2,11 +2,13 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Client;
 use App\Entity\Group;
 use App\Entity\Order;
 use App\Entity\Partner;
 use App\Entity\Product;
 use App\Entity\Supplier;
+use App\Entity\User;
 use App\Entity\Warehouse;
 use Doctrine\Persistence\ObjectManager;
 
@@ -42,8 +44,10 @@ class GroupFixtures extends BaseFixture
         $partner = new Group();
         $partner->setName('Partner');
         $partner->setRoles([
+            Client::ROLE_MANAGE_OWN,
             Order::ROLE_MANAGE_OWN,
             Partner::ROLE_MANAGE_OWN,
+            User::ROLE_PARTNER,
         ]);
         $em->persist($partner);
         $this->setReference('group_partner', $partner);

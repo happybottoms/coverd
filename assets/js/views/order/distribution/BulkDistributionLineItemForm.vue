@@ -43,7 +43,7 @@ export default {
                 let self = this;
                 return this.lineItems
                     .filter(function(item) {
-                        let testString = item.client.name.firstName + item.client.name.lastName;
+                        let testString = item.client.fullName.replace(/\s/g, '');
                         return testString.toLowerCase().includes(self.filterText.replace(/\s/g, '').toLowerCase());
                     })
                     .map((item) => item.client.id);

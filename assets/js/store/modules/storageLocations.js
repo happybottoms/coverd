@@ -19,6 +19,12 @@ const getters = {
             .sort((a,b) => a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1);
         return active;
     },
+    allActiveWarehouses: state => {
+        let active = [...state.all]
+            .filter(storageLocation => storageLocation.status === "ACTIVE" && storageLocation.type === 'Warehouse')
+            .sort((a,b) => a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1);
+        return active;
+    },
     allAgencies: state => {
         return state.all.filter(storageLocation => storageLocation.partnerType == "AGENCY")
     },

@@ -212,20 +212,20 @@ let routes = [
         path: '/orders/partner',
         name: 'orders-partner',
         component: require('./views/order/partner/PartnerOrderList.vue').default,
-        meta: {roles: ['ROLE_PARTNER_ORDER_VIEW','ROLE_PARTNER_ORDER_EDIT']}
+        meta: {roles: ['ROLE_PARTNER_ORDER_VIEW','ROLE_PARTNER_ORDER_EDIT', 'ROLE_ORDER_MANAGE_OWN']}
     },
     {
         path: '/orders/partner/new',
         name: 'order-partner-new',
         component: require('./views/order/partner/PartnerOrderEdit.vue').default,
         props: {new: true},
-        meta: {roles: ['ROLE_PARTNER_ORDER_EDIT']}
+        meta: {roles: ['ROLE_PARTNER_ORDER_EDIT', 'ROLE_ORDER_MANAGE_OWN']}
     },
     {
         path: '/orders/partner/:id',
         name: 'order-partner-edit',
         component: require('./views/order/partner/PartnerOrderEdit.vue').default,
-        meta: {roles: ['ROLE_PARTNER_ORDER_EDIT']}
+        meta: {roles: ['ROLE_PARTNER_ORDER_EDIT', 'ROLE_ORDER_MANAGE_OWN']}
     },
     {
         path: '/orders/partner/bulk-fill-sheet/:ids',
@@ -244,20 +244,20 @@ let routes = [
         path: '/orders/distribution',
         name: 'orders-distribution',
         component: require('./views/order/distribution/BulkDistributionOrderList.vue').default,
-        meta: {roles: ['ROLE_DISTRIBUTION_ORDER_VIEW', 'ROLE_DISTRIBUTION_ORDER_EDIT']}
+        meta: {roles: ['ROLE_DISTRIBUTION_ORDER_VIEW', 'ROLE_DISTRIBUTION_ORDER_EDIT', 'ROLE_ORDER_MANAGE_OWN']}
     },
     {
         path: '/orders/distribution/new',
         name: 'order-distribution-new',
         component: require('./views/order/distribution/BulkDistributionOrderEdit.vue').default,
         props: {new: true},
-        meta: {roles: ['ROLE_DISTRIBUTION_ORDER_EDIT']}
+        meta: {roles: ['ROLE_DISTRIBUTION_ORDER_EDIT', 'ROLE_DISTRIBUTION_ORDER_MANAGE_OWN']}
     },
     {
         path: '/orders/distribution/:id',
         name: 'order-distribution-edit',
         component: require('./views/order/distribution/BulkDistributionOrderEdit.vue').default,
-        meta: {roles: ['ROLE_DISTRIBUTION_ORDER_EDIT']}
+        meta: {roles: ['ROLE_DISTRIBUTION_ORDER_EDIT', 'ROLE_DISTRIBUTION_ORDER_MANAGE_OWN']}
     },
 
     {

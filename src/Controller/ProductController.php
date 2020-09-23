@@ -26,7 +26,7 @@ class ProductController extends BaseController
      * Get a list of Products
      *
      * @Route(path="", methods={"GET"})
-     * @IsGranted({"ROLE_ADMIN"})
+     * @IsGranted({"ROLE_USER"})
      *
      * @return JsonResponse
      */

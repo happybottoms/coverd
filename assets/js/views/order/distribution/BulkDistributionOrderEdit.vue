@@ -184,6 +184,8 @@
         },
         created() {
             var self = this;
+            this.$store.dispatch('loadProducts');
+
             axios
                 .get('/api/products', {params: { partnerOrderable: 1}})
                 .then(response => this.products = response.data.data);
@@ -197,7 +199,6 @@
                         self.order = response.data.data;
                     });
             }
-            this.$store.dispatch('loadProducts');
 
             console.log('Component mounted.')
         },

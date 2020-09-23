@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\InventoryTransaction;
+use App\Entity\Partner;
 use App\Entity\StorageLocation;
+use App\Entity\User;
+use App\Entity\Warehouse;
 use App\Transformers\StorageLocationOptionTransformer;
 use App\Transformers\StorageLocationTransformer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -26,13 +29,21 @@ class StorageLocationController extends BaseController
      * Get a list of Sub-classed storage locations
      *
      * @Route(path="", methods={"GET"})
-     * @IsGranted({"ROLE_ADMIN"})
+     * @IsGranted({"ROLE_ADMIN", "ROLE_PARTNER_MANAGE_OWN", "ROLE_PARTNER_VIEW_ALL"})
      *
      * @return JsonResponse
      */
     public function index(Request $request)
     {
-        $storageLocations = $this->getRepository()->findAll();
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if ($user->hasRole(Partner::ROLE_VIEW_ALL)) {
+            $storageLocations = $this->getRepository()->findAll();
+        } else {
+            $storageLocations = $this->getEm()->getRepository(Warehouse::class)->findAll();
+            $storageLocations[] = $user->getActivePartner();
+        }
 
         return $this->serialize($request, $storageLocations);
     }
@@ -121,21 +132,6 @@ class StorageLocationController extends BaseController
         $levels = $this->getRepository(InventoryTransaction::class)->getStorageLocationInventory($storageLocation);
 
         return $levels;
-    }
-
-    /**
-     *
-     * @Route(path="/list-options", methods={"GET"})
-     * @IsGranted({"ROLE_ADMIN"})
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function listOptions(Request $request)
-    {
-        $storageLocations = $this->getRepository()->findAll();
-
-        return $this->serialize($request, $storageLocations, new StorageLocationOptionTransformer());
     }
 
     protected function getStorageLocation($id): StorageLocation

@@ -7,7 +7,7 @@
                     title="Show/Hide Transactions"
                     @click="showTransactions = !showTransactions"
                 />
-                {{ value.client.name.firstName }} {{ value.client.name.lastName }}
+                {{ value.client.fullName }}
             </label>
             <div
                 class="col-xs-2"

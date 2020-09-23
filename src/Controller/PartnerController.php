@@ -35,7 +35,11 @@ class PartnerController extends BaseController
      */
     public function index(Request $request)
     {
-        $partners = $this->getRepository(Partner::class)->findAll();
+        if ($this->getUser()->hasRole(Partner::ROLE_VIEW_ALL)) {
+            $partners = $this->getRepository(Partner::class)->findAll();
+        } else {
+            $partners = [$this->getUser()->getActivePartner()];
+        }
 
         return $this->serialize($request, $partners);
     }

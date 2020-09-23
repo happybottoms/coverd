@@ -21,6 +21,7 @@ class User extends CoreEntity implements UserInterface
     public const ROLE_EDIT = 'ROLE_USER_EDIT';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
     public const ROLE_USER = 'ROLE_USER';
+    public const ROLE_PARTNER = 'ROLE_PARTNER';
 
     /**
      * @ORM\Id()
@@ -257,6 +258,11 @@ class User extends CoreEntity implements UserInterface
     public function isAdmin()
     {
         return in_array(self::ROLE_ADMIN, $this->getRoles());
+    }
+
+    public function isPartner(): bool
+    {
+        return $this->hasRole(self::ROLE_PARTNER);
     }
 
     /**
