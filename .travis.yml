@@ -27,10 +27,9 @@ matrix:
           before_script:
               - composer self-update
               - composer install --prefer-source --no-interaction --dev
-              - vendor/bin/simple-phpunit install
           script:
               - vendor/bin/simple-phpunit -v --coverage-clover clover.xml
-              - if [[ -d "$COMPOSER_BIN_DIR/.phpunit" ]]; then vendor/bin/phpstan analyse; fi
+              - vendor/bin/phpstan analyse
               - vendor/bin/phpcs
           after_script:
               - ./cc-test-reporter format-coverage -t clover # Backend coverage

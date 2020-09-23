@@ -4836,27 +4836,122 @@ parameters:
 			path: src/Transformers/UserTransformer.php
 
 		-
-			message: "#^Class PHPUnit\\\\Framework\\\\TestCase not found\\.$#"
-			count: 3
+			message: "#^Property App\\\\Tests\\\\AbstractWebTestCase\\:\\:\\$client \\(Symfony\\\\Bundle\\\\FrameworkBundle\\\\KernelBrowser\\) does not accept null\\.$#"
+			count: 1
 			path: tests/AbstractWebTestCase.php
 
 		-
-			message: "#^Class PHPUnit\\\\Framework\\\\TestCase not found\\.$#"
-			count: 3
+			message: "#^Call to an undefined method object\\:\\:close\\(\\)\\.$#"
+			count: 1
+			path: tests/AbstractWebTestCase.php
+
+		-
+			message: "#^Property App\\\\Tests\\\\AbstractWebTestCase\\:\\:\\$objectManager \\(object\\) does not accept null\\.$#"
+			count: 1
+			path: tests/AbstractWebTestCase.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getRepository\\(\\)\\.$#"
+			count: 1
+			path: tests/AbstractWebTestCase.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\AbstractWebTestCase\\:\\:getDecodedResponse\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/AbstractWebTestCase.php
+
+		-
+			message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
+			count: 1
+			path: tests/AbstractWebTestCase.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Controller\\\\ClientControllerTest\\:\\:testShow\\(\\) has no return typehint specified\\.$#"
+			count: 1
 			path: tests/Controller/ClientControllerTest.php
 
 		-
-			message: "#^Class PHPUnit\\\\Framework\\\\TestCase not found\\.$#"
-			count: 3
+			message: "#^Cannot access offset 'id' on array\\|stdClass\\|null\\.$#"
+			count: 2
+			path: tests/Controller/ClientControllerTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Controller\\\\ClientControllerTest\\:\\:testCannotShowBadUuid\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: tests/Controller/ClientControllerTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$expectedCode of method Symfony\\\\Bundle\\\\FrameworkBundle\\\\Test\\\\WebTestCase\\:\\:assertResponseStatusCodeSame\\(\\) expects int, string given\\.$#"
+			count: 1
+			path: tests/Controller/ClientControllerTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Controller\\\\ClientControllerTest\\:\\:testUpdate\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: tests/Controller/ClientControllerTest.php
+
+		-
+			message: "#^Cannot access offset 'firstName' on array\\|stdClass\\|null\\.$#"
+			count: 1
+			path: tests/Controller/ClientControllerTest.php
+
+		-
+			message: "#^Cannot access offset 'lastName' on array\\|stdClass\\|null\\.$#"
+			count: 1
+			path: tests/Controller/ClientControllerTest.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getRepository\\(\\)\\.$#"
+			count: 1
+			path: tests/Controller/ClientControllerTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Entity\\\\InventoryTransactionTest\\:\\:testConstructor\\(\\) has no return typehint specified\\.$#"
+			count: 1
 			path: tests/Entity/InventoryTransactionTest.php
 
 		-
-			message: "#^Class PHPUnit\\\\Framework\\\\TestCase not found\\.$#"
-			count: 3
+			message: "#^Method App\\\\Tests\\\\Entity\\\\InventoryTransactionTest\\:\\:testCommitSetsTimeAndCommitted\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: tests/Entity/InventoryTransactionTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Entity\\\\SupplierAddressTest\\:\\:testIsValidReturnsTrueWhenNotEmpty\\(\\) has no return typehint specified\\.$#"
+			count: 1
 			path: tests/Entity/SupplierAddressTest.php
 
 		-
-			message: "#^Class PHPUnit\\\\Framework\\\\TestCase not found\\.$#"
-			count: 3
+			message: "#^Method App\\\\Tests\\\\Entity\\\\SupplierAddressTest\\:\\:testIsValidReturnsFalseWhenAnyEmpty\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: tests/Entity/SupplierAddressTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$street1 of method App\\\\Entity\\\\Address\\:\\:setStreet1\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: tests/Entity/SupplierAddressTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$city of method App\\\\Entity\\\\Address\\:\\:setCity\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: tests/Entity/SupplierAddressTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$state of method App\\\\Entity\\\\Address\\:\\:setState\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: tests/Entity/SupplierAddressTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$postalCode of method App\\\\Entity\\\\Address\\:\\:setPostalCode\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: tests/Entity/SupplierAddressTest.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:persist\\(\\)\\.$#"
+			count: 1
+			path: tests/Entity/UserTest.php
+
+		-
+			message: "#^Service \"security\\.user_password_encoder\\.generic\" is private\\.$#"
+			count: 1
 			path: tests/Entity/UserTest.php
 
