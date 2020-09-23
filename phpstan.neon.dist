@@ -2,6 +2,8 @@ includes:
     - phpstan-baseline.neon
 
 parameters:
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
     doctrine:
         objectManagerLoader: %rootDir%/../../../tests/object-manager.php
     inferPrivatePropertyTypeFromConstructor: true
