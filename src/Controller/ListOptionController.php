@@ -93,8 +93,10 @@ abstract class ListOptionController extends BaseController
     public function destroy(int $id): JsonResponse
     {
         $listOption = $this->getListOption($id);
-        $this->getEm()->remove($listOption);
 
+        $listOption->setDeletedAt(new \DateTime());
+
+        $this->getEm()->persist($listOption);
         $this->getEm()->flush();
 
         return $this->success(sprintf('ListOption "%s" deleted.', $listOption->getName()));

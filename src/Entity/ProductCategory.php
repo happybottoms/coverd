@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Class Product
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Entity\ProductCategoryRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class ProductCategory extends ListOption

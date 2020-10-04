@@ -3,15 +3,19 @@
 namespace App\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\Expr;
 
 class ProductRepository extends EntityRepository
 {
     public function findAllSorted()
     {
-        return $this->findBy([], ['orderIndex' => 'ASC']);
+        return $this->createQueryBuilder('p')
+            ->join('p.productCategory', 'pc')
+            ->andWhere('pc.deletedAt IS NULL')
+            ->orderBy('p.orderIndex', 'ASC')
+            ->getQuery()
+            ->execute();
     }
-    
+
     public function getWarehouseInventory(Product $product)
     {
         $dql = "SELECT SUM(t.delta) AS balance FROM App\Entity\InventoryTransaction t
