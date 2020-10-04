@@ -41,7 +41,7 @@ class StockLevelsController extends BaseController
         }
 
         /** @var Product[] $products */
-        $products = $this->getRepository(Product::class)->findAll();
+        $products = $this->getRepository(Product::class)->findAllSorted();
 
         $availableLevels = $this->getRepository(InventoryTransaction::class)->getStockLevels(true, $params);
         $levels = $this->getRepository(InventoryTransaction::class)->getStockLevels(false, $params);
