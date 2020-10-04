@@ -66,7 +66,7 @@ class ProductRepository extends EntityRepository
         $qb->select('p')
             ->from('App\Entity\Product', 'p')
             ->join('p.productCategory', 'pc')
-            ->andWhere('pc.isDeleted IS NULL')
+            ->andWhere('pc.deletedAt IS NULL')
             ->andWhere('pc.isPartnerOrderable = :isPartnerOrderable')
             ->setParameter('isPartnerOrderable', (bool) $partnerOrderable);
 

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\InventoryTransaction;
 use App\Entity\Product;
+use App\Entity\ProductRepository;
 use App\Entity\StorageLocation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -40,8 +41,11 @@ class StockLevelsController extends BaseController
             $params->set('locationType', $request->get('locationType'));
         }
 
+        /** @var ProductRepository $productRepository */
+        $productRepository = $this->getRepository(Product::class);
+
         /** @var Product[] $products */
-        $products = $this->getRepository(Product::class)->findAllSorted();
+        $products = $productRepository->findAllSorted();
 
         $availableLevels = $this->getRepository(InventoryTransaction::class)->getStockLevels(true, $params);
         $levels = $this->getRepository(InventoryTransaction::class)->getStockLevels(false, $params);
