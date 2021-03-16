@@ -28,8 +28,7 @@ test-php:
           alias: db
     before_script:
         - bash ci/docker_install.sh > /dev/null
-        - psql -c 'create database coverd;' -U postgres
-        - bin/console doctrine:schema:update --force
+        - bin/console doctrine:schema:create --no-interaction
     cache:
         paths:
             - $HOME/.composer/cache/files
