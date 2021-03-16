@@ -1,5 +1,10 @@
 build-job:
     image: node:12
+    cache:
+        paths:
+            - node_modules/
+    before_script:
+        - yarn install
     script:
         - yarn build
 
@@ -9,9 +14,9 @@ test-js:
     cache:
         paths:
             - node_modules/
+    before_script:
+        - yarn install
     script:
-        - pwd
-        - ls
         - yarn lint
         - yarn test
 
@@ -19,8 +24,6 @@ test-php:
     stage: test
     image: php:7.3
     before_script:
-        - pwd
-        - ls
         - bash ci/docker_install.sh > /dev/null
         - composer self-update --2
         - composer install --prefer-source --no-interaction
