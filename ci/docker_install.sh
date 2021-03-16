@@ -7,7 +7,7 @@ set -xe
 
 # Install git (the php image doesn't have it) which is required by composer
 apt-get update -yqq
-apt-get install git wget libfreetype6-dev libjpeg62-turbo-dev libpng-dev libzip-dev libpq-dev -yqq
+apt-get install git wget libfreetype6-dev libjpeg62-turbo-dev libpng-dev libzip-dev libpq-dev libsodium -yqq
 
 docker-php-ext-install gd
 docker-php-ext-install sodium
