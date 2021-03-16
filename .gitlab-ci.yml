@@ -10,6 +10,8 @@ test-js:
         paths:
             - node_modules/
     script:
+        - pwd
+        - ls
         - yarn lint
         - yarn test
 
@@ -17,6 +19,8 @@ test-php:
     stage: test
     image: php:7.3
     before_script:
+        - pwd
+        - ls
         - bash ci/docker_install.sh > /dev/null
         - composer self-update --2
         - composer install --prefer-source --no-interaction
