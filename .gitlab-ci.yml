@@ -32,10 +32,10 @@ test-php:
     cache:
         paths:
             - $HOME/.composer/cache/files
-            - $COMPOSER_BIN_DIR/.phpunit
+            - bin/.phpunit
             - vendor/
     variables:
-        SYMFONY_PHPUNIT_DIR: "$COMPOSER_BIN_DIR/.phpunit"
+        SYMFONY_PHPUNIT_DIR: "bin/.phpunit"
         POSTGRES_PASSWORD: coverd
         POSTGRES_DB: coverd
         DATABASE_URL: "postgres://postgres:coverd@db:5432/coverd?charset=UTF-8"
