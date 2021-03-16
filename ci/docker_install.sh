@@ -11,16 +11,15 @@ apt-get install git wget libfreetype6-dev libjpeg62-turbo-dev libpng-dev libzip-
 
 docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 docker-php-ext-install gd
-docker-php-ext-install sodium
-docker-php-ext-install iconv
 docker-php-ext-install zip
-docker-php-ext-install pdo pdo_pgsql pgsql
+docker-php-ext-install pdo_pgsql pgsql
 
 
 wget https://composer.github.io/installer.sig -O - -q | tr -d '\n' > installer.sig
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php -r "if (hash_file('SHA384', 'composer-setup.php') === file_get_contents('installer.sig')) { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-php composer-setup.php --install-dir=bin --filename=composer
+php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+chmoe +x /usr/local/bin/composer
 php -r "unlink('composer-setup.php'); unlink('installer.sig');"
-php bin/composer self-update --2
-php bin/composer install --no-interaction
+composer self-update --2
+composer install --no-interaction
