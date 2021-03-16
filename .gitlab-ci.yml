@@ -42,7 +42,7 @@ test-php:
     script:
         - bin/console doctrine:schema:validate
         - bin/phpunit -v --coverage-clover clover.xml
-        - vendor/bin/phpstan analyse --debug
+        - php -d memory_limit=-1 ./vendor/bin/phpstan analyse --debug
         - vendor/bin/phpcs
 
 

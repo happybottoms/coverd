@@ -24,4 +24,3 @@ ln -s $CI_PROJECT_DIR/bin/composer /usr/local/bin/composer
 php -r "unlink('composer-setup.php'); unlink('installer.sig');"
 composer self-update --2
 composer install --no-interaction
-composer dump-autoload
