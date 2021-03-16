@@ -23,6 +23,9 @@ test-js:
 test-php:
     stage: test
     image: php:7.3
+    services:
+        - name: postgres:latest
+          alias: db
     before_script:
         - bash ci/docker_install.sh > /dev/null
         - psql -c 'create database coverd;' -U postgres
@@ -34,11 +37,50 @@ test-php:
             - vendor/
     variables:
         SYMFONY_PHPUNIT_DIR: "$COMPOSER_BIN_DIR/.phpunit"
+        POSTGRES_PASSWORD: coverd
+        POSTGRES_DB: coverd
+        DATABASE_URL: "postgres://postgres:coverd@db:5432/coverd?charset=UTF-8"
     script:
         - bin/console doctrine:schema:validate
         - bin/phpunit -v --coverage-clover clover.xml
         - vendor/bin/phpstan analyse --debug
         - vendor/bin/phpcs
+
+
+
+
+
+
+
+#matrix:
+#    include:
+#          cache:
+#              yarn: true
+#          before_install:
+#              - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+#              - chmod +x ./cc-test-reporter
+#              - ./cc-test-reporter before-build
+#          before_script:
+#              - composer self-update --2
+#              - composer install --prefer-source --no-interaction
+#              - psql -c 'create database coverd;' -U postgres
+#              - bin/console doctrine:schema:update --force
+#          script:
+#              - bin/console doctrine:schema:validate
+#              - bin/phpunit -v --coverage-clover clover.xml
+#              - vendor/bin/phpstan analyse --debug
+#              - vendor/bin/phpcs
+#          after_script:
+#              - ./cc-test-reporter format-coverage -t clover # Backend coverage
+#              - if [[ "$TRAVIS_TEST_RESULT" == 0 ]]; then ./cc-test-reporter upload-coverage; fi  # Upload coverage/codeclimate.json
+#    fast_finish: true
+#    allow_failures:
+#        - php: nightly
+#notifications:
+#    email: false
+#services:
+#    - postgresql
+
 
 
 
