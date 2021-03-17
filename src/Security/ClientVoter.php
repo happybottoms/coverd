@@ -103,14 +103,8 @@ class ClientVoter extends Voter
 
         $activePartner = $user->getActivePartner();
 
-        if (
-            $user->hasRole(Client::ROLE_MANAGE_OWN)
+        return $user->hasRole(Client::ROLE_MANAGE_OWN)
             && $activePartner
-            && $client->canPartnerTransfer()
-        ) {
-            return true;
-        }
-
-        return false;
+            && $client->canPartnerTransfer();
     }
 }
