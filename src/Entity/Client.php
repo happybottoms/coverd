@@ -466,25 +466,6 @@ class Client extends CoreEntity
         return $this->status;
     }
 
-    public function isInactiveBlocked(): bool
-    {
-        return $this->status === self::STATUS_INACTIVE_BLOCKED;
-    }
-
-    /**
-     * Statuses in which the client is considered eligible for orders
-     *
-     * return string[]
-     */
-    public function getActiveStatuses(): array
-    {
-        return [
-            self::STATUS_ACTIVE,
-            self::STATUS_NEEDS_REVIEW,
-            self::STATUS_REVIEW_PAST_DUE,
-        ];
-    }
-
     /**
      * Merged To client id
      */

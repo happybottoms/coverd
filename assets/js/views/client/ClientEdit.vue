@@ -257,9 +257,6 @@ export default {
                         return 0;
                     }
                 );
-            },
-            isClientBlocked() {
-                return this.client.status === "INACTIVE_(BLOCKED)";
             }
         }
     }
