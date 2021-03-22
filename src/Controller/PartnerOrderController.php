@@ -170,12 +170,10 @@ class PartnerOrderController extends OrderController
         $lineItems = $partner
             ->getActiveClients()
             ->map(function (Client $client) {
-                if (in_array($client->getStatus(), $client->getActiveStatuses())) {
-                    $line = new PartnerOrderLineItem();
-                    $line->setClient($client);
+                $line = new PartnerOrderLineItem();
+                $line->setClient($client);
 
-                    return $line;
-                }
+                return $line;
             });
 
         return $this->serialize($request, $lineItems, new PartnerOrderLineItemTransformer());

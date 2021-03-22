@@ -228,7 +228,7 @@ class Partner extends StorageLocation
     public function getActiveClients(): Collection
     {
         return $this->clients->filter(function (Client $client) {
-            return in_array($client->getStatus(), $client->getActiveStatuses(), true);
+            return $client->isActive();
         });
     }
 

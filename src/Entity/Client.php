@@ -40,6 +40,12 @@ class Client extends CoreEntity
         self::STATUS_NEEDS_REVIEW,
         self::STATUS_REVIEW_PAST_DUE,
     ];
+    
+    public const ACTIVE_STATUSES = [
+        self::STATUS_ACTIVE,
+        self::STATUS_NEEDS_REVIEW,
+        self::STATUS_REVIEW_PAST_DUE,
+    ];
 
     public const TRANSITION_ACTIVATE = 'ACTIVATE';
     public const TRANSITION_DEACTIVATE = 'DEACTIVATE';
@@ -527,12 +533,9 @@ class Client extends CoreEntity
         );
     }
 
-    /**
-     * Clients are considered active if they are "ACTIVE" or "NEEDS REVIEW"
-     */
     public function isActive(): bool
     {
-        return in_array($this->status, [self::STATUS_ACTIVE, self::STATUS_NEEDS_REVIEW]);
+        return in_array($this->status, self::ACTIVE_STATUSES);
     }
 
     /**
