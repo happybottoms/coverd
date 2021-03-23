@@ -40,7 +40,7 @@ class Client extends CoreEntity
         self::STATUS_NEEDS_REVIEW,
         self::STATUS_REVIEW_PAST_DUE,
     ];
-    
+
     public const ACTIVE_STATUSES = [
         self::STATUS_ACTIVE,
         self::STATUS_NEEDS_REVIEW,
