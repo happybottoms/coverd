@@ -1,0 +1,46 @@
+build-job:
+    image: node:12
+    cache:
+        paths:
+            - node_modules/
+    before_script:
+        - yarn install
+    script:
+        - yarn build
+
+test-js:
+    stage: test
+    image: node:12
+    cache:
+        paths:
+            - node_modules/
+    before_script:
+        - yarn install
+    script:
+        - yarn lint
+        - yarn test
+
+test-php:
+    stage: test
+    image: php:7.3
+    services:
+        - name: postgres:latest
+          alias: db
+    before_script:
+        - bash ci/docker_install.sh > /dev/null
+        - bin/console doctrine:schema:create --no-interaction
+    cache:
+        paths:
+            - $HOME/.composer/cache/files
+            - bin/.phpunit
+            - vendor/
+    variables:
+        SYMFONY_PHPUNIT_DIR: "bin/.phpunit"
+        POSTGRES_PASSWORD: coverd
+        POSTGRES_DB: coverd
+        DATABASE_URL: "postgres://postgres:coverd@db:5432/coverd?charset=UTF-8"
+    script:
+        - bin/console doctrine:schema:validate
+        - bin/phpunit -v --coverage-clover clover.xml
+        - php -d memory_limit=-1 ./vendor/bin/phpstan analyse --debug
+        - vendor/bin/phpcs

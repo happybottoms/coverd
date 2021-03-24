@@ -25,6 +25,7 @@ class Client extends CoreEntity
     public const STATUS_ACTIVE = 'ACTIVE';
     public const STATUS_CREATION = 'CREATION';
     public const STATUS_INACTIVE = 'INACTIVE';
+    public const STATUS_INACTIVE_BLOCKED = 'INACTIVE_(BLOCKED)';
     public const STATUS_INACTIVE_DUPLICATE = 'INACTIVE_(DUPLICATE)';
     public const STATUS_INACTIVE_EXPIRED = 'INACTIVE_(EXPIRED)';
     public const STATUS_NEEDS_REVIEW = 'NEEDS_REVIEW';
@@ -33,14 +34,22 @@ class Client extends CoreEntity
         self::STATUS_ACTIVE,
         self::STATUS_CREATION,
         self::STATUS_INACTIVE,
+        self::STATUS_INACTIVE_BLOCKED,
         self::STATUS_INACTIVE_DUPLICATE,
         self::STATUS_INACTIVE_EXPIRED,
         self::STATUS_NEEDS_REVIEW,
         self::STATUS_REVIEW_PAST_DUE,
     ];
 
+    public const ACTIVE_STATUSES = [
+        self::STATUS_ACTIVE,
+        self::STATUS_NEEDS_REVIEW,
+        self::STATUS_REVIEW_PAST_DUE,
+    ];
+
     public const TRANSITION_ACTIVATE = 'ACTIVATE';
     public const TRANSITION_DEACTIVATE = 'DEACTIVATE';
+    public const TRANSITION_DEACTIVATE_BLOCKED = 'BLOCK';
     public const TRANSITION_DEACTIVATE_DUPLICATE = 'DUPLICATE';
     public const TRANSITION_DEACTIVATE_EXPIRE = 'EXPIRE';
     public const TRANSITION_FLAG_FOR_REVIEW = 'FLAG_FOR_REVIEW';
@@ -505,12 +514,9 @@ class Client extends CoreEntity
         );
     }
 
-    /**
-     * Clients are considered active if they are "ACTIVE" or "NEEDS REVIEW"
-     */
     public function isActive(): bool
     {
-        return in_array($this->status, [self::STATUS_ACTIVE, self::STATUS_NEEDS_REVIEW]);
+        return in_array($this->status, self::ACTIVE_STATUSES);
     }
 
     /**

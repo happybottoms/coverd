@@ -86,7 +86,7 @@ class SupplyOrderController extends OrderController
     public function update(Request $request, int $id)
     {
         $params = $this->getParams($request);
-        /** @var \App\Entity\Orders\SupplyOrder $order */
+        /** @var SupplyOrder $order */
         $order = $this->getOrder($id);
 
         $this->denyAccessUnlessGranted(SupplyOrderVoter::EDIT, $order);
