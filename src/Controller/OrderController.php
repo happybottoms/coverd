@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class OrderController extends BaseController
@@ -112,11 +111,10 @@ class OrderController extends BaseController
      * @IsGranted({"ROLE_ORDER_EDIT_ALL","ROLE_ORDER_MANAGE_OWN"})
      *
      * @param Request $request
-     * @param MailerInterface $mailer
      * @param int $id
      * @return JsonResponse
      */
-    public function update(Request $request, MailerInterface $mailer, int $id)
+    public function update(Request $request, int $id)
     {
         $params = $this->getParams($request);
         /** @var Order $order */
