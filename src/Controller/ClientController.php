@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Client;
 use App\Entity\EAV\ClientDefinition;
-use App\Entity\Partner;
 use App\Entity\Orders\BulkDistributionLineItem;
+use App\Entity\Partner;
 use App\Entity\User;
 use App\Entity\ValueObjects\Name;
 use App\Exception\UserInterfaceException;
@@ -13,10 +13,7 @@ use App\Reports\ClientDistributionExcel;
 use App\Repository\ClientRepository;
 use App\Security\ClientVoter;
 use App\Service\EavAttributeProcessor;
-use App\Transformers\AttributeDefinitionTransformer;
-use App\Transformers\AttributeTransformer;
 use App\Transformers\BulkDistributionLineItemTransformer;
-use App\Transformers\ClientAttributeDefinitionTransformer;
 use App\Transformers\ClientAttributeTransformer;
 use App\Transformers\ClientTransformer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -483,7 +480,7 @@ class ClientController extends BaseController
      *
      * @Route(path="/merge", methods={"POST"})
      */
-    public function merge(Request $request)
+    public function merge(Request $request): JsonResponse
     {
 
         $request = $this->getParams($request);

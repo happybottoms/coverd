@@ -75,7 +75,7 @@ class TransferOrderController extends OrderController
      * @IsGranted({"ROLE_TRANSFER_ORDER_EDIT"})
      *
      * @param Request $request
-     * @param $id
+     * @param int $id
      * @return JsonResponse
      * @throws \App\Exception\CommittedTransactionException
      * @throws \App\Exception\UserInterfaceException

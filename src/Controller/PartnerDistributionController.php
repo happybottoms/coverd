@@ -89,7 +89,7 @@ class PartnerDistributionController extends OrderController
      * @Route(path="/{id<\d+>}", methods={"PATCH"}, defaults={"_format": "json"})
      *
      * @param Request $request
-     * @param $id
+     * @param int $id
      * @return JsonResponse
      * @throws \App\Exception\CommittedTransactionException
      */

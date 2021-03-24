@@ -225,6 +225,13 @@ class Partner extends StorageLocation
         return $this->clients;
     }
 
+    public function getActiveClients(): Collection
+    {
+        return $this->clients->filter(function (Client $client) {
+            return $client->isActive();
+        });
+    }
+
     public function getUsers(): Collection
     {
         return $this->users;

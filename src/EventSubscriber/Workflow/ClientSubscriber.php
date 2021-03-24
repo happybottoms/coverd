@@ -77,11 +77,20 @@ class ClientSubscriber implements EventSubscriberInterface
         $event->setBlocked(true);
     }
 
+    public function onTransitionDeactivateBlocked(GuardEvent $event): void
+    {
+        if ($this->canEditAll()) {
+            return;
+        }
+        $event->setBlocked(true);
+    }
+
     public static function getSubscribedEvents()
     {
         return [
             'workflow.client_management.guard' => 'onTransition',
             'workflow.client_management.guard.ACTIVATE' => 'onTransitionActivate',
+            'workflow.client_management.guard.BLOCK' => 'onTransitionDeactivateBlocked',
             'workflow.client_management.guard.DEACTIVATE' => 'onTransitionDeactivate',
             'workflow.client_management.guard.EXPIRE' => 'onTransitionDeactivateExpire',
             'workflow.client_management.guard.DUPLICATE' => 'onTransitionDeactivateDuplicate',

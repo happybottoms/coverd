@@ -79,14 +79,14 @@ class SupplyOrderController extends OrderController
      * @IsGranted({"ROLE_SUPPLY_ORDER_EDIT"})
      *
      * @param Request $request
-     * @param $id
+     * @param int $id
      * @return JsonResponse
      * @throws \App\Exception\CommittedTransactionException
      */
     public function update(Request $request, $id)
     {
         $params = $this->getParams($request);
-        /** @var \App\Entity\Orders\SupplyOrder $order */
+        /** @var SupplyOrder $order */
         $order = $this->getOrder($id);
 
         $this->denyAccessUnlessGranted(SupplyOrderVoter::EDIT, $order);

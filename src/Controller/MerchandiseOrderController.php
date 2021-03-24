@@ -66,7 +66,7 @@ class MerchandiseOrderController extends OrderController
      * @IsGranted({"ROLE_MERCHANDISE_ORDER_EDIT"})
      *
      * @param Request $request
-     * @param $id
+     * @param int $id
      * @return JsonResponse
      * @throws \App\Exception\CommittedTransactionException
      */
