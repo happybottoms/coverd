@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\AttributedEntityInterface;
 use App\Entity\EAV\Attribute;
 use App\Entity\EAV\Definition;
 use Doctrine\Common\Annotations\AnnotationReader;
@@ -21,7 +22,7 @@ class EavAttributeProcessor
         $this->em = $em;
     }
 
-    public function processAttributeChanges($entity, &$changes)
+    public function processAttributeChanges(AttributedEntityInterface $entity, &$changes)
     {
         if (!method_exists($entity, 'addAttribute') || !method_exists($entity, 'removeAttribute')) {
             throw new \Exception('Trying to process attribute changes on an entity that does not support attributes');
@@ -31,6 +32,9 @@ class EavAttributeProcessor
             foreach ($changes['attributes'] as $attributeChange) {
                 if ($attributeChange['id'] > 0) {
                     $attribute = $this->getAttributeById($attributeChange['id']);
+                    if (!$attribute) {
+                        continue;
+                    }
                 } else {
                     $definition = $this->getDefinitionById($attributeChange['definition_id']);
                     $attribute = $definition->createAttribute();

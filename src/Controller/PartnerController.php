@@ -227,7 +227,7 @@ class PartnerController extends BaseController
      *
      * @param Registry $workflowRegistry
      * @param Partner $partner
-     * @return String[]
+     * @return array
      *
      */
     protected function getEnabledTransitions(Registry $workflowRegistry, Partner $partner): array

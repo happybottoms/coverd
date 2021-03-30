@@ -17,7 +17,7 @@ use Symfony\Component\Workflow\Registry;
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
  * @Gedmo\Loggable()
  */
-class Client extends CoreEntity
+class Client extends CoreEntity implements AttributedEntityInterface
 {
     use AttributedEntityTrait;
 

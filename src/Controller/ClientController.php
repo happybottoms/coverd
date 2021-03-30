@@ -459,7 +459,7 @@ class ClientController extends BaseController
     /**
      * @param Registry $workflowRegistry
      * @param Client $client
-     * @return String[]
+     * @return array
      */
     protected function getEnabledTransitions(Registry $workflowRegistry, Client $client): array
     {

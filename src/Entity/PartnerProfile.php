@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\EntityListeners({"App\Listener\PartnerProfileListener"})
  */
-class PartnerProfile extends CoreEntity
+class PartnerProfile extends CoreEntity implements AttributedEntityInterface
 {
     use AttributedEntityTrait;
 

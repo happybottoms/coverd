@@ -24,36 +24,27 @@ trait AttributedEntityTrait
         $this->attributes = new ArrayCollection();
     }
 
-    /**
-     * @param Attribute $attribute
-     *
-     * @return $this
-     */
-    public function addAttribute(Attribute $attribute, bool $overwrite = true)
+    public function addAttribute(Attribute $attribute, bool $overwrite = true) : void
     {
         foreach ($this->attributes as $item) {
             if ($item->getDefinition()->getId() === $attribute->getDefinition()->getId()) {
                 if ($overwrite) {
                     $this->attributes->removeElement($item);
-                } else {
-                    return $this;
                 }
             }
         }
 
         $this->attributes->add($attribute);
-
-        return $this;
     }
 
-    public function addAttributes(iterable $attributes, bool $overwrite = true)
+    public function addAttributes(iterable $attributes, bool $overwrite = true) : void
     {
         foreach ($attributes as $attribute) {
             $this->addAttribute($attribute, $overwrite);
         }
     }
 
-    public function setAttribute($attributeId, $value)
+    public function setAttribute(int $attributeId, $value) : void
     {
         /** @var Attribute|null $attribute */
         $attribute = $this->attributes->filter(function (Attribute $item) use ($attributeId) {
@@ -67,23 +58,17 @@ trait AttributedEntityTrait
         }
     }
 
-    /**
-     * @param Attribute $attribute
-     */
-    public function removeAttribute(Attribute $attribute)
+    public function removeAttribute(Attribute $attribute) : void
     {
         $this->attributes->removeElement($attribute);
     }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getAttributes()
+    public function getAttributes() : ArrayCollection
     {
         return $this->attributes;
     }
 
-    public function processAttributeChanges($changes)
+    public function processAttributeChanges($changes) : void
     {
         if (isset($changes['attributes'])) {
             foreach ($changes['attributes'] as $attributeChange) {
