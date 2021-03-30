@@ -1061,41 +1061,6 @@ parameters:
 			path: src/Entity/Client.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\Client\\:\\:addAttributes\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Client.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Client\\:\\:setAttribute\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Client.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Client\\:\\:setAttribute\\(\\) has parameter \\$attributeId with no typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Client.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Client\\:\\:setAttribute\\(\\) has parameter \\$value with no typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Client.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Client\\:\\:removeAttribute\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Client.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Client\\:\\:processAttributeChanges\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Client.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Client\\:\\:processAttributeChanges\\(\\) has parameter \\$changes with no typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Client.php
-
-		-
 			message: "#^Cannot call method setValue\\(\\) on App\\\\Entity\\\\EAV\\\\Attribute\\|null\\.$#"
 			count: 1
 			path: src/Entity/Client.php
@@ -1317,41 +1282,6 @@ parameters:
 
 		-
 			message: "#^Property App\\\\Entity\\\\PartnerProfile\\:\\:\\$attributes type mapping mismatch\\: property can contain Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but database expects Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\EAV\\\\Attribute\\>\\.$#"
-			count: 1
-			path: src/Entity/PartnerProfile.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\PartnerProfile\\:\\:addAttributes\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/PartnerProfile.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\PartnerProfile\\:\\:setAttribute\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/PartnerProfile.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\PartnerProfile\\:\\:setAttribute\\(\\) has parameter \\$attributeId with no typehint specified\\.$#"
-			count: 1
-			path: src/Entity/PartnerProfile.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\PartnerProfile\\:\\:setAttribute\\(\\) has parameter \\$value with no typehint specified\\.$#"
-			count: 1
-			path: src/Entity/PartnerProfile.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\PartnerProfile\\:\\:removeAttribute\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/PartnerProfile.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\PartnerProfile\\:\\:processAttributeChanges\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/PartnerProfile.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\PartnerProfile\\:\\:processAttributeChanges\\(\\) has parameter \\$changes with no typehint specified\\.$#"
 			count: 1
 			path: src/Entity/PartnerProfile.php
 
@@ -3426,23 +3356,8 @@ parameters:
 			path: src/Service/EavAttributeProcessor.php
 
 		-
-			message: "#^Method App\\\\Service\\\\EavAttributeProcessor\\:\\:processAttributeChanges\\(\\) has parameter \\$entity with no typehint specified\\.$#"
-			count: 1
-			path: src/Service/EavAttributeProcessor.php
-
-		-
 			message: "#^Cannot call method createAttribute\\(\\) on App\\\\Entity\\\\EAV\\\\Definition\\|null\\.$#"
 			count: 1
-			path: src/Service/EavAttributeProcessor.php
-
-		-
-			message: "#^Parameter \\#1 \\$attribute of method App\\\\Service\\\\EavAttributeProcessor\\:\\:isPropertyParentRelationship\\(\\) expects App\\\\Entity\\\\EAV\\\\Attribute, App\\\\Entity\\\\EAV\\\\Attribute\\|null given\\.$#"
-			count: 1
-			path: src/Service/EavAttributeProcessor.php
-
-		-
-			message: "#^Parameter \\#1 \\$entityName of method Doctrine\\\\ORM\\\\EntityManagerInterface\\:\\:getReference\\(\\) expects class\\-string\\<mixed\\>, string given\\.$#"
-			count: 2
 			path: src/Service/EavAttributeProcessor.php
 
 		-
@@ -3451,18 +3366,8 @@ parameters:
 			path: src/Service/EavAttributeProcessor.php
 
 		-
-			message: "#^Cannot call method getValueType\\(\\) on App\\\\Entity\\\\EAV\\\\Attribute\\|null\\.$#"
+			message: "#^Parameter \\#1 \\$entityName of method Doctrine\\\\ORM\\\\EntityManagerInterface\\:\\:getReference\\(\\) expects class\\-string\\<mixed\\>, string given\\.$#"
 			count: 2
-			path: src/Service/EavAttributeProcessor.php
-
-		-
-			message: "#^Cannot call method setValue\\(\\) on App\\\\Entity\\\\EAV\\\\Attribute\\|null\\.$#"
-			count: 2
-			path: src/Service/EavAttributeProcessor.php
-
-		-
-			message: "#^Cannot call method isEmpty\\(\\) on App\\\\Entity\\\\EAV\\\\Attribute\\|null\\.$#"
-			count: 1
 			path: src/Service/EavAttributeProcessor.php
 
 		-
