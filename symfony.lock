@@ -99,14 +99,29 @@
     "egulias/email-validator": {
         "version": "2.1.9"
     },
+    "ezyang/htmlpurifier": {
+        "version": "v4.13.0"
+    },
     "fightbulc/moment": {
         "version": "1.30.0"
+    },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.3"
     },
     "fzaninotto/faker": {
         "version": "v1.8.0"
     },
     "gedmo/doctrine-extensions": {
         "version": "v2.4.37"
+    },
+    "laminas/laminas-code": {
+        "version": "3.4.1"
+    },
+    "laminas/laminas-eventmanager": {
+        "version": "3.3.1"
+    },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.2.0"
     },
     "league/fractal": {
         "version": "0.18.0"
