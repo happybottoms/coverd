@@ -24,7 +24,7 @@ trait AttributedEntityTrait
         $this->attributes = new ArrayCollection();
     }
 
-    public function addAttribute(Attribute $attribute, bool $overwrite = true) : void
+    public function addAttribute(Attribute $attribute, bool $overwrite = true): void
     {
         foreach ($this->attributes as $item) {
             if ($item->getDefinition()->getId() === $attribute->getDefinition()->getId()) {
@@ -37,14 +37,14 @@ trait AttributedEntityTrait
         $this->attributes->add($attribute);
     }
 
-    public function addAttributes(iterable $attributes, bool $overwrite = true) : void
+    public function addAttributes(iterable $attributes, bool $overwrite = true): void
     {
         foreach ($attributes as $attribute) {
             $this->addAttribute($attribute, $overwrite);
         }
     }
 
-    public function setAttribute(int $attributeId, $value) : void
+    public function setAttribute(int $attributeId, $value): void
     {
         /** @var Attribute|null $attribute */
         $attribute = $this->attributes->filter(function (Attribute $item) use ($attributeId) {
@@ -58,17 +58,17 @@ trait AttributedEntityTrait
         }
     }
 
-    public function removeAttribute(Attribute $attribute) : void
+    public function removeAttribute(Attribute $attribute): void
     {
         $this->attributes->removeElement($attribute);
     }
 
-    public function getAttributes() : ArrayCollection
+    public function getAttributes(): ArrayCollection
     {
         return $this->attributes;
     }
 
-    public function processAttributeChanges($changes) : void
+    public function processAttributeChanges($changes): void
     {
         if (isset($changes['attributes'])) {
             foreach ($changes['attributes'] as $attributeChange) {
