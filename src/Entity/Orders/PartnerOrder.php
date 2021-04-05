@@ -19,12 +19,25 @@ use Moment\Moment;
  */
 class PartnerOrder extends Order
 {
-    public const STATUS_IN_PROCESS = "IN_PROCESS";
-    public const STATUS_PENDING = "PENDING";
-    public const STATUS_SHIPPED = "SHIPPED";
+    public const STATUS_COMPLETED = 'SHIPPED';
+    public const STATUS_CREATING = 'CREATING';
+    public const STATUS_IN_PROCESS = 'IN_PROCESS';
+    public const STATUS_SUBMITTED = 'SUBMITTED';
 
-    public const ROLE_VIEW = "ROLE_PARTNER_ORDER_VIEW";
-    public const ROLE_EDIT = "ROLE_PARTNER_ORDER_EDIT";
+    public const STATUSES = [
+        self::STATUS_COMPLETED,
+        self::STATUS_CREATING,
+        self::STATUS_IN_PROCESS,
+        self::STATUS_SUBMITTED,
+    ];
+
+    public const TRANSITION_ACCEPT = 'ACCEPT';
+    public const TRANSITION_COMPLETE = 'SHIP';
+    public const TRANSITION_REVERT_TO_CREATING = 'BACK_TO_CREATING';
+    public const TRANSITION_SUBMIT = 'SUBMIT';
+
+    public const ROLE_VIEW = 'ROLE_PARTNER_ORDER_VIEW';
+    public const ROLE_EDIT = 'ROLE_PARTNER_ORDER_EDIT';
 
     /**
      * @var Partner $partner
@@ -50,7 +63,7 @@ class PartnerOrder extends Order
     protected $orderPeriod;
 
     /**
-     * @var integer
+     * @var ?integer
      *
      * @ORM\Column(type="integer", nullable=true)
      */
@@ -80,49 +93,34 @@ class PartnerOrder extends Order
         return "PTNR";
     }
 
-    /**
-     * @return Partner
-     */
-    public function getPartner()
+    public function getPartner(): Partner
     {
         return $this->partner;
     }
 
-    /**
-     * @param Partner $partner
-     */
-    public function setPartner(Partner $partner)
+    public function setPartner(Partner $partner): void
     {
         $this->partner = $partner;
     }
 
-    /**
-     * @return Warehouse
-     */
-    public function getWarehouse()
+    public function getWarehouse(): Warehouse
     {
         return $this->warehouse;
     }
 
-    /**
-     * @param Warehouse $warehouse
-     */
-    public function setWarehouse($warehouse)
+    public function setWarehouse(Warehouse $warehouse): void
     {
         $this->warehouse = $warehouse;
     }
 
-    public function isComplete()
+    public function isComplete(): bool
     {
-        return $this->getStatus() === self::STATUS_SHIPPED;
+        return $this->getStatus() === self::STATUS_COMPLETED;
     }
 
-    /**
-     * @return bool
-     */
-    public function isEditable()
+    public function isEditable(): bool
     {
-        return $this->getStatus() !== self::STATUS_SHIPPED;
+        return $this->getStatus() !== self::STATUS_COMPLETED;
     }
 
     public function addMissingClients(): void
@@ -175,7 +173,7 @@ class PartnerOrder extends Order
         }
     }
 
-    public function buildBags()
+    public function buildBags(): array
     {
         $bags = [];
         $remainderBags = [];
@@ -240,7 +238,7 @@ class PartnerOrder extends Order
     /**
      * @param \DateTime|string $orderPeriod
      */
-    public function setOrderPeriod($orderPeriod)
+    public function setOrderPeriod($orderPeriod): void
     {
         if (is_string($orderPeriod)) {
             $period = new Moment($orderPeriod);
