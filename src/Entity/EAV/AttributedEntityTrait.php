@@ -4,11 +4,12 @@ namespace App\Entity\EAV;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 trait AttributedEntityTrait
 {
     /**
-     * @var ArrayCollection
+     * @var PersistentCollection
      *
      * @ORM\ManyToMany(
      *     targetEntity="App\Entity\EAV\Attribute",
@@ -63,7 +64,7 @@ trait AttributedEntityTrait
         $this->attributes->removeElement($attribute);
     }
 
-    public function getAttributes(): ArrayCollection
+    public function getAttributes(): PersistentCollection
     {
         return $this->attributes;
     }
@@ -97,6 +98,8 @@ trait AttributedEntityTrait
                 return $attribute;
             }
         }
+
+        return null;
     }
 
     private function getDefinitionById(int $id): ?Definition
@@ -111,5 +114,7 @@ trait AttributedEntityTrait
                 return $definition;
             }
         }
+
+        return null;
     }
 }
