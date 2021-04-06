@@ -16,7 +16,13 @@ use Moment\Moment;
  */
 class BulkDistribution extends Order
 {
-    public const STATUS_PENDING = "PENDING";
+    public const STATUS_PENDING = 'PENDING';
+
+    public const STATUSES = [
+        self::STATUS_COMPLETED,
+        self::STATUS_CREATING,
+        self::STATUS_PENDING,
+    ];
 
     public const ROLE_VIEW = "ROLE_DISTRIBUTION_ORDER_VIEW";
     public const ROLE_EDIT = "ROLE_DISTRIBUTION_ORDER_EDIT";

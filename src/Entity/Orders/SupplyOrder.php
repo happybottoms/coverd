@@ -18,8 +18,18 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class SupplyOrder extends Order
 {
-    public const STATUS_ORDERED = "ORDERED";
-    public const STATUS_RECEIVED = "RECEIVED";
+    public const STATUS_ORDERED = 'ORDERED';
+    public const STATUS_RECEIVED = 'RECEIVED';
+
+    public const STATUSES = [
+        self::STATUS_COMPLETED,
+        self::STATUS_CREATING,
+        self::STATUS_ORDERED,
+        self::STATUS_RECEIVED,
+    ];
+
+    public const TRANSITION_ORDER = 'ORDER';
+    public const TRANSITION_RECEIVE = 'RECEIVE';
 
     public const ROLE_VIEW = "ROLE_SUPPLY_ORDER_VIEW";
     public const ROLE_EDIT = "ROLE_SUPPLY_ORDER_EDIT";

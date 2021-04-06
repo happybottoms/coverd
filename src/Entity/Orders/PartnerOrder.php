@@ -20,7 +20,6 @@ use Moment\Moment;
 class PartnerOrder extends Order
 {
     public const STATUS_COMPLETED = 'SHIPPED';
-    public const STATUS_CREATING = 'CREATING';
     public const STATUS_IN_PROCESS = 'IN_PROCESS';
     public const STATUS_SUBMITTED = 'SUBMITTED';
 

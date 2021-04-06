@@ -1,11 +1,77 @@
 <?php
 
 use App\Entity\Client;
+use App\Entity\Orders\AdjustmentOrder;
+use App\Entity\Orders\BulkDistribution;
+use App\Entity\Orders\MerchandiseOrder;
 use App\Entity\Orders\PartnerOrder;
+use App\Entity\Orders\SupplyOrder;
+use App\Entity\Orders\TransferOrder;
 use App\Entity\Partner;
 
 $container->loadFromExtension('framework', [
     'workflows' => [
+        'adjustment_order' => [
+            'type' => 'state_machine',
+            'audit_trail' => [
+                'enabled' => true,
+            ],
+            'marking_store' => [
+                'type' => 'method',
+                'property' => 'status',
+            ],
+            'supports' => [
+                AdjustmentOrder::class,
+            ],
+            'initial_marking' => AdjustmentOrder::STATUS_CREATING,
+            'places' => AdjustmentOrder::STATUSES,
+            'transitions' => [
+                AdjustmentOrder::TRANSITION_COMPLETE => [
+                    'metadata' => [
+                        'title' => 'Complete'
+                    ],
+                    'from' => [
+                        AdjustmentOrder::STATUS_CREATING
+                    ],
+                    'to' => AdjustmentOrder::TRANSITION_COMPLETE,
+                ],
+            ],
+        ],
+        'bulkdistribution_order' => [
+            'type' => 'state_machine',
+            'audit_trail' => [
+                'enabled' => true,
+            ],
+            'marking_store' => [
+                'type' => 'method',
+                'property' => 'status',
+            ],
+            'supports' => [
+                BulkDistribution::class,
+            ],
+            'initial_marking' => BulkDistribution::STATUS_CREATING,
+            'places' => BulkDistribution::STATUSES,
+            'transitions' => [
+                BulkDistribution::STATUS_PENDING => [
+                    'metadata' => [
+                        'title' => 'Mark As Pending'
+                    ],
+                    'from' => [
+                        BulkDistribution::STATUS_CREATING,
+                    ],
+                    'to' => BulkDistribution::STATUS_PENDING,
+                ],
+                BulkDistribution::TRANSITION_COMPLETE => [
+                    'metadata' => [
+                        'title' => 'Complete'
+                    ],
+                    'from' => [
+                        BulkDistribution::STATUS_PENDING,
+                    ],
+                    'to' => BulkDistribution::TRANSITION_COMPLETE,
+                ],
+            ],
+        ],
         'client_management' => [
             'type' => 'state_machine',
             'audit_trail' => [
@@ -114,6 +180,32 @@ $container->loadFromExtension('framework', [
                         Client::STATUS_REVIEW_PAST_DUE
                     ],
                     'to' => Client::STATUS_INACTIVE_BLOCKED,
+                ],
+            ],
+        ],
+        'merchandise_order' => [
+            'type' => 'state_machine',
+            'audit_trail' => [
+                'enabled' => true,
+            ],
+            'marking_store' => [
+                'type' => 'method',
+                'property' => 'status',
+            ],
+            'supports' => [
+                MerchandiseOrder::class,
+            ],
+            'initial_marking' => MerchandiseOrder::STATUS_CREATING,
+            'places' => MerchandiseOrder::STATUSES,
+            'transitions' => [
+                MerchandiseOrder::TRANSITION_COMPLETE => [
+                    'metadata' => [
+                        'title' => 'Complete'
+                    ],
+                    'from' => [
+                        MerchandiseOrder::STATUS_CREATING
+                    ],
+                    'to' => MerchandiseOrder::TRANSITION_COMPLETE,
                 ],
             ],
         ],
@@ -276,6 +368,76 @@ $container->loadFromExtension('framework', [
                         PartnerOrder::STATUS_IN_PROCESS,
                     ],
                     'to' => PartnerOrder::STATUS_CREATING,
+                ],
+            ],
+        ],
+        'supply_order' => [
+            'type' => 'state_machine',
+            'audit_trail' => [
+                'enabled' => true,
+            ],
+            'marking_store' => [
+                'type' => 'method',
+                'property' => 'status',
+            ],
+            'supports' => [
+                SupplyOrder::class,
+            ],
+            'initial_marking' => SupplyOrder::STATUS_CREATING,
+            'places' => SupplyOrder::STATUSES,
+            'transitions' => [
+                SupplyOrder::TRANSITION_ORDER => [
+                    'metadata' => [
+                        'title' => 'Order',
+                    ],
+                    'from' => [
+                        SupplyOrder::STATUS_CREATING,
+                    ],
+                    'to' => SupplyOrder::TRANSITION_ORDER,
+                ],
+                SupplyOrder::TRANSITION_RECEIVE => [
+                    'metadata' => [
+                        'title' => 'Receive',
+                    ],
+                    'from' => [
+                        SupplyOrder::STATUS_ORDERED,
+                    ],
+                    'to' => SupplyOrder::STATUS_RECEIVED,
+                ],
+                SupplyOrder::TRANSITION_COMPLETE => [
+                    'metadata' => [
+                        'title' => 'Complete'
+                    ],
+                    'from' => [
+                        SupplyOrder::STATUS_RECEIVED,
+                    ],
+                    'to' => SupplyOrder::TRANSITION_COMPLETE,
+                ],
+            ],
+        ],
+        'transfer_order' => [
+            'type' => 'state_machine',
+            'audit_trail' => [
+                'enabled' => true,
+            ],
+            'marking_store' => [
+                'type' => 'method',
+                'property' => 'status',
+            ],
+            'supports' => [
+                TransferOrder::class,
+            ],
+            'initial_marking' => TransferOrder::STATUS_CREATING,
+            'places' => TransferOrder::STATUSES,
+            'transitions' => [
+                TransferOrder::TRANSITION_COMPLETE => [
+                    'metadata' => [
+                        'title' => 'Complete'
+                    ],
+                    'from' => [
+                        TransferOrder::STATUS_CREATING
+                    ],
+                    'to' => TransferOrder::TRANSITION_COMPLETE,
                 ],
             ],
         ],

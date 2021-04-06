@@ -21,7 +21,15 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 abstract class Order extends CoreEntity
 {
-    public const STATUS_COMPLETED = "COMPLETED";
+    public const STATUS_COMPLETED = 'COMPLETED';
+    public const STATUS_CREATING = 'CREATING';
+
+    public const STATUSES = [
+        self::STATUS_COMPLETED,
+        self::STATUS_CREATING,
+    ];
+
+    public const TRANSITION_COMPLETE = 'COMPLETE';
 
     public const ROLE_VIEW_ALL = "ROLE_ORDER_VIEW_ALL";
     public const ROLE_EDIT_ALL = "ROLE_ORDER_EDIT_ALL";
