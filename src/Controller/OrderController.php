@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Workflow\Registry;
+use Symfony\Component\Workflow\Transition;
 
 class OrderController extends BaseController
 {
@@ -78,13 +80,17 @@ class OrderController extends BaseController
      * @IsGranted({"ROLE_ORDER_VIEW_ALL","ROLE_ORDER_MANAGE_OWN"})
      *
      */
-    public function show(Request $request, int $id): JsonResponse
+    public function show(Request $request, Registry $workflowRegistry, int $id): JsonResponse
     {
         $order = $this->getOrder($id);
 
         $this->denyAccessUnlessGranted(PartnerOrderVoter::VIEW, $order);
 
-        return $this->serialize($request, $order);
+        $meta = [
+            'enabledTransitions' => $order ? $this->getEnabledTransitions($workflowRegistry, $order) : [],
+        ];
+
+        return $this->serialize($request, $order, null, $meta);
     }
 
     /**
@@ -309,5 +315,19 @@ class OrderController extends BaseController
         }
 
         return $params;
+    }
+
+    protected function getEnabledTransitions(Registry $workflowRegistry, Order $order): array
+    {
+        $workflow = $workflowRegistry->get($order);
+        $enabledTransitions = $workflow->getEnabledTransitions($order);
+
+        return array_map(function (Transition $transition) use ($workflow) {
+            $title = $workflow->getMetadataStore()->getTransitionMetadata($transition)['title'];
+            return [
+                'transition' => $transition->getName(),
+                'title' => $title
+            ];
+        }, $enabledTransitions);
     }
 }

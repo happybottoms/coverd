@@ -17,6 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Workflow\Registry;
 
 /**
  * Class PartnerOrderController
@@ -139,6 +140,35 @@ class PartnerOrderController extends OrderController
         $this->getEm()->flush();
 
         return $this->serialize($request, $order);
+    }
+
+    /**
+     *
+     * @Route("/{id}/transition", methods={"PATCH"})
+     * @IsGranted({"ROLE_PARTNER_ORDER_EDIT"})
+     *
+     */
+    public function transition(Request $request, Registry $workflowRegistry, int $id): JsonResponse
+    {
+        /** @var PartnerOrder $order */
+        $order = $this->getOrder($id);
+        $this->denyAccessUnlessGranted(PartnerOrder::ROLE_EDIT, $order);
+
+        $params = $this->getParams($request);
+
+        if ($params['transition']) {
+            $workflowRegistry
+                ->get($order)
+                ->apply($order, $params['transition']);
+
+            $this->getEm()->flush();
+        }
+
+        $meta = [
+            'enabledTransitions' => $this->getEnabledTransitions($workflowRegistry, $order),
+        ];
+
+        return $this->serialize($request, $order, null, $meta);
     }
 
     /**

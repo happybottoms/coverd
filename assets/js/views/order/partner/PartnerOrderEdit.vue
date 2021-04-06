@@ -8,13 +8,36 @@
             The selected partner has already created a distribution for {{ order.distributionPeriod|dateTimeMonthFormat }}
         </div>
         <div class="pull-right">
-            <button
-                class="btn btn-success btn-flat"
-                :disabled="!order.isEditable"
-                @click.prevent="saveVerify"
-            >
-                <i class="fa fa-save fa-fw" />Save Order
-            </button>
+            <div class="btn-group">
+                <button
+                    class="btn btn-info btn-flat dropdown-toggle"
+                    data-toggle="dropdown"
+                >
+                    <i class="fa fa-info-circle" /> {{ order.status | statusFormat }}
+                </button>
+                <ul
+                    v-if="order.workflow.enabledTransitions"
+                    class="dropdown-menu dropdown-menu-right"
+                >
+                    <li
+                        v-for="enabledTransition in getSortedTransitions()"
+                        :key="enabledTransition.transition"
+                    >
+                        <a
+                            @click.prevent="doTransition(enabledTransition.transition)"
+                        >
+                            <i class="fa fa-arrow-circle-right" />{{ enabledTransition.title }}
+                        </a>
+                    </li>
+                </ul>
+                <button
+                    class="btn btn-success btn-flat"
+                    :disabled="!order.isEditable"
+                    @click.prevent="saveVerify"
+                >
+                    <i class="fa fa-save fa-fw" />Save Order
+                </button>
+            </div>
             <div class="btn-group">
                 <button
                     type="button"
@@ -213,8 +236,9 @@
                     warehouse: { id: null },
                     isEditable: true,
                     isDeletable: false,
-                    status: "",
                     orderPeriod: "",
+                    status: '',
+                    workflow: {},
                 },
                 products: [],
                 statuses: [
@@ -299,7 +323,10 @@
                     .get('/api/orders/partner/' + this.$route.params.id, {
                         params: { include: ['lineItems', 'lineItems.product', 'lineItems.transactions', 'partner.addresses', 'partnerAddress']}
                     })
-                    .then(response => self.order = response.data.data);
+                    .then(response => {
+                        self.order = response.data.data;
+                        self.order.workflow = response.data.meta;
+                    });
             }
         },
         mounted() {
@@ -347,6 +374,14 @@
                     .delete('/api/orders/partner/' + this.$route.params.id)
                     .then(self.$router.push('/orders/partner'));
             },
+            doTransition: function(transition) {
+                let self = this;
+                axios.patch('/api/orders/partner/' + this.$route.params.id + '/transition', {'transition': transition})
+                    .then(response => {
+                        self.order.status = response.data.data.status;
+                        self.order.workflow = response.data.meta;
+                    });
+            },
             onPartnerChange: function(partner) {
                 let self = this;
                 this.$v.order.partner.$touch();
@@ -366,6 +401,28 @@
                         },
                         (err) => {
                             // reject(err);
+                        }
+                    );
+            },
+            getSortedTransitions() {
+                const inputObject = this.order.workflow.enabledTransitions;
+
+                return Object
+                    .keys(inputObject)
+                    .map((key) => inputObject[key])
+                    .sort(function (a, b) {
+                            let titleA = a.title.toUpperCase();
+                            let titleB = b.title.toUpperCase();
+
+                            if (titleA < titleB) {
+                                return -1;
+                            }
+
+                            if (titleA > titleB) {
+                                return 1;
+                            }
+
+                            return 0;
                         }
                     );
             }
