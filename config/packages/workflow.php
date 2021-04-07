@@ -33,7 +33,7 @@ $container->loadFromExtension('framework', [
                     'from' => [
                         AdjustmentOrder::STATUS_CREATING
                     ],
-                    'to' => AdjustmentOrder::TRANSITION_COMPLETE,
+                    'to' => AdjustmentOrder::STATUS_COMPLETED,
                 ],
             ],
         ],
@@ -68,7 +68,7 @@ $container->loadFromExtension('framework', [
                     'from' => [
                         BulkDistribution::STATUS_PENDING,
                     ],
-                    'to' => BulkDistribution::TRANSITION_COMPLETE,
+                    'to' => BulkDistribution::STATUS_COMPLETED,
                 ],
             ],
         ],
@@ -205,7 +205,7 @@ $container->loadFromExtension('framework', [
                     'from' => [
                         MerchandiseOrder::STATUS_CREATING
                     ],
-                    'to' => MerchandiseOrder::TRANSITION_COMPLETE,
+                    'to' => MerchandiseOrder::STATUS_COMPLETED,
                 ],
             ],
         ],
@@ -393,7 +393,7 @@ $container->loadFromExtension('framework', [
                     'from' => [
                         SupplyOrder::STATUS_CREATING,
                     ],
-                    'to' => SupplyOrder::TRANSITION_ORDER,
+                    'to' => SupplyOrder::STATUS_ORDERED,
                 ],
                 SupplyOrder::TRANSITION_RECEIVE => [
                     'metadata' => [
@@ -411,7 +411,7 @@ $container->loadFromExtension('framework', [
                     'from' => [
                         SupplyOrder::STATUS_RECEIVED,
                     ],
-                    'to' => SupplyOrder::TRANSITION_COMPLETE,
+                    'to' => SupplyOrder::STATUS_COMPLETED,
                 ],
             ],
         ],
@@ -437,7 +437,7 @@ $container->loadFromExtension('framework', [
                     'from' => [
                         TransferOrder::STATUS_CREATING
                     ],
-                    'to' => TransferOrder::TRANSITION_COMPLETE,
+                    'to' => TransferOrder::STATUS_COMPLETED,
                 ],
             ],
         ],
