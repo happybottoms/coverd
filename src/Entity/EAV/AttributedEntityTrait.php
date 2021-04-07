@@ -3,6 +3,7 @@
 namespace App\Entity\EAV;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 trait AttributedEntityTrait
@@ -63,7 +64,7 @@ trait AttributedEntityTrait
         $this->attributes->removeElement($attribute);
     }
 
-    public function getAttributes(): ArrayCollection
+    public function getAttributes(): Collection
     {
         return $this->attributes;
     }
