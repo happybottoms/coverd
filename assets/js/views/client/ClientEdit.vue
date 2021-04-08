@@ -2,27 +2,11 @@
     <section class="content">
         <div class="pull-right">
             <div class="btn-group">
-                <button
-                    class="btn btn-info btn-flat dropdown-toggle"
-                    data-toggle="dropdown"
-                >
-                    <i class="fa fa-project-diagram fa-fw" /> Status: {{ client.status | statusFormat }} <i class="fa fa-caret-down fa-fw"></i>
-                </button>
-                <ul
-                    v-if="client.workflow.enabledTransitions"
-                    class="dropdown-menu dropdown-menu-right"
-                >
-                    <li
-                        v-for="enabledTransition in getSortedTransitions()"
-                        :key="enabledTransition.transition"
-                    >
-                        <a
-                            @click.prevent="doTransition(enabledTransition.transition)"
-                        >
-                            <i class="fa fa-arrow-circle-right" />{{ enabledTransition.title }}
-                        </a>
-                    </li>
-                </ul>
+                <workflow-button
+                    entity-api="/api/clients"
+                    :status="client.status"
+                    :workflow="client.workflow"
+                />
             </div>
             <button
                 v-if="client.canReview"
@@ -140,10 +124,12 @@ import Modal from '../../components/Modal.vue';
 import AttributesEditForm from "../../components/AttributesEditForm";
 import ClientDistributionHistory from "./ClientDistributionHistory";
 import ClientInfoForm from "./ClientInfoForm";
+import WorkflowButton from "../../components/WorkflowButton";
 
 export default {
         name: 'ClientEdit',
         components: {
+            WorkflowButton,
             ClientInfoForm,
             ClientDistributionHistory,
             AttributesEditForm,
@@ -204,14 +190,6 @@ export default {
                         });
                 }
             },
-            doTransition: function(transition) {
-                let self = this;
-                axios.patch('/api/clients/' + this.$route.params.id + '/transition', {'transition': transition})
-                    .then(response => {
-                        self.client.workflow = response.data.meta;
-                        self.client.status = response.data.data.status;
-                    });
-            },
             askDelete: function() {
                 $('#confirmModal').modal('show');
             },
@@ -236,28 +214,6 @@ export default {
                     }
                 );
             },
-            getSortedTransitions() {
-                const inputObject = this.client.workflow.enabledTransitions;
-
-                return Object
-                    .keys(inputObject)
-                    .map((key) => inputObject[key])
-                    .sort(function (a, b) {
-                        let titleA = a.title.toUpperCase();
-                        let titleB = b.title.toUpperCase();
-
-                        if (titleA < titleB) {
-                            return -1;
-                        }
-
-                        if (titleA > titleB) {
-                            return 1;
-                        }
-
-                        return 0;
-                    }
-                );
-            }
         }
     }
 </script>
