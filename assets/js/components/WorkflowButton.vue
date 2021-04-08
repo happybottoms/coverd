@@ -33,12 +33,6 @@ export default {
         status: { type: String, required: true },
         workflow: { type: Object, required: true },
     },
-    // data: function () {
-    //     return {
-    //         status: '',
-    //         workflow: {},
-    //     }
-    // },
     methods: {
         doTransition: function(transition) {
             let self = this;
