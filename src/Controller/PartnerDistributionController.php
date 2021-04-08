@@ -9,6 +9,7 @@ use App\Entity\Orders\BulkDistributionLineItem;
 use App\Entity\Partner;
 use App\Entity\User;
 use App\Exception\UserInterfaceException;
+use App\Security\BulkDistributionVoter;
 use App\Transformers\BulkDistributionLineItemTransformer;
 use App\Transformers\BulkDistributionTransformer;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,15 +25,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class PartnerDistributionController extends OrderController
 {
     protected $defaultEntityName = BulkDistribution::class;
-
-    /**
-     * @return BulkDistributionLineItem
-     */
-    protected function createLineItem()
-    {
-        return new BulkDistributionLineItem();
-    }
-
 
     /**
      * Save a new partner distribution
@@ -210,5 +202,15 @@ class PartnerDistributionController extends OrderController
     protected function getDefaultTransformer()
     {
         return new BulkDistributionTransformer();
+    }
+
+    protected function createLineItem()
+    {
+        return new BulkDistributionLineItem();
+    }
+
+    protected function getViewVoter(): string
+    {
+        return BulkDistributionVoter::VIEW;
     }
 }

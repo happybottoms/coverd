@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Orders\MerchandiseOrder;
 use App\Entity\Orders\MerchandiseOrderLineItem;
 use App\Entity\Warehouse;
+use App\Security\PartnerOrderVoter;
 use App\Transformers\MerchandiseOrderTransformer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,14 +21,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class MerchandiseOrderController extends OrderController
 {
     protected $defaultEntityName = MerchandiseOrder::class;
-
-    /**
-     * @return MerchandiseOrderLineItem
-     */
-    protected function createLineItem()
-    {
-        return new MerchandiseOrderLineItem();
-    }
 
     /**
      * Save a new product
@@ -93,10 +86,19 @@ class MerchandiseOrderController extends OrderController
         return $this->serialize($request, $order);
     }
 
-
-
     protected function getDefaultTransformer()
     {
         return new MerchandiseOrderTransformer();
+    }
+
+    protected function createLineItem()
+    {
+        return new MerchandiseOrderLineItem();
+    }
+
+    protected function getViewVoter(): string
+    {
+        // TODO ticket # 273: create a MerchandiseOrderVoter
+        return PartnerOrderVoter::VIEW;
     }
 }

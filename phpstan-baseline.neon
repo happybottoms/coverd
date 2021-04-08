@@ -241,11 +241,6 @@ parameters:
 			path: src/Controller/OrderController.php
 
 		-
-			message: "#^Method App\\\\Controller\\\\OrderController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
 			message: "#^Method App\\\\Controller\\\\OrderController\\:\\:processLineItems\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Controller/OrderController.php
@@ -3246,37 +3241,12 @@ parameters:
 			path: src/Security/SupplyOrderVoter.php
 
 		-
-			message: "#^Class App\\\\Security\\\\TransferOrder not found\\.$#"
-			count: 1
-			path: src/Security/TransferOrderVoter.php
-
-		-
 			message: "#^Method App\\\\Security\\\\TransferOrderVoter\\:\\:canView\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Security/TransferOrderVoter.php
 
 		-
-			message: "#^Parameter \\$transferOrder of method App\\\\Security\\\\TransferOrderVoter\\:\\:canView\\(\\) has invalid typehint type App\\\\Security\\\\TransferOrder\\.$#"
-			count: 1
-			path: src/Security/TransferOrderVoter.php
-
-		-
-			message: "#^Access to constant ROLE_VIEW on an unknown class App\\\\Security\\\\TransferOrder\\.$#"
-			count: 1
-			path: src/Security/TransferOrderVoter.php
-
-		-
 			message: "#^Method App\\\\Security\\\\TransferOrderVoter\\:\\:canEdit\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Security/TransferOrderVoter.php
-
-		-
-			message: "#^Parameter \\$transferOrder of method App\\\\Security\\\\TransferOrderVoter\\:\\:canEdit\\(\\) has invalid typehint type App\\\\Security\\\\TransferOrder\\.$#"
-			count: 1
-			path: src/Security/TransferOrderVoter.php
-
-		-
-			message: "#^Access to constant ROLE_EDIT on an unknown class App\\\\Security\\\\TransferOrder\\.$#"
 			count: 1
 			path: src/Security/TransferOrderVoter.php
 

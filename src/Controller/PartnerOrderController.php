@@ -10,6 +10,7 @@ use App\Entity\Partner;
 use App\Entity\User;
 use App\Entity\Warehouse;
 use App\Exception\UserInterfaceException;
+use App\Security\PartnerOrderVoter;
 use App\Transformers\BagTransformer;
 use App\Transformers\PartnerOrderLineItemTransformer;
 use App\Transformers\PartnerOrderTransformer;
@@ -28,14 +29,6 @@ use Symfony\Component\Workflow\Registry;
 class PartnerOrderController extends OrderController
 {
     protected $defaultEntityName = PartnerOrder::class;
-
-    /**
-     * @return PartnerOrderLineItem
-     */
-    protected function createLineItem()
-    {
-        return new PartnerOrderLineItem();
-    }
 
     /**
      * Save a new partner order
@@ -246,11 +239,6 @@ class PartnerOrderController extends OrderController
         return $this->meta($existingOrder === null);
     }
 
-    protected function getDefaultTransformer()
-    {
-        return new PartnerOrderTransformer();
-    }
-
     protected function buildFilterParams(Request $request)
     {
         $params = parent::buildFilterParams($request);
@@ -271,5 +259,20 @@ class PartnerOrderController extends OrderController
         }
 
         return $params;
+    }
+
+    protected function getDefaultTransformer()
+    {
+        return new PartnerOrderTransformer();
+    }
+
+    protected function createLineItem()
+    {
+        return new PartnerOrderLineItem();
+    }
+
+    protected function getViewVoter(): string
+    {
+        return PartnerOrderVoter::VIEW;
     }
 }

@@ -22,14 +22,6 @@ class SupplyOrderController extends OrderController
     protected $defaultEntityName = SupplyOrder::class;
 
     /**
-     * @return \App\Entity\Orders\SupplyOrderLineItem
-     */
-    protected function createLineItem()
-    {
-        return new SupplyOrderLineItem();
-    }
-
-    /**
      * Save a new Supply Order
      *
      * @Route(path="", methods={"POST"})
@@ -118,10 +110,18 @@ class SupplyOrderController extends OrderController
         return $this->serialize($request, $order);
     }
 
-
-
     protected function getDefaultTransformer()
     {
         return new SupplyOrderTransformer();
+    }
+
+    protected function createLineItem()
+    {
+        return new SupplyOrderLineItem();
+    }
+
+    protected function getViewVoter(): string
+    {
+        return SupplyOrderVoter::VIEW;
     }
 }

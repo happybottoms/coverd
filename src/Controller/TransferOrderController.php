@@ -20,14 +20,6 @@ class TransferOrderController extends OrderController
     protected $defaultEntityName = TransferOrder::class;
 
     /**
-     * @return TransferOrderLineItem
-     */
-    protected function createLineItem()
-    {
-        return new TransferOrderLineItem();
-    }
-
-    /**
      * Save a new Transfer
      *
      * @Route(path="", methods={"POST"})
@@ -115,5 +107,15 @@ class TransferOrderController extends OrderController
     protected function getDefaultTransformer()
     {
         return new TransferOrderTransformer();
+    }
+
+    protected function createLineItem()
+    {
+        return new TransferOrderLineItem();
+    }
+
+    protected function getViewVoter(): string
+    {
+        return TransferOrderVoter::VIEW;
     }
 }

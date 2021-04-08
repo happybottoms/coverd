@@ -6,8 +6,6 @@ use App\Entity\LineItem;
 use App\Entity\Order;
 use App\Entity\Product;
 use App\Exception\CommittedTransactionException;
-use App\Security\PartnerOrderVoter;
-use App\Transformers\OrderTransformer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -17,19 +15,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Workflow\Registry;
 use Symfony\Component\Workflow\Transition;
 
-class OrderController extends BaseController
+abstract class OrderController extends BaseController
 {
-    protected $defaultEntityName =  Order::class;
-
-    /**
-     * @return LineItem
-     * @throws \Exception
-     */
-    protected function createLineItem()
-    {
-        //This should be overwritten in subclasses
-        throw new \Exception('Do not use createLineItem on OrdersController superclass.');
-    }
+    protected $defaultEntityName = Order::class;
 
     /**
      * Get a list of Sub-classed orders
@@ -78,13 +66,12 @@ class OrderController extends BaseController
      *
      * @Route(path="/{id<\d+>}", methods={"GET"})
      * @IsGranted({"ROLE_ORDER_VIEW_ALL","ROLE_ORDER_MANAGE_OWN"})
-     *
      */
-    public function show(Request $request, Registry $workflowRegistry, int $id): JsonResponse
+    public function show(Request $request, int $id, Registry $workflowRegistry): JsonResponse
     {
         $order = $this->getOrder($id);
 
-        $this->denyAccessUnlessGranted(PartnerOrderVoter::VIEW, $order);
+        $this->denyAccessUnlessGranted($this->getViewVoter(), $order);
 
         $meta = [
             'enabledTransitions' => $order ? $this->getEnabledTransitions($workflowRegistry, $order) : [],
@@ -242,11 +229,6 @@ class OrderController extends BaseController
         return $orders;
     }
 
-    protected function getDefaultTransformer()
-    {
-        return new OrderTransformer();
-    }
-
     protected function processLineItems(Order $order, $lineItemsArray)
     {
         foreach ($lineItemsArray as $lineItemArray) {
@@ -330,4 +312,11 @@ class OrderController extends BaseController
             ];
         }, $enabledTransitions);
     }
+
+    /**
+     * @return LineItem
+     */
+    abstract protected function createLineItem();
+
+    abstract protected function getViewVoter(): string;
 }

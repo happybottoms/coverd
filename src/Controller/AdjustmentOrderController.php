@@ -20,15 +20,6 @@ class AdjustmentOrderController extends OrderController
     protected $defaultEntityName = AdjustmentOrder::class;
 
     /**
-     * @return AdjustmentOrderLineItem
-     */
-    protected function createLineItem()
-    {
-        return new AdjustmentOrderLineItem();
-    }
-
-
-    /**
      * Save a new Adjustment
      *
      * @Route(path="", methods={"POST"})
@@ -100,5 +91,15 @@ class AdjustmentOrderController extends OrderController
     protected function getDefaultTransformer()
     {
         return new AdjustmentOrderTransformer();
+    }
+
+    protected function createLineItem()
+    {
+        return new AdjustmentOrderLineItem();
+    }
+
+    protected function getViewVoter(): string
+    {
+        return AdjustmentOrderVoter::VIEW;
     }
 }
