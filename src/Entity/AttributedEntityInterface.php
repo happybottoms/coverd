@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\EAV\Attribute;
-use Doctrine\ORM\PersistentCollection;
+use Doctrine\Common\Collections\Collection;
 
 interface AttributedEntityInterface
 {
@@ -19,7 +19,7 @@ interface AttributedEntityInterface
 
     public function removeAttribute(Attribute $attribute): void;
 
-    public function getAttributes(): PersistentCollection;
+    public function getAttributes(): Collection;
 
     /**
      * @param array $changes
