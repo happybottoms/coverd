@@ -1,13 +1,20 @@
 <template>
     <section class="content">
         <div class="pull-right">
-            <button
-                class="btn btn-success btn-flat"
-                :disabled="!order.isEditable"
-                @click.prevent="saveVerify"
-            >
-                <i class="fa fa-save fa-fw" />Save Order
-            </button>
+            <div class="btn-group">
+                <workflow-button
+                    entity-api="/api/orders/transfer"
+                    :status="order.status"
+                    :workflow="order.workflow"
+                />
+                <button
+                    class="btn btn-success btn-flat"
+                    :disabled="!order.isEditable"
+                    @click.prevent="saveVerify"
+                >
+                    <i class="fa fa-save fa-fw" />Save Order
+                </button>
+            </div>
             <div class="btn-group">
                 <button
                     type="button"
@@ -38,7 +45,6 @@
                     <ordermetadatabox
                         :order="order"
                         order-type="Transfer Order"
-                        :statuses="statuses"
                         :editable="order.isEditable"
                         :v="$v.order"
                     />
@@ -122,17 +128,20 @@
 
 
 <script>
-    import { required } from 'vuelidate/lib/validators';
-    import { linesRequired, mod } from '../../../validators';
-    import ModalOrderConfirmComplete from '../../../components/ModalOrderConfirmComplete.vue';
-    import ModalOrderConfirmDelete from '../../../components/ModalOrderConfirmDelete.vue';
-    import ModalOrderInvalid from '../../../components/ModalOrderInvalid.vue';
-    import FieldError from '../../../components/FieldError.vue';
-    import OrderMetadataBox from '../../../components/OrderMetadataBox.vue';
-    import LineItemForm from '../../../components/order/LineItemByProductForm.vue';
-    import StorageLocationSelectionForm from '../../../components/StorageLocationSelectionForm.vue';
-    export default {
+import {required} from 'vuelidate/lib/validators';
+import {linesRequired} from '../../../validators';
+import ModalOrderConfirmComplete from '../../../components/ModalOrderConfirmComplete.vue';
+import ModalOrderConfirmDelete from '../../../components/ModalOrderConfirmDelete.vue';
+import ModalOrderInvalid from '../../../components/ModalOrderInvalid.vue';
+import FieldError from '../../../components/FieldError.vue';
+import OrderMetadataBox from '../../../components/OrderMetadataBox.vue';
+import LineItemForm from '../../../components/order/LineItemByProductForm.vue';
+import StorageLocationSelectionForm from '../../../components/StorageLocationSelectionForm.vue';
+import WorkflowButton from "../../../components/WorkflowButton";
+
+export default {
         components: {
+            WorkflowButton,
             'modalcomplete' : ModalOrderConfirmComplete,
             'modaldelete' : ModalOrderConfirmDelete,
             'modalinvalid' : ModalOrderInvalid,
@@ -150,12 +159,10 @@
                     targetLocation: { id: null },
                     isEditable: true,
                     isDeletable: false,
-                    status: 'COMPLETED',
+                    status: '',
+                    workflow: {},
                 },
                 products: [],
-                statuses: [
-                    {id: "COMPLETED", name: "Completed", commit: true },
-                ]
             };
         },
         validations: {
@@ -180,7 +187,7 @@
             statusIsCompleted: function () {
                 var self = this;
                 var status = this.statuses.filter(function(item) {
-                    return self.order.status == item.id
+                    return self.order.status === item.id
                 });
                 return status[0].commit === true;
             }
@@ -196,7 +203,10 @@
                     .get('/api/orders/transfer/' + this.$route.params.id, {
                         params: { include: ['lineItems', 'lineItems.product', 'lineItems.transactions', ]}
                     })
-                    .then(response => self.order = response.data.data);
+                    .then(response => {
+                        self.order = response.data.data;
+                        self.order.workflow = response.data.meta;
+                    });
             }
             console.log('Component mounted.')
         },

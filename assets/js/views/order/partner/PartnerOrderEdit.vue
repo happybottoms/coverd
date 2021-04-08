@@ -9,27 +9,11 @@
         </div>
         <div class="pull-right">
             <div class="btn-group">
-                <button
-                    class="btn btn-info btn-flat dropdown-toggle"
-                    data-toggle="dropdown"
-                >
-                    <i class="fa fa-info-circle" /> {{ order.status | statusFormat }}
-                </button>
-                <ul
-                    v-if="order.workflow.enabledTransitions"
-                    class="dropdown-menu dropdown-menu-right"
-                >
-                    <li
-                        v-for="enabledTransition in getSortedTransitions()"
-                        :key="enabledTransition.transition"
-                    >
-                        <a
-                            @click.prevent="doTransition(enabledTransition.transition)"
-                        >
-                            <i class="fa fa-arrow-circle-right" />{{ enabledTransition.title }}
-                        </a>
-                    </li>
-                </ul>
+                <workflow-button
+                    entity-api="/api/orders/partner"
+                    :status="order.status"
+                    :workflow="order.workflow"
+                />
                 <button
                     class="btn btn-success btn-flat"
                     :disabled="!order.isEditable"
@@ -73,7 +57,6 @@
                     <ordermetadatabox
                         :order="order"
                         order-type="Partner Order"
-                        :statuses="statuses"
                         :editable="order.isEditable"
                         :v="$v.order"
                     />
@@ -198,22 +181,25 @@
 
 
 <script>
-    import { required } from 'vuelidate/lib/validators';
-    import { linesRequired, mod } from '../../../validators';
-    import ModalOrderConfirmComplete from '../../../components/ModalOrderConfirmComplete';
-    import ModalOrderConfirmDelete from '../../../components/ModalOrderConfirmDelete';
-    import ModalOrderInvalid from '../../../components/ModalOrderInvalid';
-    import FieldError from '../../../components/FieldError';
-    import OrderMetadataBox from '../../../components/OrderMetadataBox.vue';
-    import WarehouseSelectionForm from '../../../components/WarehouseSelectionForm.vue'
-    import LineItemForm from '../../../components/order/LineItemByProductForm.vue';
-    import PartnerSelectionForm from '../../../components/PartnerSelectionForm.vue';
-    import Modal from "../../../components/Modal";
-    import axios from "axios";
-    import LineItemByClientForm from "../../../components/order/LineItemByClientForm";
-    import {mapGetters} from "vuex";
-    export default {
+import {required} from 'vuelidate/lib/validators';
+import {linesRequired} from '../../../validators';
+import ModalOrderConfirmComplete from '../../../components/ModalOrderConfirmComplete';
+import ModalOrderConfirmDelete from '../../../components/ModalOrderConfirmDelete';
+import ModalOrderInvalid from '../../../components/ModalOrderInvalid';
+import FieldError from '../../../components/FieldError';
+import OrderMetadataBox from '../../../components/OrderMetadataBox.vue';
+import WarehouseSelectionForm from '../../../components/WarehouseSelectionForm.vue'
+import LineItemForm from '../../../components/order/LineItemByProductForm.vue';
+import PartnerSelectionForm from '../../../components/PartnerSelectionForm.vue';
+import Modal from "../../../components/Modal";
+import axios from "axios";
+import LineItemByClientForm from "../../../components/order/LineItemByClientForm";
+import {mapGetters} from "vuex";
+import WorkflowButton from "../../../components/WorkflowButton";
+
+export default {
         components: {
+            WorkflowButton,
             LineItemByClientForm,
             Modal,
             'modalcomplete' : ModalOrderConfirmComplete,
@@ -241,11 +227,6 @@
                     workflow: {},
                 },
                 products: [],
-                statuses: [
-                    {id: "IN_PROCESS", name: "In Process"},
-                    {id: "PENDING", name: "Pending"},
-                    {id: "SHIPPED", name: "Shipped", commit: true },
-                ],
                 partnerType: 'AGENCY',
                 partnerCanOrder: true
             };
@@ -272,7 +253,7 @@
             statusIsCompleted: function () {
                 var self = this;
                 var status = this.statuses.filter(function(item) {
-                    return self.order.status == item.id
+                    return self.order.status === item.id
                 });
                 return status[0].commit === true;
             },
@@ -374,14 +355,6 @@
                     .delete('/api/orders/partner/' + this.$route.params.id)
                     .then(self.$router.push('/orders/partner'));
             },
-            doTransition: function(transition) {
-                let self = this;
-                axios.patch('/api/orders/partner/' + this.$route.params.id + '/transition', {'transition': transition})
-                    .then(response => {
-                        self.order.status = response.data.data.status;
-                        self.order.workflow = response.data.meta;
-                    });
-            },
             onPartnerChange: function(partner) {
                 let self = this;
                 this.$v.order.partner.$touch();
@@ -404,28 +377,6 @@
                         }
                     );
             },
-            getSortedTransitions() {
-                const inputObject = this.order.workflow.enabledTransitions;
-
-                return Object
-                    .keys(inputObject)
-                    .map((key) => inputObject[key])
-                    .sort(function (a, b) {
-                            let titleA = a.title.toUpperCase();
-                            let titleB = b.title.toUpperCase();
-
-                            if (titleA < titleB) {
-                                return -1;
-                            }
-
-                            if (titleA > titleB) {
-                                return 1;
-                            }
-
-                            return 0;
-                        }
-                    );
-            }
         }
     }
 </script>
