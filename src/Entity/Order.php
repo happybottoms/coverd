@@ -181,12 +181,12 @@ abstract class Order extends CoreEntity
     /**
      * @param string $status
      */
-    public function setStatus($status)
+    public function setStatus($status): void
     {
         $this->status = $status;
     }
 
-    public function isComplete()
+    public function isComplete(): bool
     {
         return $this->getStatus() === self::STATUS_COMPLETED;
     }

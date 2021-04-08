@@ -121,7 +121,7 @@ class PartnerDistributionController extends BaseOrderController
      * @param BulkDistributionLineItem $lineItem
      * @param array $lineItemArray
      */
-    protected function extraLineItemProcessing(LineItem $lineItem, array $lineItemArray)
+    protected function extraLineItemProcessing(LineItem $lineItem, array $lineItemArray): void
     {
         $client = $this->getEm()->getRepository(Client::class)->findOneByPublicId($lineItemArray['client']['id']);
         $lineItem->setClient($client);

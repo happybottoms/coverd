@@ -88,7 +88,7 @@ class BulkDistribution extends Order
         $this->partner = $partner;
     }
 
-    public function isComplete()
+    public function isComplete(): bool
     {
         return $this->getStatus() === self::STATUS_COMPLETED;
     }

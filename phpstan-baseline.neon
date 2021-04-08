@@ -326,11 +326,6 @@ parameters:
 			path: src/Controller/PartnerController.php
 
 		-
-			message: "#^Method App\\\\Controller\\\\PartnerDistributionController\\:\\:extraLineItemProcessing\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/PartnerDistributionController.php
-
-		-
 			message: "#^Method App\\\\Controller\\\\PartnerDistributionController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Controller/PartnerDistributionController.php
@@ -1826,16 +1821,6 @@ parameters:
 			path: src/Entity/Order.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\Order\\:\\:setStatus\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Order.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Order\\:\\:isComplete\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Order.php
-
-		-
 			message: "#^Property App\\\\Entity\\\\Orders\\\\AdjustmentOrder\\:\\:\\$storageLocation type mapping mismatch\\: database can contain App\\\\Entity\\\\StorageLocation\\|null but property expects App\\\\Entity\\\\StorageLocation\\.$#"
 			count: 1
 			path: src/Entity/Orders/AdjustmentOrder.php
@@ -1862,11 +1847,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Entity\\\\Orders\\\\BulkDistribution\\:\\:setPartner\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Orders/BulkDistribution.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Orders\\\\BulkDistribution\\:\\:isComplete\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Entity/Orders/BulkDistribution.php
 
@@ -1902,11 +1882,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Entity\\\\Orders\\\\MerchandiseOrder\\:\\:setWarehouse\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Orders/MerchandiseOrder.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Orders\\\\MerchandiseOrder\\:\\:isComplete\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Entity/Orders/MerchandiseOrder.php
 
@@ -1952,11 +1927,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Entity\\\\Orders\\\\SupplyOrder\\:\\:setWarehouse\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Orders/SupplyOrder.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Orders\\\\SupplyOrder\\:\\:isComplete\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Entity/Orders/SupplyOrder.php
 

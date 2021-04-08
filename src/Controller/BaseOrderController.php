@@ -6,6 +6,7 @@ use App\Entity\LineItem;
 use App\Entity\Order;
 use App\Entity\Product;
 use App\Exception\CommittedTransactionException;
+use App\Repository\OrderRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -35,7 +36,10 @@ abstract class BaseOrderController extends BaseController
 
         $params = $this->buildFilterParams($request);
 
-        $orders = $this->getRepository()->findAllPaged(
+        /** @var OrderRepository $repo */
+        $repo = $this->getRepository();
+
+        $orders = $repo->findAllPaged(
             $page,
             $limit,
             $sort ? $sort[0] : null,
@@ -43,7 +47,7 @@ abstract class BaseOrderController extends BaseController
             $params
         );
 
-        $total = $this->getRepository()->findAllCount($params);
+        $total = $$repo->findAllCount($params);
 
         $meta = [
             'pagination' => [
@@ -74,7 +78,7 @@ abstract class BaseOrderController extends BaseController
         $this->denyAccessUnlessGranted($this->getViewVoter(), $order);
 
         $meta = [
-            'enabledTransitions' => $order ? $this->getEnabledTransitions($workflowRegistry, $order) : [],
+            'enabledTransitions' => $this->getEnabledTransitions($workflowRegistry, $order),
         ];
 
         return $this->serialize($request, $order, null, $meta);
@@ -204,9 +208,9 @@ abstract class BaseOrderController extends BaseController
         return $this->success(sprintf("Orders %s have been deleted", implode(", ", $ids)));
     }
 
-    protected function getOrder(int $id): ?Order
+    protected function getOrder(int $id): Order
     {
-        /** @var Order $order */
+        /** @var ?Order $order */
         $order = $this->getRepository()->find($id);
 
         if (!$order) {
@@ -229,7 +233,7 @@ abstract class BaseOrderController extends BaseController
         return $orders;
     }
 
-    protected function processLineItems(Order $order, $lineItemsArray)
+    protected function processLineItems(Order $order, array $lineItemsArray): void
     {
         foreach ($lineItemsArray as $lineItemArray) {
             if (!isset($lineItemArray['id']) && (!$lineItemArray['product']['id'] || !$lineItemArray['quantity'])) {
@@ -237,6 +241,7 @@ abstract class BaseOrderController extends BaseController
             }
 
             if (isset($lineItemArray['id']) && $lineItemArray['id'] !== 0) {
+                /** @var LineItem $line */
                 $line = $order->getLineItem($lineItemArray['id']);
             } else {
                 $line = $this->createLineItem();
@@ -250,7 +255,7 @@ abstract class BaseOrderController extends BaseController
                 continue;
             }
 
-            if (!$line->getProduct() || $line->getProduct()->getId() !== $lineItemArray['product']['id']) {
+            if ($line->getProduct()->getId() !== $lineItemArray['product']['id']) {
                 $product = $this->getEm()->getReference(Product::class, $lineItemArray['product']['id']);
                 $line->setProduct($product);
             }
@@ -264,12 +269,12 @@ abstract class BaseOrderController extends BaseController
         }
     }
 
-    protected function extraLineItemProcessing(LineItem $line, array $lineItemArray)
+    protected function extraLineItemProcessing(LineItem $line, array $lineItemArray): void
     {
         return;
     }
 
-    protected function checkEditable(Order $order)
+    protected function checkEditable(Order $order): void
     {
         if (!$order->isEditable()) {
             throw new CommittedTransactionException(
