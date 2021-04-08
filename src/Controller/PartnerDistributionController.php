@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route(path="/api/orders/distribution")
  */
-class PartnerDistributionController extends OrderController
+class PartnerDistributionController extends BaseOrderController
 {
     protected $defaultEntityName = BulkDistribution::class;
 

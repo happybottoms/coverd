@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route(path="/api/orders/transfer")
  */
-class TransferOrderController extends OrderController
+class TransferOrderController extends BaseOrderController
 {
     protected $defaultEntityName = TransferOrder::class;
 

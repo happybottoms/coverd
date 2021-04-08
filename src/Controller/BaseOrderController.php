@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Workflow\Registry;
 use Symfony\Component\Workflow\Transition;
 
-abstract class OrderController extends BaseController
+abstract class BaseOrderController extends BaseController
 {
     protected $defaultEntityName = Order::class;
 

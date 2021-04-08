@@ -26,7 +26,7 @@ use Symfony\Component\Workflow\Registry;
  *
  * @Route(path="/api/orders/partner")
  */
-class PartnerOrderController extends OrderController
+class PartnerOrderController extends BaseOrderController
 {
     protected $defaultEntityName = PartnerOrder::class;
 

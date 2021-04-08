@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route(path="/api/orders/merchandise")
  */
-class MerchandiseOrderController extends OrderController
+class MerchandiseOrderController extends BaseOrderController
 {
     protected $defaultEntityName = MerchandiseOrder::class;
 
