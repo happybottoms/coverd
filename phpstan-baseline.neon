@@ -26,11 +26,6 @@ parameters:
 			path: src/Command/ZipCountyImportCommand.php
 
 		-
-			message: "#^Method App\\\\Controller\\\\AdjustmentOrderController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/AdjustmentOrderController.php
-
-		-
 			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\:\\:findAllSorted\\(\\)\\.$#"
 			count: 2
 			path: src/Controller/BaseAttributeDefinitionController.php
@@ -209,86 +204,6 @@ parameters:
 			message: "#^Method App\\\\Controller\\\\LoginController\\:\\:register\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Controller/LoginController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\MerchandiseOrderController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/MerchandiseOrderController.php
-
-		-
-			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\:\\:findAllPaged\\(\\)\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\:\\:findAllCount\\(\\)\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Cannot call method isDeletable\\(\\) on App\\\\Entity\\\\Order\\|null\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Order\\|null\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 2
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\OrderController\\:\\:processLineItems\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\OrderController\\:\\:processLineItems\\(\\) has parameter \\$lineItemsArray with no typehint specified\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Parameter \\#1 \\$line of method App\\\\Controller\\\\OrderController\\:\\:extraLineItemProcessing\\(\\) expects App\\\\Entity\\\\LineItem, App\\\\Entity\\\\LineItem\\|bool given\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Parameter \\#1 \\$lineItem of method App\\\\Entity\\\\Order\\:\\:removeLineItem\\(\\) expects App\\\\Entity\\\\LineItem, App\\\\Entity\\\\LineItem\\|bool given\\.$#"
-			count: 2
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Cannot call method getProduct\\(\\) on App\\\\Entity\\\\LineItem\\|bool\\.$#"
-			count: 2
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Cannot call method setProduct\\(\\) on App\\\\Entity\\\\LineItem\\|bool\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Cannot call method applyChangesFromArray\\(\\) on App\\\\Entity\\\\LineItem\\|bool\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Cannot call method getQuantity\\(\\) on App\\\\Entity\\\\LineItem\\|bool\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\OrderController\\:\\:extraLineItemProcessing\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\OrderController\\:\\:checkEditable\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
 
 		-
 			message: "#^Method App\\\\Controller\\\\PartnerController\\:\\:index\\(\\) has no return typehint specified\\.$#"

@@ -88,7 +88,7 @@ class AdjustmentOrderController extends BaseOrderController
         return $this->serialize($request, $order);
     }
 
-    protected function getDefaultTransformer()
+    protected function getDefaultTransformer(): AdjustmentOrderTransformer
     {
         return new AdjustmentOrderTransformer();
     }
