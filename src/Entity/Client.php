@@ -72,16 +72,7 @@ class Client extends CoreEntity implements AttributedEntityInterface
             self::class,
         ],
         'initial_marking' => self::STATUS_CREATION,
-        'places' => [
-            self::STATUS_ACTIVE,
-            self::STATUS_CREATION,
-            self::STATUS_INACTIVE,
-            self::STATUS_INACTIVE_BLOCKED,
-            self::STATUS_INACTIVE_DUPLICATE,
-            self::STATUS_INACTIVE_EXPIRED,
-            self::STATUS_NEEDS_REVIEW,
-            self::STATUS_REVIEW_PAST_DUE,
-        ],
+        'places' => self::STATUSES,
         'transitions' => [
             self::TRANSITION_ACTIVATE => [
                 'metadata' => [

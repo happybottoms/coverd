@@ -68,15 +68,7 @@ class Partner extends StorageLocation
             self::class,
         ],
         'initial_marking' => self::STATUS_START,
-        'places' => [
-            self::STATUS_ACTIVE,
-            self::STATUS_APPLICATION_PENDING,
-            self::STATUS_APPLICATION_PENDING_PRIORITY,
-            self::STATUS_INACTIVE,
-            self::STATUS_NEEDS_PROFILE_REVIEW,
-            self::STATUS_REVIEW_PAST_DUE,
-            self::STATUS_START,
-        ],
+        'places' => self::STATUSES,
         'transitions' => [
             self::TRANSITION_SUBMIT => [
                 'metadata' => [
