@@ -33,6 +33,51 @@ class SupplyOrder extends Order
 
     public const ROLE_VIEW = "ROLE_SUPPLY_ORDER_VIEW";
     public const ROLE_EDIT = "ROLE_SUPPLY_ORDER_EDIT";
+    
+    public const WORKFLOW = [
+        'type' => 'state_machine',
+        'audit_trail' => [
+            'enabled' => true,
+        ],
+        'marking_store' => [
+            'type' => 'method',
+            'property' => 'status',
+        ],
+        'supports' => [
+            self::class,
+        ],
+        'initial_marking' => self::STATUS_CREATING,
+        'places' => self::STATUSES,
+        'transitions' => [
+            self::TRANSITION_ORDER => [
+                'metadata' => [
+                    'title' => 'Order',
+                ],
+                'from' => [
+                    self::STATUS_CREATING,
+                ],
+                'to' => self::STATUS_ORDERED,
+            ],
+            self::TRANSITION_RECEIVE => [
+                'metadata' => [
+                    'title' => 'Receive',
+                ],
+                'from' => [
+                    self::STATUS_ORDERED,
+                ],
+                'to' => self::STATUS_RECEIVED,
+            ],
+            self::TRANSITION_COMPLETE => [
+                'metadata' => [
+                    'title' => 'Complete'
+                ],
+                'from' => [
+                    self::STATUS_RECEIVED,
+                ],
+                'to' => self::STATUS_COMPLETED,
+            ],
+        ],
+    ];
 
     /**
      * @var Supplier $supplier

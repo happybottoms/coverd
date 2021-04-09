@@ -58,6 +58,118 @@ class Client extends CoreEntity implements AttributedEntityInterface
     public const ROLE_EDIT_ALL = "ROLE_CLIENT_EDIT_ALL";
     public const ROLE_MANAGE_OWN = "ROLE_CLIENT_MANAGE_OWN";
     public const ROLE_VIEW_ALL = "ROLE_CLIENT_VIEW_ALL";
+    
+    public const WORKFLOW = [
+        'type' => 'state_machine',
+        'audit_trail' => [
+            'enabled' => true,
+        ],
+        'marking_store' => [
+            'type' => 'method',
+            'property' => 'status',
+        ],
+        'supports' => [
+            self::class,
+        ],
+        'initial_marking' => self::STATUS_CREATION,
+        'places' => [
+            self::STATUS_ACTIVE,
+            self::STATUS_CREATION,
+            self::STATUS_INACTIVE,
+            self::STATUS_INACTIVE_BLOCKED,
+            self::STATUS_INACTIVE_DUPLICATE,
+            self::STATUS_INACTIVE_EXPIRED,
+            self::STATUS_NEEDS_REVIEW,
+            self::STATUS_REVIEW_PAST_DUE,
+        ],
+        'transitions' => [
+            self::TRANSITION_ACTIVATE => [
+                'metadata' => [
+                    'title' => 'Activate'
+                ],
+                'from' => [
+                    self::STATUS_CREATION,
+                    self::STATUS_INACTIVE,
+                    self::STATUS_INACTIVE_BLOCKED,
+                    self::STATUS_INACTIVE_DUPLICATE,
+                    self::STATUS_INACTIVE_EXPIRED,
+                    self::STATUS_NEEDS_REVIEW,
+                    self::STATUS_REVIEW_PAST_DUE,
+                ],
+                'to' => self::STATUS_ACTIVE,
+            ],
+            self::TRANSITION_DEACTIVATE => [
+                'metadata' => [
+                    'title' => 'Deactivate'
+                ],
+                'from' => [
+                    self::STATUS_ACTIVE,
+                    self::STATUS_CREATION,
+                    self::STATUS_INACTIVE_BLOCKED,
+                    self::STATUS_INACTIVE_DUPLICATE,
+                    self::STATUS_INACTIVE_EXPIRED,
+                ],
+                'to' => self::STATUS_INACTIVE,
+            ],
+            self::TRANSITION_DEACTIVATE_EXPIRE => [
+                'metadata' => [
+                    'title' => 'Deactivate (Expire Client)'
+                ],
+                'from' => [
+                    self::STATUS_ACTIVE,
+                    self::STATUS_CREATION,
+                    self::STATUS_INACTIVE,
+                    self::STATUS_INACTIVE_DUPLICATE,
+                ],
+                'to' => self::STATUS_INACTIVE_EXPIRED,
+            ],
+            self::TRANSITION_DEACTIVATE_DUPLICATE => [
+                'metadata' => [
+                    'title' => 'Deactivate (Duplicate)'
+                ],
+                'from' => [
+                    self::STATUS_ACTIVE,
+                    self::STATUS_CREATION,
+                    self::STATUS_INACTIVE,
+                    self::STATUS_INACTIVE_EXPIRED,
+                ],
+                'to' => self::STATUS_INACTIVE_DUPLICATE,
+            ],
+            self::TRANSITION_FLAG_FOR_REVIEW => [
+                'metadata' => [
+                    'title' => 'Needs Review'
+                ],
+                'from' => [
+                    self::STATUS_ACTIVE,
+                ],
+                'to' => self::STATUS_NEEDS_REVIEW,
+            ],
+            self::TRANSITION_FLAG_FOR_REVIEW_PAST_DUE => [
+                'metadata' => [
+                    'title' => 'Review Past Due'
+                ],
+                'from' => [
+                    self::STATUS_NEEDS_REVIEW,
+                ],
+                'to' => self::STATUS_REVIEW_PAST_DUE,
+            ],
+            self::TRANSITION_DEACTIVATE_BLOCKED => [
+                'metadata' => [
+                    'title' => 'Deactivate (Blocked)'
+                ],
+                'from' => [
+                    self::STATUS_ACTIVE,
+                    self::STATUS_CREATION,
+                    self::STATUS_INACTIVE,
+                    self::STATUS_INACTIVE_DUPLICATE,
+                    self::STATUS_INACTIVE_EXPIRED,
+                    self::STATUS_NEEDS_REVIEW,
+                    self::STATUS_REVIEW_PAST_DUE
+                ],
+                'to' => self::STATUS_INACTIVE_BLOCKED,
+            ],
+        ],
+    ];
 
     /**
      * The unique auto incremented primary key.

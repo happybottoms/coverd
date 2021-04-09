@@ -26,6 +26,42 @@ class BulkDistribution extends Order
 
     public const ROLE_VIEW = "ROLE_DISTRIBUTION_ORDER_VIEW";
     public const ROLE_EDIT = "ROLE_DISTRIBUTION_ORDER_EDIT";
+    
+    public const WORKFLOW = [
+        'type' => 'state_machine',
+        'audit_trail' => [
+            'enabled' => true,
+        ],
+        'marking_store' => [
+            'type' => 'method',
+            'property' => 'status',
+        ],
+        'supports' => [
+            self::class,
+        ],
+        'initial_marking' => self::STATUS_CREATING,
+        'places' => self::STATUSES,
+        'transitions' => [
+            self::STATUS_PENDING => [
+                'metadata' => [
+                    'title' => 'Mark As Pending'
+                ],
+                'from' => [
+                    self::STATUS_CREATING,
+                ],
+                'to' => self::STATUS_PENDING,
+            ],
+            self::TRANSITION_COMPLETE => [
+                'metadata' => [
+                    'title' => 'Complete'
+                ],
+                'from' => [
+                    self::STATUS_PENDING,
+                ],
+                'to' => self::STATUS_COMPLETED,
+            ],
+        ],
+    ];
 
     /**
      * @var Partner $partner

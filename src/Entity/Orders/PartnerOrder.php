@@ -37,6 +37,61 @@ class PartnerOrder extends Order
 
     public const ROLE_VIEW = 'ROLE_PARTNER_ORDER_VIEW';
     public const ROLE_EDIT = 'ROLE_PARTNER_ORDER_EDIT';
+    
+    public const WORKFLOW = [
+        'type' => 'state_machine',
+        'audit_trail' => [
+            'enabled' => true,
+        ],
+        'marking_store' => [
+            'type' => 'method',
+            'property' => 'status',
+        ],
+        'supports' => [
+            self::class,
+        ],
+        'initial_marking' => self::STATUS_CREATING,
+        'places' => self::STATUSES,
+        'transitions' => [
+            self::TRANSITION_SUBMIT => [
+                'metadata' => [
+                    'title' => 'Submit',
+                ],
+                'from' => [
+                    self::STATUS_CREATING,
+                ],
+                'to' => self::STATUS_SUBMITTED,
+            ],
+            self::TRANSITION_ACCEPT => [
+                'metadata' => [
+                    'title' => 'Accept',
+                ],
+                'from' => [
+                    self::STATUS_COMPLETED,
+                    self::STATUS_SUBMITTED,
+                ],
+                'to' => self::STATUS_IN_PROCESS,
+            ],
+            self::TRANSITION_COMPLETE => [
+                'metadata' => [
+                    'title' => 'Ship'
+                ],
+                'from' => [
+                    self::STATUS_IN_PROCESS,
+                ],
+                'to' => self::STATUS_COMPLETED,
+            ],
+            self::TRANSITION_REVERT_TO_CREATING => [
+                'metadata' => [
+                    'title' => 'Revert To Creating'
+                ],
+                'from' => [
+                    self::STATUS_IN_PROCESS,
+                ],
+                'to' => self::STATUS_CREATING,
+            ],
+        ],
+    ];
 
     /**
      * @var Partner $partner

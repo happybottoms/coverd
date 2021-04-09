@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\Workflow\Exception\LogicException;
 use Symfony\Component\Workflow\Registry;
 
@@ -55,6 +54,115 @@ class Partner extends StorageLocation
     public const TRANSITION_REVIEWED = 'REVIEWED';
     public const TRANSITION_SUBMIT = 'SUBMIT';
     public const TRANSITION_SUBMIT_PRIORITY = 'SUBMIT_PRIORITY';
+
+    public const WORKFLOW = [
+        'type' => 'state_machine',
+        'audit_trail' => [
+            'enabled' => true,
+        ],
+        'marking_store' => [
+            'type' => 'method',
+            'property' => 'status',
+        ],
+        'supports' => [
+            self::class,
+        ],
+        'initial_marking' => self::STATUS_START,
+        'places' => [
+            self::STATUS_ACTIVE,
+            self::STATUS_APPLICATION_PENDING,
+            self::STATUS_APPLICATION_PENDING_PRIORITY,
+            self::STATUS_INACTIVE,
+            self::STATUS_NEEDS_PROFILE_REVIEW,
+            self::STATUS_REVIEW_PAST_DUE,
+            self::STATUS_START,
+        ],
+        'transitions' => [
+            self::TRANSITION_SUBMIT => [
+                'metadata' => [
+                    'title' => 'Submit'
+                ],
+                'from' => [
+                    self::STATUS_APPLICATION_PENDING_PRIORITY,
+                    self::STATUS_INACTIVE,
+                    self::STATUS_START,
+                ],
+                'to' => self::STATUS_APPLICATION_PENDING,
+            ],
+            self::TRANSITION_SUBMIT_PRIORITY => [
+                'metadata' => [
+                    'title' => 'Submit (Priority)'
+                ],
+                'from' => [
+                    self::STATUS_APPLICATION_PENDING,
+                    self::STATUS_INACTIVE,
+                ],
+                'to' => self::STATUS_APPLICATION_PENDING_PRIORITY,
+            ],
+            self::TRANSITION_ACTIVATE => [
+                'metadata' => [
+                    'title' => 'Activate'
+                ],
+                'from' => [
+                    self::STATUS_APPLICATION_PENDING,
+                    self::STATUS_APPLICATION_PENDING_PRIORITY,
+                    self::STATUS_INACTIVE,
+                    self::STATUS_NEEDS_PROFILE_REVIEW,
+                    self::STATUS_REVIEW_PAST_DUE,
+                ],
+                'to' => self::STATUS_ACTIVE,
+            ],
+            self::TRANSITION_REVIEWED => [
+                'metadata' => [
+                    'title' => 'Reviewed'
+                ],
+                'from' => [
+                    self::STATUS_NEEDS_PROFILE_REVIEW,
+                    self::STATUS_REVIEW_PAST_DUE,
+                ],
+                'to' => self::STATUS_ACTIVE,
+            ],
+            self::TRANSITION_FLAG_FOR_REVIEW => [
+                'metadata' => [
+                    'title' => 'Flag for Review'
+                ],
+                'from' => [
+                    self::STATUS_ACTIVE,
+                    self::STATUS_APPLICATION_PENDING,
+                    self::STATUS_APPLICATION_PENDING_PRIORITY,
+                    self::STATUS_INACTIVE,
+                    self::STATUS_REVIEW_PAST_DUE,
+                ],
+                'to' => self::STATUS_NEEDS_PROFILE_REVIEW,
+            ],
+            self::TRANSITION_FLAG_FOR_REVIEW_PAST_DUE => [
+                'metadata' => [
+                    'title' => 'Flag for Review Past Due'
+                ],
+                'from' => [
+                    self::STATUS_ACTIVE,
+                    self::STATUS_APPLICATION_PENDING,
+                    self::STATUS_APPLICATION_PENDING_PRIORITY,
+                    self::STATUS_INACTIVE,
+                    self::STATUS_NEEDS_PROFILE_REVIEW,
+                ],
+                'to' => self::STATUS_REVIEW_PAST_DUE,
+            ],
+            self::TRANSITION_DEACTIVATE => [
+                'metadata' => [
+                    'title' => 'Deactivate'
+                ],
+                'from' => [
+                    self::STATUS_ACTIVE,
+                    self::STATUS_APPLICATION_PENDING,
+                    self::STATUS_APPLICATION_PENDING_PRIORITY,
+                    self::STATUS_NEEDS_PROFILE_REVIEW,
+                    self::STATUS_REVIEW_PAST_DUE,
+                ],
+                'to' => self::STATUS_INACTIVE,
+            ],
+        ],
+    ];
 
     /**
      * @var string

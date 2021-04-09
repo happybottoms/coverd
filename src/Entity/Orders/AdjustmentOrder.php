@@ -15,6 +15,33 @@ class AdjustmentOrder extends Order
 {
     public const ROLE_VIEW = "ROLE_ADJUSTMENT_ORDER_VIEW";
     public const ROLE_EDIT = "ROLE_ADJUSTMENT_ORDER_EDIT";
+    
+    public const WORKFLOW = [
+        'type' => 'state_machine',
+        'audit_trail' => [
+            'enabled' => true,
+        ],
+        'marking_store' => [
+            'type' => 'method',
+            'property' => 'status',
+        ],
+        'supports' => [
+            self::class,
+        ],
+        'initial_marking' => self::STATUS_CREATING,
+        'places' => self::STATUSES,
+        'transitions' => [
+            self::TRANSITION_COMPLETE => [
+                'metadata' => [
+                    'title' => 'Complete'
+                ],
+                'from' => [
+                    self::STATUS_CREATING
+                ],
+                'to' => self::STATUS_COMPLETED,
+            ],
+        ],
+    ];
 
     /**
      * @var StorageLocation $storageLocation
