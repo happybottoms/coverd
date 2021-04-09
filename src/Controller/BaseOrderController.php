@@ -47,7 +47,7 @@ abstract class BaseOrderController extends BaseController
             $params
         );
 
-        $total = $$repo->findAllCount($params);
+        $total = $repo->findAllCount($params);
 
         $meta = [
             'pagination' => [
