@@ -26,7 +26,7 @@ class BulkDistribution extends Order
 
     public const ROLE_VIEW = "ROLE_DISTRIBUTION_ORDER_VIEW";
     public const ROLE_EDIT = "ROLE_DISTRIBUTION_ORDER_EDIT";
-    
+
     public const WORKFLOW = [
         'type' => 'state_machine',
         'audit_trail' => [

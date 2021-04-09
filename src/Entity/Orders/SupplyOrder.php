@@ -33,7 +33,7 @@ class SupplyOrder extends Order
 
     public const ROLE_VIEW = "ROLE_SUPPLY_ORDER_VIEW";
     public const ROLE_EDIT = "ROLE_SUPPLY_ORDER_EDIT";
-    
+
     public const WORKFLOW = [
         'type' => 'state_machine',
         'audit_trail' => [

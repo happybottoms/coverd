@@ -37,7 +37,7 @@ class PartnerOrder extends Order
 
     public const ROLE_VIEW = 'ROLE_PARTNER_ORDER_VIEW';
     public const ROLE_EDIT = 'ROLE_PARTNER_ORDER_EDIT';
-    
+
     public const WORKFLOW = [
         'type' => 'state_machine',
         'audit_trail' => [

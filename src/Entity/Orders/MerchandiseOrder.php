@@ -15,7 +15,7 @@ class MerchandiseOrder extends Order
 {
     public const ROLE_VIEW = "ROLE_MERCHANDISE_ORDER_VIEW";
     public const ROLE_EDIT = "ROLE_MERCHANDISE_ORDER_EDIT";
-    
+
     public const WORKFLOW = [
         'type' => 'state_machine',
         'audit_trail' => [
