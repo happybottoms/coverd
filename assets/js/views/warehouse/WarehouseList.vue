@@ -28,43 +28,12 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
-                        <div
-                            v-if="loading"
-                            class="loadingArea"
-                        >
-                            <pulse-loader
-                                :loading="loading"
-                                color="#3c8dbc"
-                            />
-                        </div>
-                        <table
-                            v-else
-                            class="table table-hover"
-                        >
-                            <thead>
-                                <tr>
-                                    <th>Warehouse ID</th>
-                                    <th>Title</th>
-                                    <th>Status</th>
-                                    <th>Last Updated</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr
-                                    v-for="warehouse in warehouses.data"
-                                    :key="warehouse.id"
-                                >
-                                    <td>
-                                        <router-link :to="{ name: 'warehouse-edit', params: { id: warehouse.id }}">
-                                            <i class="fa fa-edit" />{{ warehouse.id }}
-                                        </router-link>
-                                    </td>
-                                    <td v-text="warehouse.title" />
-                                    <td v-text="warehouse.status" />
-                                    <td>{{ warehouse.updatedAt | dateTimeFormat }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <tablepaged
+                            :columns="columns"
+                            api-url="/api/warehouses"
+                            edit-route="warehouses/"
+                            :sort-order="[{ field: 'id', direction: 'desc'}]"
+                        />
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -73,30 +42,26 @@
         </div>
     </section>
 </template>
-
 <script>
-import PulseLoader from "vue-spinner/src/PulseLoader";
+import TablePaged from '../../components/TablePaged.vue';
 
 export default {
-        components: {
-            PulseLoader,
-        },
-        props:[],
-        data() {
-            return {
-                warehouses: {},
-                loading: true,
-            };
-        },
-        created() {
-            axios
-                .get('/api/warehouses')
-                .then(response => this.warehouses = response.data)
-                .catch(error => {
-                    console.log(error)
-                })
-                .finally(() => this.loading = false);
-            console.log('Component mounted.')
-        }
+    components: {
+        'tablepaged' : TablePaged
+    },
+    props:[],
+    data() {
+        return {
+            warehouses: {},
+            loading: true,
+            columns: [
+                { name: '__checkbox', title: "#" },
+                { name: '__slot:link', title: "Warehouse Id", sortField: 'warehouse.id' },
+                { name: 'title', title: "Title", sortField: 'warehouse.title' },
+                { name: 'status', title: "Status", sortField: 'warehouse.status' },
+                { name: 'updatedAt', title: "Last Updated", callback: 'dateTimeFormat', sortField: 'warehouse.updatedAt' },
+            ]
+        };
     }
+}
 </script>
