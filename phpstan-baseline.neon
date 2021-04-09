@@ -906,11 +906,6 @@ parameters:
 			path: src/Entity/Client.php
 
 		-
-			message: "#^Property App\\\\Entity\\\\Client\\:\\:\\$attributes \\(Doctrine\\\\ORM\\\\PersistentCollection\\) does not accept Doctrine\\\\Common\\\\Collections\\\\ArrayCollection\\<mixed, mixed\\>\\.$#"
-			count: 1
-			path: src/Entity/Client.php
-
-		-
 			message: "#^Method App\\\\Entity\\\\Client\\:\\:setFirstName\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Entity/Client.php
@@ -966,7 +961,7 @@ parameters:
 			path: src/Entity/Client.php
 
 		-
-			message: "#^Property App\\\\Entity\\\\Client\\:\\:\\$attributes type mapping mismatch\\: property can contain Doctrine\\\\ORM\\\\PersistentCollection but database expects Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\EAV\\\\Attribute\\>\\.$#"
+			message: "#^Property App\\\\Entity\\\\Client\\:\\:\\$attributes type mapping mismatch\\: property can contain Doctrine\\\\Common\\\\Collections\\\\Collection but database expects Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\EAV\\\\Attribute\\>\\.$#"
 			count: 1
 			path: src/Entity/Client.php
 
@@ -1176,12 +1171,7 @@ parameters:
 			path: src/Entity/EAV/Attribute.php
 
 		-
-			message: "#^Property App\\\\Entity\\\\PartnerProfile\\:\\:\\$attributes type mapping mismatch\\: property can contain Doctrine\\\\ORM\\\\PersistentCollection but database expects Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\EAV\\\\Attribute\\>\\.$#"
-			count: 1
-			path: src/Entity/PartnerProfile.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\PartnerProfile\\:\\:\\$attributes \\(Doctrine\\\\ORM\\\\PersistentCollection\\) does not accept Doctrine\\\\Common\\\\Collections\\\\ArrayCollection\\<mixed, mixed\\>\\.$#"
+			message: "#^Property App\\\\Entity\\\\PartnerProfile\\:\\:\\$attributes type mapping mismatch\\: property can contain Doctrine\\\\Common\\\\Collections\\\\Collection but database expects Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\EAV\\\\Attribute\\>\\.$#"
 			count: 1
 			path: src/Entity/PartnerProfile.php
 

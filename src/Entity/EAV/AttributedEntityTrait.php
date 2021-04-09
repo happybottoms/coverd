@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 trait AttributedEntityTrait
 {
     /**
-     * @var ArrayCollection
+     * @var Collection
      *
      * @ORM\ManyToMany(
      *     targetEntity="App\Entity\EAV\Attribute",
@@ -69,7 +69,7 @@ trait AttributedEntityTrait
         return $this->attributes;
     }
 
-    public function processAttributeChanges($changes): void
+    public function processAttributeChanges(array $changes): void
     {
         if (isset($changes['attributes'])) {
             foreach ($changes['attributes'] as $attributeChange) {
@@ -98,6 +98,8 @@ trait AttributedEntityTrait
                 return $attribute;
             }
         }
+
+        return null;
     }
 
     private function getDefinitionById(int $id): ?Definition
@@ -112,5 +114,7 @@ trait AttributedEntityTrait
                 return $definition;
             }
         }
+
+        return null;
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Entity\EAV\AttributedEntity;
 use App\Entity\EAV\AttributedEntityTrait;
 use Doctrine\ORM\Mapping as ORM;
 

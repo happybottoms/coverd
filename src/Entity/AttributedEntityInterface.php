@@ -21,8 +21,5 @@ interface AttributedEntityInterface
 
     public function getAttributes(): Collection;
 
-    /**
-     * @param array $changes
-     */
-    public function processAttributeChanges($changes): void;
+    public function processAttributeChanges(array $changes): void;
 }
