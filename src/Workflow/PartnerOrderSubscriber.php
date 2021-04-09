@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EventSubscriber\Workflow;
+namespace App\Workflow;
 
 use App\Entity\Orders\PartnerOrder;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
