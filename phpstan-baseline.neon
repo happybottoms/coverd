@@ -241,11 +241,6 @@ parameters:
 			path: src/Controller/PartnerController.php
 
 		-
-			message: "#^Method App\\\\Controller\\\\PartnerDistributionController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/PartnerDistributionController.php
-
-		-
 			message: "#^Method App\\\\Controller\\\\PartnerDistributionMethodController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Controller/PartnerDistributionMethodController.php
@@ -254,11 +249,6 @@ parameters:
 			message: "#^Method App\\\\Controller\\\\PartnerFulfillmentPeriodController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Controller/PartnerFulfillmentPeriodController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\PartnerOrderController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/PartnerOrderController.php
 
 		-
 			message: "#^Method App\\\\Controller\\\\ProductCategoryController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
@@ -561,19 +551,9 @@ parameters:
 			path: src/Controller/SupplierController.php
 
 		-
-			message: "#^Method App\\\\Controller\\\\SupplyOrderController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/SupplyOrderController.php
-
-		-
 			message: "#^Method App\\\\Controller\\\\SystemController\\:\\:getSettings\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Controller/SystemController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\TransferOrderController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/TransferOrderController.php
 
 		-
 			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\:\\:findByPartner\\(\\)\\.$#"

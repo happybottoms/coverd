@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Workflow\Registry;
 
 /**
  * Class PartnerOrderController
@@ -86,6 +87,15 @@ class MerchandiseOrderController extends BaseOrderController
         return $this->serialize($request, $order);
     }
 
+    /**
+     * @Route("/{id}/transition", methods={"PATCH"})
+     * @IsGranted({"ROLE_MERCHANDISE_ORDER_EDIT"})
+     */
+    public function transition(Request $request, Registry $workflowRegistry, int $id): JsonResponse
+    {
+        return parent::transition($request, $workflowRegistry, $id);
+    }
+
     protected function getDefaultTransformer(): MerchandiseOrderTransformer
     {
         return new MerchandiseOrderTransformer();
@@ -94,6 +104,12 @@ class MerchandiseOrderController extends BaseOrderController
     protected function createLineItem()
     {
         return new MerchandiseOrderLineItem();
+    }
+
+    protected function getEditVoter(): string
+    {
+        // TODO ticket # 273: create a MerchandiseOrderVoter
+        return PartnerOrderVoter::EDIT;
     }
 
     protected function getViewVoter(): string

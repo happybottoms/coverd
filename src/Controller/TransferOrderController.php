@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Workflow\Registry;
 
 /**
  * @Route(path="/api/orders/transfer")
@@ -104,7 +105,16 @@ class TransferOrderController extends BaseOrderController
         return $this->serialize($request, $order);
     }
 
-    protected function getDefaultTransformer()
+    /**
+     * @Route("/{id}/transition", methods={"PATCH"})
+     * @IsGranted({"ROLE_TRANSFER_ORDER_EDIT"})
+     */
+    public function transition(Request $request, Registry $workflowRegistry, int $id): JsonResponse
+    {
+        return parent::transition($request, $workflowRegistry, $id);
+    }
+
+    protected function getDefaultTransformer(): TransferOrderTransformer
     {
         return new TransferOrderTransformer();
     }
@@ -112,6 +122,11 @@ class TransferOrderController extends BaseOrderController
     protected function createLineItem()
     {
         return new TransferOrderLineItem();
+    }
+
+    protected function getEditVoter(): string
+    {
+        return TransferOrderVoter::EDIT;
     }
 
     protected function getViewVoter(): string

@@ -208,6 +208,35 @@ abstract class BaseOrderController extends BaseController
         return $this->success(sprintf("Orders %s have been deleted", implode(", ", $ids)));
     }
 
+    /**
+     * NOTE: Call this method from child controllers so we can use the right roles for the IsGranted annotation
+     *       -- The Route annotation will need to be copied to the child class, too
+     * @Route("/{id}/transition", methods={"PATCH"})
+     * @IsGranted({"ROLE_ORDER_EDIT"})
+     */
+    public function transition(Request $request, Registry $workflowRegistry, int $id): JsonResponse
+    {
+        /** @var Order $order */
+        $order = $this->getOrder($id);
+        $this->denyAccessUnlessGranted($this->getEditVoter(), $order);
+
+        $params = $this->getParams($request);
+
+        if ($params['transition']) {
+            $workflowRegistry
+                ->get($order)
+                ->apply($order, $params['transition']);
+
+            $this->getEm()->flush();
+        }
+
+        $meta = [
+            'enabledTransitions' => $this->getEnabledTransitions($workflowRegistry, $order),
+        ];
+
+        return $this->serialize($request, $order, null, $meta);
+    }
+
     protected function getOrder(int $id): Order
     {
         /** @var ?Order $order */
@@ -323,5 +352,6 @@ abstract class BaseOrderController extends BaseController
      */
     abstract protected function createLineItem();
 
+    abstract protected function getEditVoter(): string;
     abstract protected function getViewVoter(): string;
 }
