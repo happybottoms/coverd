@@ -36,12 +36,7 @@ class SupplyOrderFixtures extends BaseFixture implements DependentFixtureInterfa
 
             $order->setSupplierAddress($this->faker->randomElement($supplier->getAddresses()));
 
-            $order->setStatus($this->faker->randomElement([
-                SupplyOrder::STATUS_ORDERED,
-                SupplyOrder::STATUS_RECEIVED,
-                SupplyOrder::STATUS_RECEIVED,
-                SupplyOrder::STATUS_RECEIVED,
-            ]));
+            $order->setStatus($this->faker->randomElement(SupplyOrder::STATUSES));
 
             $order->setCreatedAt($this->faker->dateTimeBetween('-1 year', 'now'));
             foreach ($products as $product) {
