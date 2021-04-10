@@ -4,7 +4,7 @@ namespace App\Workflow;
 
 use App\Entity\Orders\SupplyOrder;
 
-class SupplyOrderWorkflow
+class SupplyOrderWorkflow extends BaseWorkflow
 {
     public const WORKFLOW = [
         'type' => 'state_machine',

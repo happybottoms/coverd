@@ -4,7 +4,7 @@ namespace App\Workflow;
 
 use App\Entity\Orders\BulkDistribution;
 
-class BulkDistributionOrderWorkflow
+class BulkDistributionOrderWorkflow extends BaseWorkflow
 {
     public const WORKFLOW = [
         'type' => 'state_machine',

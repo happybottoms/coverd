@@ -4,7 +4,7 @@ namespace App\Workflow;
 
 use App\Entity\Partner;
 
-class PartnerWorkflow
+class PartnerWorkflow extends BaseWorkflow
 {
     public const WORKFLOW = [
         'type' => 'state_machine',

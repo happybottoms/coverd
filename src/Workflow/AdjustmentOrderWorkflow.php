@@ -4,7 +4,7 @@ namespace App\Workflow;
 
 use App\Entity\Orders\AdjustmentOrder;
 
-class AdjustmentOrderWorkflow
+class AdjustmentOrderWorkflow extends BaseWorkflow
 {
     public const WORKFLOW = [
         'type' => 'state_machine',
