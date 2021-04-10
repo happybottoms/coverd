@@ -21,7 +21,7 @@ class MerchandiseOrderWorkflow extends BaseWorkflow
         'initial_marking' => MerchandiseOrder::STATUS_CREATING,
         'places' => MerchandiseOrder::STATUSES,
         'transitions' => [
-            MerchandiseOrder::TRANSITION_COMPLETE => [
+            self::TRANSITION_COMPLETE => [
                 'metadata' => [
                     'title' => 'Complete'
                 ],

@@ -21,7 +21,7 @@ class TransferOrderWorkflow extends BaseWorkflow
         'initial_marking' => TransferOrder::STATUS_CREATING,
         'places' => TransferOrder::STATUSES,
         'transitions' => [
-            TransferOrder::TRANSITION_COMPLETE => [
+            self::TRANSITION_COMPLETE => [
                 'metadata' => [
                     'title' => 'Complete'
                 ],

@@ -6,6 +6,14 @@ use App\Entity\Partner;
 
 class PartnerWorkflow extends BaseWorkflow
 {
+    public const TRANSITION_ACTIVATE = 'ACTIVATE';
+    public const TRANSITION_DEACTIVATE = 'DEACTIVATE';
+    public const TRANSITION_FLAG_FOR_REVIEW = 'FLAG_FOR_REVIEW';
+    public const TRANSITION_FLAG_FOR_REVIEW_PAST_DUE = 'FLAG_FOR_REVIEW_PAST_DUE';
+    public const TRANSITION_REVIEWED = 'REVIEWED';
+    public const TRANSITION_SUBMIT = 'SUBMIT';
+    public const TRANSITION_SUBMIT_PRIORITY = 'SUBMIT_PRIORITY';
+
     public const WORKFLOW = [
         'type' => 'state_machine',
         'audit_trail' => [
@@ -21,7 +29,7 @@ class PartnerWorkflow extends BaseWorkflow
         'initial_marking' => Partner::STATUS_START,
         'places' => Partner::STATUSES,
         'transitions' => [
-            Partner::TRANSITION_SUBMIT => [
+            self::TRANSITION_SUBMIT => [
                 'metadata' => [
                     'title' => 'Submit'
                 ],
@@ -32,7 +40,7 @@ class PartnerWorkflow extends BaseWorkflow
                 ],
                 'to' => Partner::STATUS_APPLICATION_PENDING,
             ],
-            Partner::TRANSITION_SUBMIT_PRIORITY => [
+            self::TRANSITION_SUBMIT_PRIORITY => [
                 'metadata' => [
                     'title' => 'Submit (Priority)'
                 ],
@@ -42,7 +50,7 @@ class PartnerWorkflow extends BaseWorkflow
                 ],
                 'to' => Partner::STATUS_APPLICATION_PENDING_PRIORITY,
             ],
-            Partner::TRANSITION_ACTIVATE => [
+            self::TRANSITION_ACTIVATE => [
                 'metadata' => [
                     'title' => 'Activate'
                 ],
@@ -55,7 +63,7 @@ class PartnerWorkflow extends BaseWorkflow
                 ],
                 'to' => Partner::STATUS_ACTIVE,
             ],
-            Partner::TRANSITION_REVIEWED => [
+            self::TRANSITION_REVIEWED => [
                 'metadata' => [
                     'title' => 'Reviewed'
                 ],
@@ -65,7 +73,7 @@ class PartnerWorkflow extends BaseWorkflow
                 ],
                 'to' => Partner::STATUS_ACTIVE,
             ],
-            Partner::TRANSITION_FLAG_FOR_REVIEW => [
+            self::TRANSITION_FLAG_FOR_REVIEW => [
                 'metadata' => [
                     'title' => 'Flag for Review'
                 ],
@@ -78,7 +86,7 @@ class PartnerWorkflow extends BaseWorkflow
                 ],
                 'to' => Partner::STATUS_NEEDS_PROFILE_REVIEW,
             ],
-            Partner::TRANSITION_FLAG_FOR_REVIEW_PAST_DUE => [
+            self::TRANSITION_FLAG_FOR_REVIEW_PAST_DUE => [
                 'metadata' => [
                     'title' => 'Flag for Review Past Due'
                 ],
@@ -91,7 +99,7 @@ class PartnerWorkflow extends BaseWorkflow
                 ],
                 'to' => Partner::STATUS_REVIEW_PAST_DUE,
             ],
-            Partner::TRANSITION_DEACTIVATE => [
+            self::TRANSITION_DEACTIVATE => [
                 'metadata' => [
                     'title' => 'Deactivate'
                 ],

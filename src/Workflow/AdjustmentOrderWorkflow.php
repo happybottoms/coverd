@@ -6,6 +6,8 @@ use App\Entity\Orders\AdjustmentOrder;
 
 class AdjustmentOrderWorkflow extends BaseWorkflow
 {
+    public const TRANSITION_COMPLETE = 'COMPLETE';
+
     public const WORKFLOW = [
         'type' => 'state_machine',
         'audit_trail' => [
@@ -21,7 +23,7 @@ class AdjustmentOrderWorkflow extends BaseWorkflow
         'initial_marking' => AdjustmentOrder::STATUS_CREATING,
         'places' => AdjustmentOrder::STATUSES,
         'transitions' => [
-            AdjustmentOrder::TRANSITION_COMPLETE => [
+            self::TRANSITION_COMPLETE => [
                 'metadata' => [
                     'title' => 'Complete'
                 ],

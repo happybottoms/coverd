@@ -6,6 +6,9 @@ use App\Entity\Orders\SupplyOrder;
 
 class SupplyOrderWorkflow extends BaseWorkflow
 {
+    public const TRANSITION_ORDER = 'ORDER';
+    public const TRANSITION_RECEIVE = 'RECEIVE';
+
     public const WORKFLOW = [
         'type' => 'state_machine',
         'audit_trail' => [
@@ -21,7 +24,7 @@ class SupplyOrderWorkflow extends BaseWorkflow
         'initial_marking' => SupplyOrder::STATUS_CREATING,
         'places' => SupplyOrder::STATUSES,
         'transitions' => [
-            SupplyOrder::TRANSITION_ORDER => [
+            self::TRANSITION_ORDER => [
                 'metadata' => [
                     'title' => 'Order',
                 ],
@@ -30,7 +33,7 @@ class SupplyOrderWorkflow extends BaseWorkflow
                 ],
                 'to' => SupplyOrder::STATUS_ORDERED,
             ],
-            SupplyOrder::TRANSITION_RECEIVE => [
+            self::TRANSITION_RECEIVE => [
                 'metadata' => [
                     'title' => 'Receive',
                 ],
@@ -39,7 +42,7 @@ class SupplyOrderWorkflow extends BaseWorkflow
                 ],
                 'to' => SupplyOrder::STATUS_RECEIVED,
             ],
-            SupplyOrder::TRANSITION_COMPLETE => [
+            self::TRANSITION_COMPLETE => [
                 'metadata' => [
                     'title' => 'Complete'
                 ],

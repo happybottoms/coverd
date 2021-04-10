@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Entity\Client;
+use App\Workflow\ClientWorkflow;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -84,13 +85,13 @@ class ClientExpirationCommand extends Command
             foreach ($agedOutClients as $client) {
                 $this->workflowRegistry
                     ->get($client)
-                    ->apply($client, Client::TRANSITION_DEACTIVATE_EXPIRE);
+                    ->apply($client, ClientWorkflow::TRANSITION_DEACTIVATE_EXPIRE);
             }
 
             foreach ($maxDistributionClients as $client) {
                 $this->workflowRegistry
                     ->get($client)
-                    ->apply($client, Client::TRANSITION_DEACTIVATE_EXPIRE);
+                    ->apply($client, ClientWorkflow::TRANSITION_DEACTIVATE_EXPIRE);
             }
 
             $this->em->flush();
@@ -98,7 +99,7 @@ class ClientExpirationCommand extends Command
             $io->success(sprintf(
                 '%d client(s) have been transitioned to "%s".',
                 count($rows),
-                Client::TRANSITION_DEACTIVATE_EXPIRE
+                ClientWorkflow::TRANSITION_DEACTIVATE_EXPIRE
             ));
         } else {
             $io->warning(sprintf(
