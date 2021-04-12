@@ -28,7 +28,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
-                        <tablepaged
+                        <table-paged
                             :columns="columns"
                             api-url="/api/warehouses"
                             edit-route="warehouses/"
@@ -47,13 +47,10 @@ import TablePaged from '../../components/TablePaged.vue';
 
 export default {
     components: {
-        'tablepaged' : TablePaged
+        TablePaged
     },
-    props:[],
     data() {
         return {
-            warehouses: {},
-            loading: true,
             columns: [
                 { name: '__checkbox', title: "#" },
                 { name: '__slot:link', title: "Warehouse Id", sortField: 'warehouse.id' },
