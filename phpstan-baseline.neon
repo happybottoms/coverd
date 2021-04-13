@@ -721,21 +721,6 @@ parameters:
 			path: src/Controller/UserController.php
 
 		-
-			message: "#^Method App\\\\Controller\\\\WarehouseController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/WarehouseController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\WarehouseController\\:\\:getWarehouseById\\(\\) has parameter \\$id with no typehint specified\\.$#"
-			count: 1
-			path: src/Controller/WarehouseController.php
-
-		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: src/Controller/WarehouseController.php
-
-		-
 			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\:\\:findAllInConstraints\\(\\)\\.$#"
 			count: 1
 			path: src/Controller/ZipCountyController.php

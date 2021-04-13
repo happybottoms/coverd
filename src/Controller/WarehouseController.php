@@ -3,9 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Warehouse;
-use App\Transformers\StorageLocationTransformer;
+use App\Repository\WarehouseRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,7 +31,20 @@ class WarehouseController extends StorageLocationController
     {
         $this->denyAccessUnlessGranted(Warehouse::ROLE_VIEW);
 
-        $partners = $this->getRepository(Warehouse::class)->findAll();
+        $sort = $request->get('sort') ? explode('|', $request->get('sort')) : null;
+        $page = $request->get('page', 1);
+        $limit = $request->get('per_page', 10);
+        $params = $this->buildFilterParams($request);
+
+        /** @var WarehouseRepository $repo */
+        $repo = $this->getRepository(Warehouse::class);
+        $partners = $repo->findAllPaged(
+            $page,
+            $limit,
+            $sort ? $sort[0] : null,
+            $sort ? $sort[1] : null,
+            $params
+        );
 
         return $this->serialize($request, $partners);
     }
@@ -50,14 +64,9 @@ class WarehouseController extends StorageLocationController
         return $this->serialize($request, $partner);
     }
 
-    protected function getDefaultTransformer()
+    protected function getWarehouseById(int $id): Warehouse
     {
-        return new StorageLocationTransformer();
-    }
-
-    protected function getWarehouseById($id): Warehouse
-    {
-        /** @var Warehouse $warehouse */
+        /** @var ?Warehouse $warehouse */
         $warehouse = $this->getRepository()->find($id);
 
         if (!$warehouse) {
@@ -65,5 +74,24 @@ class WarehouseController extends StorageLocationController
         }
 
         return $warehouse;
+    }
+
+    /**
+     * @param Request $request
+     * @return ParameterBag
+     */
+    protected function buildFilterParams(Request $request)
+    {
+        $params = new ParameterBag();
+
+        if ($request->get('status')) {
+            $params->set('status', $request->get('status'));
+        }
+
+        if ($request->get('id')) {
+            $params->set('id', $request->get('id'));
+        }
+
+        return $params;
     }
 }
