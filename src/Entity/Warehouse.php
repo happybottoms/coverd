@@ -5,10 +5,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Warehouse class
- * @package App\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\WarehouseRepository")
  *
- * @ORM\Entity()
  */
 class Warehouse extends StorageLocation
 {

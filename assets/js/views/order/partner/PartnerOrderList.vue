@@ -121,98 +121,97 @@
 </template>
 
 <script>
-    import ModalConfirmBulkChange from '../../../components/ModalConfirmBulkChange.vue';
-    import DateField from '../../../components/DateField.vue';
-    import OptionListEntity from '../../../components/OptionListEntity.vue';
-    import OptionListStatic from '../../../components/OptionListStatic.vue';
-    import PartnerSelectionForm from '../../../components/PartnerSelectionForm.vue';
-    import TablePaged from '../../../components/TablePaged.vue';
-    export default {
-        components: {
-            'modalbulkchange' : ModalConfirmBulkChange,
-            'datefield' : DateField,
-            'optionlist' : OptionListEntity,
-            'optionliststatic' : OptionListStatic,
-            'partnerselectionform' : PartnerSelectionForm,
-            'tablepaged' : TablePaged
+import ModalConfirmBulkChange from '../../../components/ModalConfirmBulkChange.vue';
+import DateField from '../../../components/DateField.vue';
+import OptionListEntity from '../../../components/OptionListEntity.vue';
+import OptionListStatic from '../../../components/OptionListStatic.vue';
+import PartnerSelectionForm from '../../../components/PartnerSelectionForm.vue';
+import TablePaged from '../../../components/TablePaged.vue';
+export default {
+    components: {
+        'modalbulkchange' : ModalConfirmBulkChange,
+        'datefield' : DateField,
+        'optionlist' : OptionListEntity,
+        'optionliststatic' : OptionListStatic,
+        'partnerselectionform' : PartnerSelectionForm,
+        'tablepaged' : TablePaged
+    },
+    props:[],
+    data() {
+        return {
+            orders: {},
+            columns: [
+                { name: '__checkbox', title: "#" },
+                { name: '__slot:link', title: "Order Id", sortField: 'id' },
+                { name: 'partner.title', title: "Partner", sortField: 'partner.title' },
+                { name: 'warehouse.title', title: "Warehouse", sortField: 'warehouse.title' },
+                { name: 'orderPeriod', title: "Order Period", callback: 'periodFormat', sortField: 'orderPeriod' },
+                { name: 'status', title: "Status", sortField: 'status' },
+                { name: 'createdAt', title: "Created", callback: 'dateTimeFormat', sortField: 'createdAt' },
+                { name: 'updatedAt', title: "Last Updated", callback: 'dateTimeFormat', sortField: 'updatedAt' },
+            ],
+            statuses: [
+                { id: "IN_PROCESS", name: "In Process" },
+                { id: "PENDING", name: "Pending" },
+                { id: "SHIPPED", name: "Shipped" },
+            ],
+            filters: {
+                status: null,
+                fulfillmentPeriod: null,
+                orderPeriod: null,
+                partner: {}
+            },
+            selection: [],
+            bulkChange: {},
+        };
+    },
+    mounted() {
+        this.$events.$on('selection-change', eventData => this.onSelectionChange(eventData));
+    },
+    methods: {
+        routerLink: function (id) {
+            return "<router-link to=" + { name: 'order-partner-edit', params: { id: id }} + "><i class=\"fa fa-edit\"></i>" + id + "</router-link>";
         },
-        props:[],
-        data() {
-            return {
-                orders: {},
-                columns: [
-                    { name: '__checkbox', title: "#" },
-                    { name: '__slot:link', title: "Order Id", sortField: 'id' },
-                    { name: 'partner.title', title: "Partner", sortField: 'partner.title' },
-                    { name: 'warehouse.title', title: "Warehouse", sortField: 'warehouse.title' },
-                    { name: 'orderPeriod', title: "Order Period", callback: 'periodFormat', sortField: 'orderPeriod' },
-                    { name: 'status', title: "Status", sortField: 'status' },
-                    { name: 'createdAt', title: "Created", callback: 'dateTimeFormat', sortField: 'createdAt' },
-                    { name: 'updatedAt', title: "Last Updated", callback: 'dateTimeFormat', sortField: 'updatedAt' },
-                ],
-                statuses: [
-                    {id: "IN_PROCESS", name: "In Process"},
-                    {id: "PENDING", name: "Pending"},
-                    {id: "SHIPPED", name: "Shipped"},
-                ],
-                filters: {
-                    status: null,
-                    fulfillmentPeriod: null,
-                    orderPeriod: null,
-                    partner: {}
-                },
-                selection: [],
-                bulkChange: {},
+        onPaginationData (paginationData) {
+            this.$refs.pagination.setPaginationData(paginationData)
+        },
+        onChangePage (page) {
+            this.$refs.vuetable.changePage(page)
+        },
+        doFilter () {
+            console.log('doFilter:', this.requestParams());
+            this.$events.fire('filter-set', this.requestParams());
+        },
+        onSelectionChange (selection) {
+            this.selection = selection;
+        },
+        bulkStatusChange (statusId) {
+            $('#bulkChangeModal').modal('show');
+            this.bulkChange = {
+                status: statusId
             };
         },
-        mounted() {
-            this.$events.$on('selection-change', eventData => this.onSelectionChange(eventData));
+        doBulkChange () {
+            let self = this;
+            axios
+                .patch('/api/orders/partner/bulk-change', {
+                    ids: self.selection,
+                    changes: self.bulkChange,
+                })
+                .then(response => self.$refs.hbtable.refresh())
+                .catch(function (error) {
+                    console.log(error);
+                });
+
         },
-        methods: {
-            routerLink: function (id) {
-                return "<router-link to=" + { name: 'order-partner-edit', params: { id: id }} + "><i class=\"fa fa-edit\"></i>" + id + "</router-link>";
-            },
-            onPaginationData (paginationData) {
-                this.$refs.pagination.setPaginationData(paginationData)
-            },
-            onChangePage (page) {
-                this.$refs.vuetable.changePage(page)
-            },
-            doFilter () {
-                console.log('doFilter:', this.requestParams());
-                this.$events.fire('filter-set', this.requestParams());
-            },
-            onSelectionChange (selection) {
-                this.selection = selection;
-            },
-            bulkStatusChange (statusId) {
-                $('#bulkChangeModal').modal('show');
-                this.bulkChange = {
-                    status: statusId
-                };
-            },
-            doBulkChange () {
-                let self = this;
-                axios
-                    .patch('/api/orders/partner/bulk-change', {
-                        ids: self.selection,
-                        changes: self.bulkChange,
-                    })
-                    .then(response => self.$refs.hbtable.refresh())
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-
-            },
-            requestParams: function () {
-                return {
-                    status: this.filters.status || null,
-                    fulfillmentPeriod: this.filters.fulfillmentPeriod || null,
-                    orderPeriod: this.filters.orderPeriod || null,
-                    partner: this.filters.partner.id || null,
-                }
-            },
-
-        }
+        requestParams: function () {
+            return {
+                status: this.filters.status || null,
+                fulfillmentPeriod: this.filters.fulfillmentPeriod || null,
+                orderPeriod: this.filters.orderPeriod || null,
+                partner: this.filters.partner.id || null,
+            }
+        },
     }
+}
 </script>
