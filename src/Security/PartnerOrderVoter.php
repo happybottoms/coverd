@@ -79,14 +79,8 @@ class PartnerOrderVoter extends Voter
         $activePartner = $user->getActivePartner();
 
         // If they have the manage own role, have an active partner, and this order is that partner's, they can edit
-        if (
-            $user->hasRole(Order::ROLE_MANAGE_OWN)
+        return $user->hasRole(Order::ROLE_MANAGE_OWN)
             && $activePartner
-            && $order->getPartner()->getId() === $activePartner->getId()
-        ) {
-            return true;
-        }
-
-        return false;
+            && $order->getPartner()->getId() === $activePartner->getId();
     }
 }

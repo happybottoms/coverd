@@ -3,28 +3,6 @@
         <div class="box-body">
             <h2>{{ order.sequence }}</h2>
             <div
-                class="form-group"
-                :class="{ 'has-error': statusError }"
-            >
-                <template v-if="editable">
-                    <optionliststatic
-                        v-model="order.status"
-                        label="Status:"
-                        :preloaded-options="statuses"
-                        empty-string="-- Select Status --"
-                    />
-                    <fielderror v-if="statusError">
-                        Field is required
-                    </fielderror>
-                </template>
-
-                <template v-else>
-                    <strong>Status:</strong>
-                    <span>{{ order.status | statusFormat }}</span>
-                </template>
-            </div>
-
-            <div
                 v-if="order.hasOwnProperty('orderPeriod')"
                 class="form-group"
             >
@@ -92,27 +70,22 @@
 </template>
 
 <script>
-    import FieldError from '../components/FieldError.vue';
-    import DateField from '../components/DateField.vue';
-    import OptionListStatic from '../components/OptionListStatic.vue';
+import DateField from '../components/DateField.vue';
 
-    export default {
+export default {
         components: {
-            'fielderror': FieldError,
             'datefield': DateField,
-            'optionliststatic' : OptionListStatic
         },
         props: {
             order: { type: Object, required: true },
             orderType: { type: String, required: true, },
             editable: { type: Boolean, default: true },
-            statuses: { type: Array, required: true },
             v: { type: Object },
         },
         computed: {
             statusError: function () {
                 return this.v && this.v.status && this.v.status.$error;
-            }
+            },
         }
     }
 </script>

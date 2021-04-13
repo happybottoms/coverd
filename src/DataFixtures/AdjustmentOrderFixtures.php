@@ -4,8 +4,8 @@ namespace App\DataFixtures;
 
 use App\Entity\Orders\AdjustmentOrder;
 use App\Entity\Orders\AdjustmentOrderLineItem;
-use App\Entity\Product;
 use App\Entity\Partner;
+use App\Entity\Product;
 use App\Entity\StorageLocation;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -34,7 +34,7 @@ class AdjustmentOrderFixtures extends BaseFixture implements DependentFixtureInt
                 $storageLocation
             );
 
-            $order->setStatus(AdjustmentOrder::STATUS_COMPLETED);
+            $order->setStatus($this->faker->randomElement(AdjustmentOrder::STATUSES));
             $order->setCreatedAt($this->faker->dateTimeBetween('-1 year', 'now'));
             $order->setReason("Fixture Adjustment.");
 

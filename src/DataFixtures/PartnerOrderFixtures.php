@@ -4,8 +4,8 @@ namespace App\DataFixtures;
 
 use App\Entity\Orders\PartnerOrder;
 use App\Entity\Orders\PartnerOrderLineItem;
-use App\Entity\Product;
 use App\Entity\Partner;
+use App\Entity\Product;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
@@ -35,11 +35,7 @@ class PartnerOrderFixtures extends BaseFixture implements DependentFixtureInterf
                 $this->getReference('warehouse_main')
             );
 
-            $order->setStatus($this->faker->randomElement([
-                PartnerOrder::STATUS_SHIPPED,
-                PartnerOrder::STATUS_PENDING,
-                PartnerOrder::STATUS_IN_PROCESS,
-            ]));
+            $order->setStatus($this->faker->randomElement(PartnerOrder::STATUSES));
 
             $order->setCreatedAt($this->faker->dateTimeBetween('-1 year', 'now'));
 

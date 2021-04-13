@@ -4,8 +4,8 @@ namespace App\DataFixtures;
 
 use App\Entity\Orders\TransferOrder;
 use App\Entity\Orders\TransferOrderLineItem;
-use App\Entity\Product;
 use App\Entity\Partner;
+use App\Entity\Product;
 use App\Entity\StorageLocation;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -41,7 +41,7 @@ class TransferOrderFixtures extends BaseFixture implements DependentFixtureInter
             );
 
             $order->setCreatedAt($this->faker->dateTimeBetween('-1 year', 'now'));
-            $order->setStatus(TransferOrder::STATUS_COMPLETED);
+            $order->setStatus($this->faker->randomElement(TransferOrder::STATUSES));
 
             foreach ($products as $product) {
                 $lineItem = new TransferOrderLineItem($product, $this->faker->numberBetween(100, 1000));

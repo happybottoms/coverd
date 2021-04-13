@@ -18,8 +18,15 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class SupplyOrder extends Order
 {
-    public const STATUS_ORDERED = "ORDERED";
-    public const STATUS_RECEIVED = "RECEIVED";
+    public const STATUS_ORDERED = 'ORDERED';
+    public const STATUS_RECEIVED = 'RECEIVED';
+
+    public const STATUSES = [
+        self::STATUS_COMPLETED,
+        self::STATUS_CREATING,
+        self::STATUS_ORDERED,
+        self::STATUS_RECEIVED,
+    ];
 
     public const ROLE_VIEW = "ROLE_SUPPLY_ORDER_VIEW";
     public const ROLE_EDIT = "ROLE_SUPPLY_ORDER_EDIT";
@@ -126,7 +133,7 @@ class SupplyOrder extends Order
         $this->warehouse = $warehouse;
     }
 
-    public function isComplete()
+    public function isComplete(): bool
     {
         return $this->getStatus() === self::STATUS_RECEIVED;
     }

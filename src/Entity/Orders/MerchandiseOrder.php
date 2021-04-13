@@ -60,7 +60,7 @@ class MerchandiseOrder extends Order
         $this->warehouse = $warehouse;
     }
 
-    public function isComplete()
+    public function isComplete(): bool
     {
         return $this->getStatus() === self::STATUS_COMPLETED;
     }

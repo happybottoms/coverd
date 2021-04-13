@@ -21,7 +21,15 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 abstract class Order extends CoreEntity
 {
-    public const STATUS_COMPLETED = "COMPLETED";
+    public const STATUS_COMPLETED = 'COMPLETED';
+    public const STATUS_CREATING = 'CREATING';
+
+    public const STATUSES = [
+        self::STATUS_COMPLETED,
+        self::STATUS_CREATING,
+    ];
+
+    public const TRANSITION_COMPLETE = 'COMPLETE';
 
     public const ROLE_VIEW_ALL = "ROLE_ORDER_VIEW_ALL";
     public const ROLE_EDIT_ALL = "ROLE_ORDER_EDIT_ALL";
@@ -173,12 +181,12 @@ abstract class Order extends CoreEntity
     /**
      * @param string $status
      */
-    public function setStatus($status)
+    public function setStatus($status): void
     {
         $this->status = $status;
     }
 
-    public function isComplete()
+    public function isComplete(): bool
     {
         return $this->getStatus() === self::STATUS_COMPLETED;
     }

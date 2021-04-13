@@ -47,14 +47,6 @@ class Client extends CoreEntity implements AttributedEntityInterface
         self::STATUS_REVIEW_PAST_DUE,
     ];
 
-    public const TRANSITION_ACTIVATE = 'ACTIVATE';
-    public const TRANSITION_DEACTIVATE = 'DEACTIVATE';
-    public const TRANSITION_DEACTIVATE_BLOCKED = 'BLOCK';
-    public const TRANSITION_DEACTIVATE_DUPLICATE = 'DUPLICATE';
-    public const TRANSITION_DEACTIVATE_EXPIRE = 'EXPIRE';
-    public const TRANSITION_FLAG_FOR_REVIEW = 'FLAG_FOR_REVIEW';
-    public const TRANSITION_FLAG_FOR_REVIEW_PAST_DUE = 'FLAG_FOR_REVIEW_PAST_DUE';
-
     public const ROLE_EDIT_ALL = "ROLE_CLIENT_EDIT_ALL";
     public const ROLE_MANAGE_OWN = "ROLE_CLIENT_MANAGE_OWN";
     public const ROLE_VIEW_ALL = "ROLE_CLIENT_VIEW_ALL";
@@ -208,17 +200,11 @@ class Client extends CoreEntity implements AttributedEntityInterface
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getPublicId(): ?string
     {
         return $this->publicId;
     }
 
-    /**
-     * @param string $publicId
-     */
     public function setPublicId(?string $publicId): void
     {
         $this->publicId = $publicId;

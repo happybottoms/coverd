@@ -10,6 +10,7 @@ use App\Entity\Partner;
 use App\Entity\User;
 use App\Entity\Warehouse;
 use App\Exception\UserInterfaceException;
+use App\Security\PartnerOrderVoter;
 use App\Transformers\BagTransformer;
 use App\Transformers\PartnerOrderLineItemTransformer;
 use App\Transformers\PartnerOrderTransformer;
@@ -17,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Workflow\Registry;
 
 /**
  * Class PartnerOrderController
@@ -24,17 +26,9 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route(path="/api/orders/partner")
  */
-class PartnerOrderController extends OrderController
+class PartnerOrderController extends BaseOrderController
 {
     protected $defaultEntityName = PartnerOrder::class;
-
-    /**
-     * @return PartnerOrderLineItem
-     */
-    protected function createLineItem()
-    {
-        return new PartnerOrderLineItem();
-    }
 
     /**
      * Save a new partner order
@@ -216,11 +210,6 @@ class PartnerOrderController extends OrderController
         return $this->meta($existingOrder === null);
     }
 
-    protected function getDefaultTransformer()
-    {
-        return new PartnerOrderTransformer();
-    }
-
     protected function buildFilterParams(Request $request)
     {
         $params = parent::buildFilterParams($request);
@@ -241,5 +230,34 @@ class PartnerOrderController extends OrderController
         }
 
         return $params;
+    }
+
+    /**
+     * @Route("/{id}/transition", methods={"PATCH"})
+     * @IsGranted({"ROLE_PARTNER_ORDER_EDIT"})
+     */
+    public function transition(Request $request, Registry $workflowRegistry, int $id): JsonResponse
+    {
+        return parent::transition($request, $workflowRegistry, $id);
+    }
+
+    protected function getDefaultTransformer(): PartnerOrderTransformer
+    {
+        return new PartnerOrderTransformer();
+    }
+
+    protected function createLineItem()
+    {
+        return new PartnerOrderLineItem();
+    }
+
+    protected function getEditVoter(): string
+    {
+        return PartnerOrderVoter::EDIT;
+    }
+
+    protected function getViewVoter(): string
+    {
+        return PartnerOrderVoter::VIEW;
     }
 }

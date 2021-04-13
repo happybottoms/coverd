@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\Orders\MerchandiseOrder;
 use App\Entity\Orders\MerchandiseOrderLineItem;
 use App\Entity\Warehouse;
+use App\Security\PartnerOrderVoter;
 use App\Transformers\MerchandiseOrderTransformer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Workflow\Registry;
 
 /**
  * Class PartnerOrderController
@@ -17,17 +19,9 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route(path="/api/orders/merchandise")
  */
-class MerchandiseOrderController extends OrderController
+class MerchandiseOrderController extends BaseOrderController
 {
     protected $defaultEntityName = MerchandiseOrder::class;
-
-    /**
-     * @return MerchandiseOrderLineItem
-     */
-    protected function createLineItem()
-    {
-        return new MerchandiseOrderLineItem();
-    }
 
     /**
      * Save a new product
@@ -93,10 +87,34 @@ class MerchandiseOrderController extends OrderController
         return $this->serialize($request, $order);
     }
 
+    /**
+     * @Route("/{id}/transition", methods={"PATCH"})
+     * @IsGranted({"ROLE_MERCHANDISE_ORDER_EDIT"})
+     */
+    public function transition(Request $request, Registry $workflowRegistry, int $id): JsonResponse
+    {
+        return parent::transition($request, $workflowRegistry, $id);
+    }
 
-
-    protected function getDefaultTransformer()
+    protected function getDefaultTransformer(): MerchandiseOrderTransformer
     {
         return new MerchandiseOrderTransformer();
+    }
+
+    protected function createLineItem()
+    {
+        return new MerchandiseOrderLineItem();
+    }
+
+    protected function getEditVoter(): string
+    {
+        // TODO ticket # 273: create a MerchandiseOrderVoter
+        return PartnerOrderVoter::EDIT;
+    }
+
+    protected function getViewVoter(): string
+    {
+        // TODO ticket # 273: create a MerchandiseOrderVoter
+        return PartnerOrderVoter::VIEW;
     }
 }

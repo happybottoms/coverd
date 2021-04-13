@@ -3,8 +3,9 @@
 namespace App\Command;
 
 use App\Configuration\AppConfiguration;
-use App\Entity\Group;
 use App\Entity\Client;
+use App\Entity\Group;
+use App\Workflow\ClientWorkflow;
 use Doctrine\ORM\EntityManagerInterface;
 use Moment\Moment;
 use Symfony\Component\Console\Command\Command;
@@ -143,12 +144,12 @@ class ClientAnnualReviewCommand extends Command
                     (string) $client,
                     $client->getStatus(),
                     $client->getPartner() ? $client->getPartner()->getTitle() : null,
-                    Client::TRANSITION_FLAG_FOR_REVIEW
+                    ClientWorkflow::TRANSITION_FLAG_FOR_REVIEW
                 ];
 
                 $this->workflowRegistry
                     ->get($client)
-                    ->apply($client, Client::TRANSITION_FLAG_FOR_REVIEW);
+                    ->apply($client, ClientWorkflow::TRANSITION_FLAG_FOR_REVIEW);
 
                 if ($force) {
                     $this->appConfig->set('clientReviewLastStartRun', $now->format());
@@ -163,12 +164,12 @@ class ClientAnnualReviewCommand extends Command
                     (string) $client,
                     $client->getStatus(),
                     $client->getPartner() ? $client->getPartner()->getTitle() : null,
-                    Client::TRANSITION_FLAG_FOR_REVIEW_PAST_DUE
+                    ClientWorkflow::TRANSITION_FLAG_FOR_REVIEW_PAST_DUE
                 ];
 
                 $this->workflowRegistry
                     ->get($client)
-                    ->apply($client, Client::TRANSITION_FLAG_FOR_REVIEW_PAST_DUE);
+                    ->apply($client, ClientWorkflow::TRANSITION_FLAG_FOR_REVIEW_PAST_DUE);
 
                 if ($force) {
                     $this->appConfig->set('clientReviewLastEndRun', $now->format());
