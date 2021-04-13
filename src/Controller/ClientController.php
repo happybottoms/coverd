@@ -16,6 +16,7 @@ use App\Service\EavAttributeProcessor;
 use App\Transformers\BulkDistributionLineItemTransformer;
 use App\Transformers\ClientAttributeTransformer;
 use App\Transformers\ClientTransformer;
+use App\Workflow\ClientWorkflow;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -366,7 +367,7 @@ class ClientController extends BaseController
         $this->denyAccessUnlessGranted(ClientVoter::EDIT, $client);
 
         if ($client->canReview()) {
-            $workflowRegistry->get($client)->apply($client, Client::TRANSITION_ACTIVATE);
+            $workflowRegistry->get($client)->apply($client, ClientWorkflow::TRANSITION_ACTIVATE);
             $client->setLastReviewedAt(new \DateTime());
 
             $this->getEm()->flush();
@@ -399,7 +400,7 @@ class ClientController extends BaseController
 
         $client->setPartner($partner);
 
-        $workflowRegistry->get($client)->apply($client, Client::TRANSITION_ACTIVATE);
+        $workflowRegistry->get($client)->apply($client, ClientWorkflow::TRANSITION_ACTIVATE);
 
         $this->getEm()->flush();
 

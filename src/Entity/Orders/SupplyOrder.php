@@ -28,9 +28,6 @@ class SupplyOrder extends Order
         self::STATUS_RECEIVED,
     ];
 
-    public const TRANSITION_ORDER = 'ORDER';
-    public const TRANSITION_RECEIVE = 'RECEIVE';
-
     public const ROLE_VIEW = "ROLE_SUPPLY_ORDER_VIEW";
     public const ROLE_EDIT = "ROLE_SUPPLY_ORDER_EDIT";
 

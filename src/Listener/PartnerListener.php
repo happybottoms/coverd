@@ -3,6 +3,7 @@
 namespace App\Listener;
 
 use App\Entity\Partner;
+use App\Workflow\PartnerWorkflow;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
@@ -28,7 +29,7 @@ class PartnerListener implements EventSubscriber
         if ($partner->isReviewing() && !$event->hasChangedField('status')) {
             $this->workflowRegistry
                 ->get($partner)
-                ->apply($partner, Partner::TRANSITION_REVIEWED);
+                ->apply($partner, PartnerWorkflow::TRANSITION_REVIEWED);
         }
     }
 

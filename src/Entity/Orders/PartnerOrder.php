@@ -30,11 +30,6 @@ class PartnerOrder extends Order
         self::STATUS_SUBMITTED,
     ];
 
-    public const TRANSITION_ACCEPT = 'ACCEPT';
-    public const TRANSITION_COMPLETE = 'SHIP';
-    public const TRANSITION_REVERT_TO_CREATING = 'BACK_TO_CREATING';
-    public const TRANSITION_SUBMIT = 'SUBMIT';
-
     public const ROLE_VIEW = 'ROLE_PARTNER_ORDER_VIEW';
     public const ROLE_EDIT = 'ROLE_PARTNER_ORDER_EDIT';
 

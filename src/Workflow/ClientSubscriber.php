@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EventSubscriber\Workflow;
+namespace App\Workflow;
 
 use App\Entity\Client;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
