@@ -21,21 +21,12 @@ class BulkDistributionOrderWorkflow extends BaseWorkflow
         'initial_marking' => BulkDistribution::STATUS_CREATING,
         'places' => BulkDistribution::STATUSES,
         'transitions' => [
-            self::TRANSITION_PENDING => [
-                'metadata' => [
-                    'title' => 'Mark As Pending'
-                ],
-                'from' => [
-                    BulkDistribution::STATUS_CREATING,
-                ],
-                'to' => BulkDistribution::STATUS_PENDING,
-            ],
             self::TRANSITION_COMPLETE => [
                 'metadata' => [
                     'title' => 'Complete'
                 ],
                 'from' => [
-                    BulkDistribution::STATUS_PENDING,
+                    BulkDistribution::STATUS_CREATING,
                 ],
                 'to' => BulkDistribution::STATUS_COMPLETED,
             ],
