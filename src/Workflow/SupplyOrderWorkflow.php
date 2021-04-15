@@ -7,7 +7,7 @@ use App\Entity\Orders\SupplyOrder;
 class SupplyOrderWorkflow extends BaseWorkflow
 {
     public const TRANSITION_ORDER = 'ORDER';
-    public const TRANSITION_RECEIVE = 'RECEIVE';
+    public const TRANSITION_COMPLETE = 'RECEIVE';
 
     public const WORKFLOW = [
         'type' => 'state_machine',
@@ -33,21 +33,12 @@ class SupplyOrderWorkflow extends BaseWorkflow
                 ],
                 'to' => SupplyOrder::STATUS_ORDERED,
             ],
-            self::TRANSITION_RECEIVE => [
+            self::TRANSITION_COMPLETE => [
                 'metadata' => [
                     'title' => 'Receive',
                 ],
                 'from' => [
                     SupplyOrder::STATUS_ORDERED,
-                ],
-                'to' => SupplyOrder::STATUS_RECEIVED,
-            ],
-            self::TRANSITION_COMPLETE => [
-                'metadata' => [
-                    'title' => 'Complete'
-                ],
-                'from' => [
-                    SupplyOrder::STATUS_RECEIVED,
                 ],
                 'to' => SupplyOrder::STATUS_COMPLETED,
             ],
