@@ -203,7 +203,7 @@ class PartnerDistributionController extends BaseOrderController
 
     /**
      * @Route("/{id}/transition", methods={"PATCH"})
-     * @IsGranted({"ROLE_DISTRIBUTION_ORDER_EDIT"})
+     * @IsGranted({"ROLE_DISTRIBUTION_ORDER_EDIT", "ROLE_ORDER_MANAGE_OWN"})
      */
     public function transition(Request $request, Registry $workflowRegistry, int $id): JsonResponse
     {
