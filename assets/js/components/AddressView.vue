@@ -11,7 +11,7 @@
             v-tooltip
             :title="helpText"
             class="attribute-help-text fa fa-question-circle"
-        ></i>
+        />
         <div v-if="value.street1">
             {{ value.street1 }}<br>
         </div>

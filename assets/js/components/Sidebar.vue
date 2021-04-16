@@ -9,7 +9,10 @@
                 :key="menu.id"
                 :class="{ treeview: menu.hasOwnProperty('links') }"
             >
-                <router-link :to="menu.route || '#'" v-if="menuHasAccessibleLinks(menu)">
+                <router-link
+                    v-if="menuHasAccessibleLinks(menu)"
+                    :to="menu.route || '#'"
+                >
                     <i
                         v-if="menu.icon"
                         class="fa"

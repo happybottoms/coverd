@@ -6,7 +6,7 @@
             v-tooltip
             :title="helpText"
             class="attribute-help-text fa fa-question-circle"
-        ></i>
+        />
         <input
             :value="value"
             type="number"

@@ -1,10 +1,16 @@
 <template>
     <div class="box box-default box-solid">
         <div class="box-header with-border">
-            <div v-text="label" class="box-title"></div>
+            <div
+                class="box-title"
+                v-text="label"
+            />
         </div>
         <div class="box-body">
-            <AddressFormFields v-model="value" :has-title="false"></AddressFormFields>
+            <AddressFormFields
+                v-model="value"
+                :has-title="false"
+            />
         </div>
     </div>
 </template>
