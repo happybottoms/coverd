@@ -4,7 +4,7 @@
             v-if="!partnerCanOrder"
             class="callout callout-danger"
         >
-            <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+            <h4><i class="icon fa fa-ban" /> Alert!</h4>
             The selected partner has already created a distribution for {{ order.distributionPeriod|dateTimeMonthFormat }}
         </div>
         <div class="pull-right">
@@ -119,12 +119,21 @@
                                 At least one line item must have a quantity
                             </fielderror>
                             <h3 class="box-title">
-                                <a data-toggle="collapse" href="#orderByClient" aria-expanded="true" aria-controls="orderByClient">
+                                <a
+                                    data-toggle="collapse"
+                                    href="#orderByClient"
+                                    aria-expanded="true"
+                                    aria-controls="orderByClient"
+                                >
                                     <i class="icon fa fa-child fa-fw" />Order by Client
                                 </a>
                             </h3>
                         </div>
-                        <div id="orderByClient" class="panel-collapse collapse in" aria-expanded="true">
+                        <div
+                            id="orderByClient"
+                            class="panel-collapse collapse in"
+                            aria-expanded="true"
+                        >
                             <LineItemByClientForm
                                 :products="allOrderableProducts"
                                 :line-items="order.lineItems.filter((item) => item.client)"
@@ -173,7 +182,12 @@
             :action="this.save"
             :order-title="order.sequence"
         />
-        <Modal classes="modal-danger" title="Partner not active" id="inactive-partner-modal" :has-action="false">
+        <Modal
+            id="inactive-partner-modal"
+            classes="modal-danger"
+            title="Partner not active"
+            :has-action="false"
+        >
             This partner is not in an active status and cannot place an order at this time.
         </Modal>
     </section>

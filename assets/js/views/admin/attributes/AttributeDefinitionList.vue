@@ -24,7 +24,7 @@
         <h3
             class="box-title"
             v-text="title"
-        ></h3>
+        />
 
         <div class="row">
             <div class="col-xs-12">

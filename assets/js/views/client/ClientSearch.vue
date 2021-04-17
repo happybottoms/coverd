@@ -49,17 +49,16 @@
                         >
                             <template v-slot:actions="{rowData}">
                                 <button
-                                    :disabled="!userActivePartner || !rowData.canPartnerTransfer"
                                     v-tooltip
+                                    :disabled="!userActivePartner || !rowData.canPartnerTransfer"
                                     :title="transferButtonTooltip(rowData)"
                                     class="btn btn-xs btn-primary"
                                     @click="onTransferClicked(rowData)"
                                 >
-                                    <i class="fa fa-exchange-alt fa-fw"></i>
+                                    <i class="fa fa-exchange-alt fa-fw" />
                                     Transfer to Active Partner
                                 </button>
                             </template>
-
                         </TableStatic>
                     </div>
                     <!-- /.box-body -->

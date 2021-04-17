@@ -13,9 +13,8 @@
                     v-if="value.client.lastDistribution"
                     class="pull-right"
                 >
-                    <span class="small">Last Distribution:</span> <span class="badge bg-light-blue">{{ value.client.lastDistribution.product.name }} x {{value.client.lastDistribution.quantity}}</span>
+                    <span class="small">Last Distribution:</span> <span class="badge bg-light-blue">{{ value.client.lastDistribution.product.name }} x {{ value.client.lastDistribution.quantity }}</span>
                 </div>
-
             </div>
             <div
                 class="col-xs-2"
