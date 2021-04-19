@@ -95,11 +95,10 @@
                                     class="btn btn-xs btn-primary"
                                     @click="onMarkReviewClicked(rowData.id)"
                                 >
-                                    <i class="fa fa-check-square fa-fw"></i>
+                                    <i class="fa fa-check-square fa-fw" />
                                     Mark Reviewed
                                 </button>
                             </template>
-
                         </TablePaged>
                     </div>
                     <!-- /.box-body -->

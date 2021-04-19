@@ -81,6 +81,7 @@
                                 </ul>
                                 <div class="tab-content">
                                     <ClientInfoForm
+                                        ref="clientInfoForm"
                                         v-model="client"
                                     />
                                     <AttributesEditForm
@@ -116,6 +117,8 @@
                 Delete Client
             </template>
         </modal>
+
+        <modalinvalid />
     </section>
 </template>
 
@@ -125,6 +128,7 @@ import AttributesEditForm from "../../components/AttributesEditForm";
 import ClientDistributionHistory from "./ClientDistributionHistory";
 import ClientInfoForm from "./ClientInfoForm";
 import WorkflowButton from "../../components/WorkflowButton";
+import ModalOrderInvalid from '../../components/ModalOrderInvalid';
 
 export default {
         name: 'ClientEdit',
@@ -133,7 +137,8 @@ export default {
             ClientInfoForm,
             ClientDistributionHistory,
             AttributesEditForm,
-            'modal' : Modal
+            'modal' : Modal,
+            'modalinvalid' : ModalOrderInvalid,
         },
         props: {
             new: {
@@ -174,6 +179,13 @@ export default {
         methods: {
             save: function () {
                 let self = this;
+                if (this.$refs.clientInfoForm) {
+                    this.$refs.clientInfoForm.$v.$touch();
+                    if (this.$refs.clientInfoForm.$v.$invalid) {
+                        $('#invalidModal').modal('show');
+                        return false;
+                    }
+                }
                 if (this.new) {
                     axios
                         .post('/api/clients', this.client)

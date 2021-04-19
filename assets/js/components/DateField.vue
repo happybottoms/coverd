@@ -6,7 +6,7 @@
             v-tooltip
             :title="helpText"
             class="attribute-help-text fa fa-question-circle"
-        ></i>
+        />
         <div class="input-group date">
             <div class="input-group-addon">
                 <i class="far fa-calendar-alt" />

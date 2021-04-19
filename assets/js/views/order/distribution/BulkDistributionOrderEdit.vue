@@ -4,7 +4,7 @@
             v-if="!partnerCanOrder"
             class="alert alert-danger alert-dismissible"
         >
-            <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+            <h4><i class="icon fa fa-ban" /> Alert!</h4>
             The selected partner has already created a distribution for {{ order.distributionPeriod|dateTimeMonthFormat }}
         </div>
         <div class="pull-right">

@@ -11,7 +11,7 @@
         Transfer <strong>{{ client.fullName }}</strong> to <strong>{{ targetPartner.title }}</strong>?
 
         <template slot="confirmButton">
-            <i class="fa fa-exchange-alt"></i> Transfer
+            <i class="fa fa-exchange-alt" /> Transfer
         </template>
     </modal>
 </template>

@@ -6,7 +6,7 @@
             v-tooltip
             :title="helpText"
             class="attribute-help-text fa fa-question-circle"
-        ></i>
+        />
         <div
             v-for="option in options"
             :key="option.id"
