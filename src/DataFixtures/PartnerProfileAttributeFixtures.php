@@ -46,7 +46,7 @@ class PartnerProfileAttributeFixtures extends BaseFixture
                 'description' => '',
                 'required' => true,
                 'type' => Definition::TYPE_OPTION_LIST,
-                'interface' => Attribute::UI_CHECKBOX_GROUP,
+                'interface' => Attribute::UI_SELECT_SINGLE,
                 'options' => [
                     '501c3' => '501(c)3',
                     'religious' => 'Religious Organization',
@@ -160,7 +160,7 @@ class PartnerProfileAttributeFixtures extends BaseFixture
                 'description' => '',
                 'required' => true,
                 'type' => Definition::TYPE_OPTION_LIST,
-                'interface' => Attribute::UI_CHECKBOX_GROUP,
+                'interface' => Attribute::UI_SELECT_SINGLE,
                 'options' => [
                     'emergency' => 'Emergency supplies for families (off site)',
                     'homeless' => 'Homeless shelter',
@@ -498,7 +498,7 @@ class PartnerProfileAttributeFixtures extends BaseFixture
                 'description' => '',
                 'required' => true,
                 'type' => Definition::TYPE_OPTION_LIST,
-                'interface' => Attribute::UI_CHECKBOX_GROUP,
+                'interface' => Attribute::UI_SELECT_SINGLE,
                 'options' => [
                     'foundations' => 'Grants – Foundations',
                     'state' => 'Grants – State',
@@ -528,7 +528,7 @@ class PartnerProfileAttributeFixtures extends BaseFixture
                 'description' => '',
                 'required' => false,
                 'type' => Definition::TYPE_OPTION_LIST,
-                'interface' => Attribute::UI_CHECKBOX_GROUP,
+                'interface' => Attribute::UI_SELECT_SINGLE,
                 'options' => [
                     'retail' => 'Purchase retail',
                     'wholesale' => 'Purchase wholesale',
