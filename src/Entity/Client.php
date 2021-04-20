@@ -177,6 +177,21 @@ class Client extends CoreEntity implements AttributedEntityInterface
      */
     protected $lastReviewedAt;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default" : false})
+     */
+    protected $isDuplicate;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" : false})
+     */
+    protected $isExpired;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" : false})
+     */
+    protected $isBlocked;
+
     public function __construct(Registry $workflowRegistry)
     {
         $this->attributes = new ArrayCollection();
@@ -444,6 +459,18 @@ class Client extends CoreEntity implements AttributedEntityInterface
             throw new \Exception(sprintf('%s is not a valid Status', $status));
         }
 
+        switch ($status) {
+            case self::STATUS_INACTIVE_BLOCKED:
+                $this->setIsBlocked(true);
+                break;
+            case self::STATUS_INACTIVE_DUPLICATE:
+                $this->setIsDuplicate(true);
+                break;
+            case self::STATUS_INACTIVE_EXPIRED:
+                $this->setIsExpired(true);
+                break;
+        }
+
         $this->status = $status;
     }
 
@@ -511,5 +538,41 @@ class Client extends CoreEntity implements AttributedEntityInterface
     public function canPartnerTransfer(): bool
     {
         return in_array($this->status, [self::STATUS_INACTIVE, self::STATUS_CREATION]);
+    }
+
+    public function getIsDuplicate(): ?bool
+    {
+        return $this->isDuplicate;
+    }
+
+    public function setIsDuplicate(bool $isDuplicate): self
+    {
+        $this->isDuplicate = $isDuplicate;
+
+        return $this;
+    }
+
+    public function getIsExpired(): ?bool
+    {
+        return $this->isExpired;
+    }
+
+    public function setIsExpired(bool $isExpired): self
+    {
+        $this->isExpired = $isExpired;
+
+        return $this;
+    }
+
+    public function getIsBlocked(): ?bool
+    {
+        return $this->isBlocked;
+    }
+
+    public function setIsBlocked(bool $isBlocked): self
+    {
+        $this->isBlocked = $isBlocked;
+
+        return $this;
     }
 }
