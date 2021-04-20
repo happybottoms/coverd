@@ -2,7 +2,7 @@
     <section class="content">
         <ClientTransferModal
             :client="transferClient"
-            :target-partners="userPartners || null"
+            :target-partner="userActivePartner || null"
         />
 
         <div class="pull-right">
@@ -89,7 +89,7 @@
                                 <AttributesEditForm
                                     id="profile_tab"
                                     v-model="client.attributes"
-                                    :filter="(attribute) => attribute.isDuplicateReference"
+                                    :filter="attribute => attribute.isDuplicateReference"
                                 />
                                 <!-- text input -->
                             </div>
@@ -202,56 +202,56 @@ export default {
         DateField,
         AttributesEditForm,
         fielderror: FieldError,
-        modalinvalid: ModalOrderInvalid,
+        modalinvalid: ModalOrderInvalid
     },
     data() {
         return {
             client: {
                 attributes: [],
-                partner: {},
+                partner: {}
             },
             duplicates: [],
             checked: false,
-            transferClient: {},
+            transferClient: {}
         };
     },
     validations: {
         client: {
             firstName: {
-                required,
+                required
             },
             lastName: {
-                required,
+                required
             },
             birthdate: {
                 required,
-                mustLessThanNow,
-            },
-        },
+                mustLessThanNow
+            }
+        }
     },
     computed: {
-        ...mapGetters(["userActivePartner", "userPartners"]),
-        foundDuplicates: function () {
+        ...mapGetters(["userActivePartner"]),
+        foundDuplicates: function() {
             return this.checked && this.duplicates.length > 0;
         },
-        noDuplicates: function () {
+        noDuplicates: function() {
             return this.checked && this.duplicates.length === 0;
-        },
+        }
     },
     created() {
         let self = this;
         axios
             .get("/api/clients/fields", {
-                params: { include: ["options"] },
+                params: { include: ["options"] }
             })
-            .then((response) => (this.client.attributes = response.data.data))
-            .catch(function (error) {
+            .then(response => (this.client.attributes = response.data.data))
+            .catch(function(error) {
                 console.log("Save this.client error %o", error);
             });
         console.log("ClientEdit Component mounted.");
     },
     methods: {
-        check: function () {
+        check: function() {
             let self = this;
             this.$v.$touch();
             if (this.$v.$invalid) {
@@ -260,17 +260,17 @@ export default {
             }
             axios
                 .post("/api/clients/new-check", this.client, {
-                    params: { include: ["partner", "lastDistribution", "lastDistribution.order"] },
+                    params: { include: ["partner", "lastDistribution", "lastDistribution.order"] }
                 })
-                .then((response) => {
+                .then(response => {
                     self.duplicates = response.data.data;
                     self.checked = true;
                 })
-                .catch(function (error) {
+                .catch(function(error) {
                     console.log("Save this.client error %o", error);
                 });
         },
-        save: function () {
+        save: function() {
             let self = this;
             if (this.$refs.clientInfoForm) {
                 this.$refs.clientInfoForm.$v.$touch();
@@ -281,21 +281,21 @@ export default {
             }
             axios
                 .post("/api/clients", this.client)
-                .then((response) => self.$router.push({ name: "clients" }))
-                .catch(function (error) {
+                .then(response => self.$router.push({ name: "clients" }))
+                .catch(function(error) {
                     console.log("Save this.client error %o", error);
                 });
         },
-        onTransferClicked: function (client) {
+        onTransferClicked: function(client) {
             this.transferClient = client;
             $("#clientTransferModal").modal("show");
         },
-        transferButtonTooltip: function (rowData) {
+        transferButtonTooltip: function(rowData) {
             if (rowData.canPartnerTransfer) {
                 return "Transfer client to " + this.userActivePartner.title;
             }
             return "This client is not in a transferable status or you do not have access.";
-        },
-    },
+        }
+    }
 };
 </script>

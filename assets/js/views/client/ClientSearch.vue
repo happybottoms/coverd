@@ -79,7 +79,7 @@
         </div>
         <ClientTransferModal
             :client="transferClient"
-            :target-partners="userPartners || []"
+            :target-partner="userActivePartner || null"
         />
     </section>
 </template>
@@ -99,7 +99,7 @@ export default {
         DateField,
         TableStatic,
         TextField,
-        PartnerSelectionForm,
+        PartnerSelectionForm
     },
     props: [],
     data() {
@@ -111,33 +111,30 @@ export default {
                 { name: "birthdate", title: "Birthday", callback: "dateFormat", sortField: "c.birthdate" },
                 { name: "partner.title", title: "Assigned Partner", sortField: "partner.title" },
                 { name: "status", title: "Status", callback: "statusFormat", sortField: "status" },
-                { name: "__slot:actions" },
+                { name: "__slot:actions" }
             ],
             clients: {},
-            statuses: [
-                { id: "ACTIVE", name: "Active" },
-                { id: "INACTIVE", name: "Inactive" },
-            ],
+            statuses: [{ id: "ACTIVE", name: "Active" }, { id: "INACTIVE", name: "Inactive" }],
             filters: {
                 keyword: null,
                 partner: { id: null },
-                birthdate: null,
+                birthdate: null
             },
             selection: [],
-            transferClient: {},
+            transferClient: {}
         };
     },
     computed: {
-        ...mapGetters(["userActivePartner", "userPartners"]),
+        ...mapGetters(["userActivePartner"])
     },
     created() {
         console.log("Component mounted.");
     },
     mounted() {
-        this.$events.$on("selection-change", (eventData) => this.onSelectionChange(eventData));
+        this.$events.$on("selection-change", eventData => this.onSelectionChange(eventData));
     },
     methods: {
-        routerLink: function (id) {
+        routerLink: function(id) {
             return (
                 "<router-link :to=" +
                 { name: "client-edit", params: { id: id } } +
@@ -156,31 +153,31 @@ export default {
         bulkStatusChange(statusId) {
             $("#bulkChangeModal").modal("show");
             this.bulkChange = {
-                status: statusId,
+                status: statusId
             };
         },
         refreshTable() {
             this.$refs.hbtable.refresh();
         },
-        requestParams: function () {
+        requestParams: function() {
             return {
                 status: this.filters.status || null,
                 keyword: this.filters.keyword || null,
                 partner: this.filters.partner.id || null,
                 birthdate: this.filters.birthdate || null,
-                include: ["partner"],
+                include: ["partner"]
             };
         },
-        onTransferClicked: function (client) {
+        onTransferClicked: function(client) {
             this.transferClient = client;
             $("#clientTransferModal").modal("show");
         },
-        transferButtonTooltip: function (rowData) {
+        transferButtonTooltip: function(rowData) {
             if (this.userActivePartner && rowData.canPartnerTransfer) {
                 return "Transfer client to " + this.userActivePartner.title;
             }
             return "This client is not in a transferable status or you do not have access.";
-        },
-    },
+        }
+    }
 };
 </script>
