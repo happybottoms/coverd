@@ -61,6 +61,11 @@ class MerchandiseOrderVoter extends Voter
             return true;
         }
 
+        // If they have the view role of merchandise order, they can view
+        if ($user->hasRole(MerchandiseOrder::ROLE_VIEW)) {
+            return true;
+        }
+
         return false;
     }
 
@@ -73,6 +78,11 @@ class MerchandiseOrderVoter extends Voter
 
         // If they have the edit all role, they can edit
         if ($user->hasRole(Order::ROLE_EDIT_ALL)) {
+            return true;
+        }
+
+        // If they have the edit roll of merchandise order, they can edit
+        if ($user->hasRole(MerchandiseOrder::ROLE_EDIT)) {
             return true;
         }
 
