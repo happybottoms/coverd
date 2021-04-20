@@ -44,10 +44,10 @@
                             ref="hbtable"
                             :columns="columns"
                             api-url="/api/clients/search"
-                            :sort-order="[{ field: 'id', direction: 'desc'}]"
+                            :sort-order="[{ field: 'id', direction: 'desc' }]"
                             :params="requestParams()"
                         >
-                            <template v-slot:actions="{rowData}">
+                            <template v-slot:actions="{ rowData }">
                                 <button
                                     v-tooltip
                                     :disabled="!userActivePartner || !rowData.canPartnerTransfer"
@@ -70,110 +70,117 @@
             <div class="col-xs-12 col-md-6 col-md-offset-3">
                 <div class="callout callout-info">
                     <h4>Search is limited to 5 results</h4>
-                    <p>Only 5 results are allowed at a time in this search. Please use the filter above to narrow the results</p>
+                    <p>
+                        Only 5 results are allowed at a time in this search. Please use the filter above to narrow the
+                        results
+                    </p>
                 </div>
             </div>
         </div>
         <ClientTransferModal
             :client="transferClient"
-            :target-partner="userActivePartner || null"
+            :target-partners="userPartners || []"
         />
     </section>
 </template>
 
 <script>
-    import PartnerSelectionForm from "../../components/PartnerSelectionForm";
-    import TextField from "../../components/TextField";
-    import TableStatic from "../../components/TableStatic";
-    import DateField from "../../components/DateField";
-    import ClientTransferModal from "./ClientTransferModal";
-    import {mapGetters} from "vuex";
+import PartnerSelectionForm from "../../components/PartnerSelectionForm";
+import TextField from "../../components/TextField";
+import TableStatic from "../../components/TableStatic";
+import DateField from "../../components/DateField";
+import ClientTransferModal from "./ClientTransferModal";
+import { mapGetters } from "vuex";
 
-    export default {
-        name: 'ClientSearch',
-        components: {
-            ClientTransferModal,
-            DateField,
-            TableStatic,
-            TextField,
-            PartnerSelectionForm,
+export default {
+    name: "ClientSearch",
+    components: {
+        ClientTransferModal,
+        DateField,
+        TableStatic,
+        TextField,
+        PartnerSelectionForm,
+    },
+    props: [],
+    data() {
+        return {
+            columns: [
+                { name: "id", title: "ID", sortField: "c.id" },
+                { name: "fullName", title: "Name", sortField: "c.fullName" },
+                { name: "parentFullName", title: "Parent/Guardian" },
+                { name: "birthdate", title: "Birthday", callback: "dateFormat", sortField: "c.birthdate" },
+                { name: "partner.title", title: "Assigned Partner", sortField: "partner.title" },
+                { name: "status", title: "Status", callback: "statusFormat", sortField: "status" },
+                { name: "__slot:actions" },
+            ],
+            clients: {},
+            statuses: [
+                { id: "ACTIVE", name: "Active" },
+                { id: "INACTIVE", name: "Inactive" },
+            ],
+            filters: {
+                keyword: null,
+                partner: { id: null },
+                birthdate: null,
+            },
+            selection: [],
+            transferClient: {},
+        };
+    },
+    computed: {
+        ...mapGetters(["userActivePartner", "userPartners"]),
+    },
+    created() {
+        console.log("Component mounted.");
+    },
+    mounted() {
+        this.$events.$on("selection-change", (eventData) => this.onSelectionChange(eventData));
+    },
+    methods: {
+        routerLink: function (id) {
+            return (
+                "<router-link :to=" +
+                { name: "client-edit", params: { id: id } } +
+                '><i class="fa fa-edit"></i> ' +
+                id +
+                "</router-link>"
+            );
         },
-        props: [],
-        data() {
+        doFilter() {
+            console.log("doFilter:", this.requestParams());
+            this.$events.fire("filter-set", this.requestParams());
+        },
+        onSelectionChange(selection) {
+            this.selection = selection;
+        },
+        bulkStatusChange(statusId) {
+            $("#bulkChangeModal").modal("show");
+            this.bulkChange = {
+                status: statusId,
+            };
+        },
+        refreshTable() {
+            this.$refs.hbtable.refresh();
+        },
+        requestParams: function () {
             return {
-                columns: [
-                    { name: 'id', title: "ID", sortField: 'c.id' },
-                    { name: 'fullName', title: "Name", sortField: 'c.fullName' },
-                    { name: 'parentFullName', title: "Parent/Guardian" },
-                    { name: 'birthdate', title: "Birthday", callback: 'dateFormat', sortField: 'c.birthdate' },
-                    { name: 'partner.title', title: "Assigned Partner", sortField: 'partner.title' },
-                    { name: 'status', title: "Status", callback: 'statusFormat', sortField: 'status' },
-                    { name: '__slot:actions'}
-                ],
-                clients: {},
-                statuses: [
-                    {id: "ACTIVE", name: "Active"},
-                    {id: "INACTIVE", name: "Inactive"}
-                ],
-                filters: {
-                    keyword: null,
-                    partner: { id: null },
-                    birthdate: null
-                },
-                selection: [],
-                transferClient: {}
+                status: this.filters.status || null,
+                keyword: this.filters.keyword || null,
+                partner: this.filters.partner.id || null,
+                birthdate: this.filters.birthdate || null,
+                include: ["partner"],
+            };
+        },
+        onTransferClicked: function (client) {
+            this.transferClient = client;
+            $("#clientTransferModal").modal("show");
+        },
+        transferButtonTooltip: function (rowData) {
+            if (this.userActivePartner && rowData.canPartnerTransfer) {
+                return "Transfer client to " + this.userActivePartner.title;
             }
+            return "This client is not in a transferable status or you do not have access.";
         },
-        computed: {
-            ...mapGetters([
-                'userActivePartner'
-            ])
-        },
-        created() {
-            console.log('Component mounted.')
-        },
-        mounted() {
-            this.$events.$on('selection-change', eventData => this.onSelectionChange(eventData));
-        },
-        methods: {
-            routerLink: function (id) {
-                return "<router-link :to=" + { name: 'client-edit', params: { id: id }} + "><i class=\"fa fa-edit\"></i> " + id + "</router-link>";
-            },
-            doFilter () {
-                console.log('doFilter:', this.requestParams());
-                this.$events.fire('filter-set', this.requestParams());
-            },
-            onSelectionChange (selection) {
-                this.selection = selection;
-            },
-            bulkStatusChange (statusId) {
-                $('#bulkChangeModal').modal('show');
-                this.bulkChange = {
-                    status: statusId
-                }
-            },
-            refreshTable () {
-                this.$refs.hbtable.refresh();
-            },
-            requestParams: function () {
-                return {
-                    status: this.filters.status || null,
-                    keyword: this.filters.keyword || null,
-                    partner: this.filters.partner.id || null,
-                    birthdate: this.filters.birthdate || null,
-                    include: ['partner'],
-                }
-            },
-            onTransferClicked: function(client) {
-                this.transferClient = client;
-                $('#clientTransferModal').modal('show');
-            },
-            transferButtonTooltip: function(rowData) {
-                if(this.userActivePartner && rowData.canPartnerTransfer) {
-                    return 'Transfer client to ' + this.userActivePartner.title;
-                }
-                return 'This client is not in a transferable status or you do not have access.';
-            }
-        },
-    }
+    },
+};
 </script>
