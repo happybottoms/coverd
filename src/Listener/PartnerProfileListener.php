@@ -13,9 +13,13 @@ class PartnerProfileListener
         $em = $event->getEntityManager();
         $definitions = $em->getRepository(PartnerProfileDefinition::class)->findAll();
 
-        $emptyAttributes = array_map(function (PartnerProfileDefinition $defintion) {
-            return $defintion->createAttribute();
-        }, $definitions);
+        $emptyAttributes = [];
+
+        foreach ($definitions as $definition) {
+            if (!$profile->hasAttributeForDefinition($definition)) {
+                $emptyAttributes[] = $definition->createAttribute();
+            }
+        }
 
         $profile->addAttributes($emptyAttributes, false);
     }
