@@ -49,7 +49,7 @@ class MerchandiseOrderVoter extends Voter
         }
     }
 
-    private function canView(MerchandiseOrder $order, User $user)
+    private function canView(MerchandiseOrder $order, User $user): bool
     {
         // if they can edit, they can view
         if ($this->canEdit($order, $user)) {
@@ -69,7 +69,7 @@ class MerchandiseOrderVoter extends Voter
         return false;
     }
 
-    private function canEdit(MerchandiseOrder $order, User $user)
+    private function canEdit(MerchandiseOrder $order, User $user): bool
     {
         // Admin can do all the things
         if ($user->isAdmin()) {
