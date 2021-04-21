@@ -178,16 +178,19 @@ class Client extends CoreEntity implements AttributedEntityInterface
     protected $lastReviewedAt;
 
     /**
+     * @var boolean
      * @ORM\Column(type="boolean")
      */
     protected $isDuplicate;
 
     /**
+     * @var boolean
      * @ORM\Column(type="boolean")
      */
     protected $isExpired;
 
     /**
+     * @var boolean
      * @ORM\Column(type="boolean")
      */
     protected $isBlocked;
