@@ -178,17 +178,17 @@ class Client extends CoreEntity implements AttributedEntityInterface
     protected $lastReviewedAt;
 
     /**
-     * @ORM\Column(type="boolean", options={"default" : false})
+     * @ORM\Column(type="boolean")
      */
     protected $isDuplicate;
 
     /**
-     * @ORM\Column(type="boolean", options={"default" : false})
+     * @ORM\Column(type="boolean")
      */
     protected $isExpired;
 
     /**
-     * @ORM\Column(type="boolean", options={"default" : false})
+     * @ORM\Column(type="boolean")
      */
     protected $isBlocked;
 
@@ -202,6 +202,9 @@ class Client extends CoreEntity implements AttributedEntityInterface
         $this->pullupDistributionCount = 0;
         $this->workflowRegistry = $workflowRegistry;
         $this->status = self::STATUS_CREATION;
+        $this->isDuplicate = false;
+        $this->isExpired = false;
+        $this->isBlocked = false;
     }
 
     public function __toString()
@@ -459,18 +462,6 @@ class Client extends CoreEntity implements AttributedEntityInterface
             throw new \Exception(sprintf('%s is not a valid Status', $status));
         }
 
-        switch ($status) {
-            case self::STATUS_INACTIVE_BLOCKED:
-                $this->setIsBlocked(true);
-                break;
-            case self::STATUS_INACTIVE_DUPLICATE:
-                $this->setIsDuplicate(true);
-                break;
-            case self::STATUS_INACTIVE_EXPIRED:
-                $this->setIsExpired(true);
-                break;
-        }
-
         $this->status = $status;
     }
 
@@ -540,7 +531,7 @@ class Client extends CoreEntity implements AttributedEntityInterface
         return in_array($this->status, [self::STATUS_INACTIVE, self::STATUS_CREATION]);
     }
 
-    public function getIsDuplicate(): ?bool
+    public function isDuplicate(): ?bool
     {
         return $this->isDuplicate;
     }
@@ -552,7 +543,7 @@ class Client extends CoreEntity implements AttributedEntityInterface
         return $this;
     }
 
-    public function getIsExpired(): ?bool
+    public function isExpired(): ?bool
     {
         return $this->isExpired;
     }
@@ -564,7 +555,7 @@ class Client extends CoreEntity implements AttributedEntityInterface
         return $this;
     }
 
-    public function getIsBlocked(): ?bool
+    public function isBlocked(): ?bool
     {
         return $this->isBlocked;
     }

@@ -34,9 +34,9 @@ class ClientSubscriber implements EventSubscriberInterface
 
         if (
             $this->checker->isGranted(Client::ROLE_MANAGE_OWN) && in_array($status, [
-                    Client::STATUS_CREATION,
-                    Client::STATUS_INACTIVE,
-                ], true)
+                Client::STATUS_CREATION,
+                Client::STATUS_INACTIVE,
+            ], true)
         ) {
             return;
         }
@@ -85,6 +85,22 @@ class ClientSubscriber implements EventSubscriberInterface
         $event->setBlocked(true);
     }
 
+    public function onTransitionChangeStatus(GuardEvent $event): void
+    {
+        $client = $event->getSubject();
+        switch ($client->getStatus()) {
+            case Client::STATUS_INACTIVE_BLOCKED:
+                $client->setIsBlocked(true);
+                break;
+            case Client::STATUS_INACTIVE_DUPLICATE:
+                $client->setIsDuplicate(true);
+                break;
+            case Client::STATUS_INACTIVE_EXPIRED:
+                $client->setIsExpired(true);
+                break;
+        }
+    }
+
     public static function getSubscribedEvents()
     {
         return [
@@ -94,13 +110,14 @@ class ClientSubscriber implements EventSubscriberInterface
             'workflow.client_management.guard.DEACTIVATE' => 'onTransitionDeactivate',
             'workflow.client_management.guard.EXPIRE' => 'onTransitionDeactivateExpire',
             'workflow.client_management.guard.DUPLICATE' => 'onTransitionDeactivateDuplicate',
+            'workflow.client_management.enter.status' =>
+            'onTransitionChangeStatus',
         ];
     }
 
     protected function canEditAll(): bool
     {
         return $this->checker->isGranted('ROLE_ADMIN')
-            || $this->checker->isGranted(Client::ROLE_EDIT_ALL)
-        ;
+            || $this->checker->isGranted(Client::ROLE_EDIT_ALL);
     }
 }
