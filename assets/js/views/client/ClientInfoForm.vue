@@ -61,6 +61,7 @@
             <PartnerSelectionForm
                 v-model="value.partner"
                 label="Assigned Partner"
+                :options="allPartners"
             />
         </div>
         <div class="col-md-6">
@@ -112,11 +113,12 @@ import BooleanField from "../../components/ToggleField";
 import NumberField from "../../components/NumberField";
 import DisplayField from "../../components/DisplayField";
 import ClientDistributionHistory from "./ClientDistributionHistory";
-import {required} from 'vuelidate/lib/validators';
-import {mustLessThanNow} from '../../validators';
+import { required } from "vuelidate/lib/validators";
+import { mustLessThanNow } from "../../validators";
+import { mapGetters } from "vuex";
 
 export default {
-    name: 'ClientInfoForm',
+    name: "ClientInfoForm",
     components: {
         DisplayField,
         NumberField,
@@ -135,7 +137,7 @@ export default {
             default: true,
             required: false
         },
-        value: { required: true, type: [Object, Array] },
+        value: { required: true, type: [Object, Array] }
     },
     validations: {
         value: {
@@ -148,13 +150,14 @@ export default {
             birthdate: {
                 required,
                 mustLessThanNow
-            },
+            }
         }
     },
+    computed: mapGetters(["allPartners"]),
     created() {
         let self = this;
 
-        console.log('ClientEdit Component mounted.');
-    },
-}
+        console.log("ClientEdit Component mounted.");
+    }
+};
 </script>

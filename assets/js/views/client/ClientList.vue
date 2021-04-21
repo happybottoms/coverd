@@ -22,6 +22,7 @@
                 <PartnerSelectionForm
                     v-model="filters.partner"
                     label="Assigned Partner"
+                    :options="allPartners"
                 />
             </div>
 
@@ -84,12 +85,12 @@
                             :columns="columns"
                             api-url="/api/clients/"
                             edit-route="/clients/"
-                            :sort-order="[{ field: 'id', direction: 'desc'}]"  
+                            :sort-order="[{ field: 'id', direction: 'desc' }]"
                             :params="requestParams()"
                             :per-page="50"
                             link-display-property="id"
                         >
-                            <template v-slot:actions="{rowData}">
+                            <template v-slot:actions="{ rowData }">
                                 <button
                                     v-if="rowData.canReview"
                                     class="btn btn-xs btn-primary"
@@ -114,110 +115,115 @@
 </template>
 
 <script>
-    import ClientMerge from './ClientMerge';
-    import PartnerSelectionForm from "../../components/PartnerSelectionForm";
-    import TablePaged from "../../components/TablePaged";
-    import TextField from "../../components/TextField";
+import ClientMerge from "./ClientMerge";
+import PartnerSelectionForm from "../../components/PartnerSelectionForm";
+import TablePaged from "../../components/TablePaged";
+import TextField from "../../components/TextField";
+import { mapGetters } from "vuex";
 
-    export default {
-        components: {
-            TextField,
-            ClientMerge,
-            PartnerSelectionForm,
-            TablePaged,
+export default {
+    components: {
+        TextField,
+        ClientMerge,
+        PartnerSelectionForm,
+        TablePaged
+    },
+    props: [],
+    data() {
+        return {
+            columns: [
+                { name: "__checkbox", title: "#" },
+                { name: "__slot:link", title: "ID", sortField: "c.id" },
+                { name: "fullName", title: "Name", sortField: "c.fullName" },
+                { name: "partner.title", title: "Assigned Partner", sortField: "partner.title" },
+                { name: "status", title: "Status", callback: "statusFormat", sortField: "status" },
+                { name: "createdAt", title: "Created", callback: "dateTimeFormat", sortField: "createdAt" },
+                { name: "updatedAt", title: "Last Updated", callback: "dateTimeFormat", sortField: "updatedAt" },
+                { name: "__slot:actions" }
+            ],
+            clients: {},
+            statuses: [{ id: "ACTIVE", name: "Active" }, { id: "INACTIVE", name: "Inactive" }],
+            filters: {
+                keyword: null,
+                partner: { id: null }
+            },
+            selection: []
+        };
+    },
+    computed: mapGetters(["allPartners"]),
+    created() {
+        axios.get("/api/clients").then(response => (this.clients = response.data));
+        console.log("Component mounted.");
+    },
+    mounted() {
+        this.$events.$on("selection-change", eventData => this.onSelectionChange(eventData));
+    },
+    methods: {
+        routerLink: function(id) {
+            return (
+                "<router-link :to=" +
+                { name: "client-edit", params: { id: id } } +
+                '><i class="fa fa-edit"></i> ' +
+                id +
+                "</router-link>"
+            );
         },
-        props: [],
-        data() {
-            return {
-                columns: [
-                    { name: '__checkbox', title: "#" },
-                    { name: '__slot:link', title: "ID", sortField: 'c.id' },
-                    { name: 'fullName', title: "Name", sortField: 'c.fullName' },
-                    { name: 'partner.title', title: "Assigned Partner", sortField: 'partner.title'},
-                    { name: 'status', title: "Status", callback: 'statusFormat', sortField: 'status' },
-                    { name: 'createdAt', title: "Created", callback: 'dateTimeFormat', sortField: 'createdAt' },
-                    { name: 'updatedAt', title: "Last Updated", callback: 'dateTimeFormat', sortField: 'updatedAt' },
-                    { name: '__slot:actions'},
-                ],
-                clients: {},
-                statuses: [
-                    {id: "ACTIVE", name: "Active"},
-                    {id: "INACTIVE", name: "Inactive"}
-                ],
-                filters: {
-                    keyword: null,
-                    partner: { id: null }
-                },
-                selection: [],
-            }
+        onPaginationData(paginationData) {
+            this.$refs.pagination.setPaginationData(paginationData);
         },
-        created() {
+        onChangePage(page) {
+            this.$refs.vuetable.changePage(page);
+        },
+        doFilter() {
+            console.log("doFilter:", this.requestParams());
+            this.$events.fire("filter-set", this.requestParams());
+        },
+        onSelectionChange(selection) {
+            this.selection = selection;
+        },
+        bulkStatusChange(statusId) {
+            $("#bulkChangeModal").modal("show");
+            this.bulkChange = {
+                status: statusId
+            };
+        },
+        refreshTable() {
+            this.$refs.hbtable.refresh();
+        },
+        doBulkChange() {
+            let self = this;
             axios
-                .get('/api/clients')
-                .then(response => this.clients = response.data);
-            console.log('Component mounted.')
+                .patch("/api/clients/bulk-change", {
+                    ids: self.selection,
+                    changes: self.bulkChange
+                })
+                .then(response => self.refreshTable())
+                .catch(function(error) {
+                    console.log(error);
+                });
         },
-        mounted() {
-            this.$events.$on('selection-change', eventData => this.onSelectionChange(eventData));
+        requestParams: function() {
+            return {
+                status: this.filters.status || null,
+                keyword: this.filters.keyword || null,
+                partner: this.filters.partner.id || null,
+                include: ["partner"]
+            };
         },
-        methods: {
-            routerLink: function (id) {
-                return "<router-link :to=" + { name: 'client-edit', params: { id: id }} + "><i class=\"fa fa-edit\"></i> " + id + "</router-link>";
-            },
-            onPaginationData (paginationData) {
-                this.$refs.pagination.setPaginationData(paginationData)
-            },
-            onChangePage (page) {
-                this.$refs.vuetable.changePage(page)
-            },
-            doFilter () {
-                console.log('doFilter:', this.requestParams());
-                this.$events.fire('filter-set', this.requestParams());
-            },
-            onSelectionChange (selection) {
-                this.selection = selection;
-            },
-            bulkStatusChange (statusId) {
-                $('#bulkChangeModal').modal('show');
-                this.bulkChange = {
-                    status: statusId
-                }
-            },
-            refreshTable () {
-                this.$refs.hbtable.refresh();
-            },
-            doBulkChange () {
-                let self = this;
-                axios
-                    .patch('/api/clients/bulk-change', {
-                        ids: self.selection,
-                        changes: self.bulkChange,
-                    })
-                    .then(response => self.refreshTable())
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            },
-            requestParams: function () {
-                return {
-                    status: this.filters.status || null,
-                    keyword: this.filters.keyword || null,
-                    partner: this.filters.partner.id || null,
-                    include: ['partner'],
-                }
-            },
-            onClickMerge: function () {
-                this.$refs.clientMerge.reset();
-                $('#clientMergeModal').modal('show');
-            },
-            onMarkReviewClicked: function (clientId) {
-                axios
-                    .post('/api/clients/' + clientId + '/review')
-                    .then(() => {this.refreshTable()})
-                    .catch(function (error) {
-                        console.log("Save this.client error with params id %o", error);
-                    });
-            }
+        onClickMerge: function() {
+            this.$refs.clientMerge.reset();
+            $("#clientMergeModal").modal("show");
         },
+        onMarkReviewClicked: function(clientId) {
+            axios
+                .post("/api/clients/" + clientId + "/review")
+                .then(() => {
+                    this.refreshTable();
+                })
+                .catch(function(error) {
+                    console.log("Save this.client error with params id %o", error);
+                });
+        }
     }
+};
 </script>
