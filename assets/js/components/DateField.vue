@@ -13,9 +13,10 @@
             </div>
             <input
                 v-model.lazy="humanReadable"
-                v-datepicker="{format: format, tz: timezone}"
+                v-datepicker="{ format: format, tz: timezone }"
                 type="text"
                 class="form-control pull-right"
+                :disabled="disabled"
                 @change="$emit('input', dateValue)"
             >
         </div>
@@ -23,32 +24,33 @@
 </template>
 
 <script>
-    export default {
-        name: 'DateField',
-        props: {
-            value: { type: String, default: '' },
-            label: { type: String, required: false, default: 'Date:' },
-            helpText: { type: String, required: false, default: "" },
-            format: { type: String, default: 'MM/DD/YYYY'},
-            timezone: { type: String, required: false, default: 'UTC' },
-        },
-        data() {
-            return { dateValue: null }
-        },
-        computed: {
-            humanReadable: {
-                get: function() {
-                    if (!this.dateValue && !this.value) {
-                        return;
-                    }
-                    let date = moment.tz(this.dateValue || this.value, this.timezone);
-                    return date.format(this.format);
-                },
-                set: function(val) {
-                    let date = moment.tz(val, this.format, this.timezone);
-                    this.dateValue = val ? date.format() : null;
-                },
+export default {
+    name: "DateField",
+    props: {
+        value: { type: String, default: "" },
+        label: { type: String, required: false, default: "Date:" },
+        helpText: { type: String, required: false, default: "" },
+        format: { type: String, default: "MM/DD/YYYY" },
+        timezone: { type: String, required: false, default: "UTC" },
+        disabled: { type: Boolean, default: false }
+    },
+    data() {
+        return { dateValue: null };
+    },
+    computed: {
+        humanReadable: {
+            get: function() {
+                if (!this.dateValue && !this.value) {
+                    return;
+                }
+                let date = moment.tz(this.dateValue || this.value, this.timezone);
+                return date.format(this.format);
+            },
+            set: function(val) {
+                let date = moment.tz(val, this.format, this.timezone);
+                this.dateValue = val ? date.format() : null;
             }
         }
     }
+};
 </script>

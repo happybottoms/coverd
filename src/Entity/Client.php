@@ -50,6 +50,7 @@ class Client extends CoreEntity implements AttributedEntityInterface
     public const ROLE_EDIT_ALL = "ROLE_CLIENT_EDIT_ALL";
     public const ROLE_MANAGE_OWN = "ROLE_CLIENT_MANAGE_OWN";
     public const ROLE_VIEW_ALL = "ROLE_CLIENT_VIEW_ALL";
+    public const ROLE_CLIENT_OVERRIDE_EXPIRATIONS = "ROLE_CLIENT_OVERRIDE_EXPIRATIONS";
 
     /**
      * The unique auto incremented primary key.

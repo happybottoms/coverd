@@ -926,11 +926,6 @@ parameters:
 			path: src/Entity/Client.php
 
 		-
-			message: "#^Property App\\\\Entity\\\\Client\\:\\:\\$attributes type mapping mismatch\\: property can contain Doctrine\\\\Common\\\\Collections\\\\Collection but database expects Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\EAV\\\\Attribute\\>\\.$#"
-			count: 1
-			path: src/Entity/Client.php
-
-		-
 			message: "#^Cannot call method setValue\\(\\) on App\\\\Entity\\\\EAV\\\\Attribute\\|null\\.$#"
 			count: 1
 			path: src/Entity/Client.php
@@ -1134,11 +1129,6 @@ parameters:
 			message: "#^Method App\\\\Entity\\\\EAV\\\\Attribute\\:\\:fixtureData\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Entity/EAV/Attribute.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\PartnerProfile\\:\\:\\$attributes type mapping mismatch\\: property can contain Doctrine\\\\Common\\\\Collections\\\\Collection but database expects Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\EAV\\\\Attribute\\>\\.$#"
-			count: 1
-			path: src/Entity/PartnerProfile.php
 
 		-
 			message: "#^Cannot call method setValue\\(\\) on App\\\\Entity\\\\EAV\\\\Attribute\\|null\\.$#"

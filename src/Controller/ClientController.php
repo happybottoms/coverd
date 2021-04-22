@@ -232,6 +232,16 @@ class ClientController extends BaseController
         $client = $this->getClientById($publicId);
         $this->denyAccessUnlessGranted(ClientVoter::EDIT, $client);
 
+        /** @var User $user */
+        $user = $this->getUser();
+
+        // check client expiration changes
+        // if the user has no role of ROLE_CLIENT_OVERRIDE_EXPIRATIONS,
+        // unset those information from params
+        if (!$user->hasRole(Client::ROLE_CLIENT_OVERRIDE_EXPIRATIONS)) {
+            unset($params["ageExpiresAt"], $params["isExpirationOverridden"], $params["distributionExpiresAt"], $params["pullupDistributionMax"], $params["pullupDistributionCount"]);
+        }
+
         if ($params['firstName'] && $params['lastName']) {
             $name = new Name($params['firstName'], $params['lastName']);
             $client->setName($name);
