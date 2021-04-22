@@ -28,49 +28,41 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
-                        <div
-                            v-if="loading"
-                            class="loadingArea"
-                        >
-                            <pulse-loader
-                                :loading="loading"
-                                color="#3c8dbc"
-                            />
-                        </div>
-                        <table
-                            v-else
-                            class="table table-hover"
-                        >
-                            <thead>
-                                <tr>
-                                    <th>Partner ID</th>
-                                    <th>Title</th>
-                                    <th>Type</th>
-                                    <th>Status</th>
-                                    <th>Fulfillment Period</th>
-                                    <th>Distribution Method</th>
-                                    <th>Last Updated</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr
-                                    v-for="partner in partners.data"
-                                    :key="partner.id"
-                                >
-                                    <td>
-                                        <router-link :to="{ name: 'partner-edit', params: { id: partner.id }}">
-                                            <i class="fa fa-edit" />{{ partner.id }}
-                                        </router-link>
-                                    </td>
-                                    <td v-text="partner.title" />
-                                    <td v-text="partner.partnerType" />
-                                    <td>{{ partner.status | statusFormat }}</td>
-                                    <td v-text="partner.fulfillmentPeriod.name" />
-                                    <td v-text="partner.distributionMethod ? partner.distributionMethod.name : null" />
-                                    <td>{{ partner.updatedAt | dateTimeFormat }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <TableSkeleton :loading="loading">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Partner ID</th>
+                                        <th>Title</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>Fulfillment Period</th>
+                                        <th>Distribution Method</th>
+                                        <th>Last Updated</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        v-for="partner in partners.data"
+                                        :key="partner.id"
+                                    >
+                                        <td>
+                                            <router-link :to="{ name: 'partner-edit', params: { id: partner.id } }">
+                                                <i class="fa fa-edit" />{{ partner.id }}
+                                            </router-link>
+                                        </td>
+                                        <td v-text="partner.title" />
+                                        <td v-text="partner.partnerType" />
+                                        <td>{{ partner.status | statusFormat }}</td>
+                                        <td v-text="partner.fulfillmentPeriod.name" />
+                                        <td
+                                            v-text="partner.distributionMethod ? partner.distributionMethod.name : null"
+                                        />
+                                        <td>{{ partner.updatedAt | dateTimeFormat }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </TableSkeleton>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -81,28 +73,28 @@
 </template>
 
 <script>
-import PulseLoader from "vue-spinner/src/PulseLoader";
+import TableSkeleton from '../../components/skeleton/TableSkeleton';
 
 export default {
-        components: {
-            PulseLoader,
-        },
-        props:[],
-        data() {
-            return {
-                partners: [],
-                loading: true,
-            };
-        },
-        created() {
-            axios
-                .get('/api/partners')
-                .then(response => this.partners = response.data)
-                .catch(error => {
-                    console.log(error)
-                })
-                .finally(() => this.loading = false);
-            console.log('Component mounted.')
-        }
+    components: {
+        TableSkeleton
+    },
+    props: [],
+    data() {
+        return {
+            partners: [],
+            loading: true
+        };
+    },
+    created() {
+        axios
+            .get("/api/partners")
+            .then(response => (this.partners = response.data))
+            .catch(error => {
+                console.log(error);
+            })
+            .finally(() => (this.loading = false));
+        console.log("Component mounted.");
     }
+};
 </script>

@@ -43,52 +43,42 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
-                        <div
-                            v-if="loading"
-                            class="loadingArea"
-                        >
-                            <pulse-loader
-                                :loading="loading"
-                                color="#3c8dbc"
-                            />
-                        </div>
-                        <table
-                            v-else
-                            class="table table-hover"
-                        >
-                            <thead>
-                                <tr>
-                                    <th />
-                                    <th>Product ID</th>
-                                    <th>Name</th>
-                                    <th>Category</th>
-                                    <th>Order</th>
-                                    <th>Status</th>
-                                    <th>Last Updated</th>
-                                </tr>
-                            </thead>
-                            <Draggable
-                                v-model="products.data"
-                                tag="tbody"
-                            >
-                                <tr
-                                    v-for="product in products.data"
-                                    :key="product.id"
+                        <TableSkeleton :loading="loading">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th />
+                                        <th>Product ID</th>
+                                        <th>Name</th>
+                                        <th>Category</th>
+                                        <th>Order</th>
+                                        <th>Status</th>
+                                        <th>Last Updated</th>
+                                    </tr>
+                                </thead>
+                                <Draggable
+                                    v-model="products.data"
+                                    tag="tbody"
                                 >
-                                    <td><i class="fa fa-arrows" /></td>
-                                    <td>
-                                        <router-link :to="{ name: 'product-edit', params: { id: product.id }}">
-                                            <i class="fa fa-edit" />{{ product.id }}
-                                        </router-link>
-                                    </td>
-                                    <td v-text="product.name" />
-                                    <td v-text="product.productCategory.name" />
-                                    <td v-text="product.orderIndex" />
-                                    <td v-text="product.status" />
-                                    <td>{{ product.updatedAt | dateTimeFormat }}</td>
-                                </tr>
-                            </Draggable>
-                        </table>
+                                    <tr
+                                        v-for="product in products.data"
+                                        :key="product.id"
+                                    >
+                                        <td><i class="fa fa-arrows" /></td>
+                                        <td>
+                                            <router-link :to="{ name: 'product-edit', params: { id: product.id } }">
+                                                <i class="fa fa-edit" />{{ product.id }}
+                                            </router-link>
+                                        </td>
+                                        <td v-text="product.name" />
+                                        <td v-text="product.productCategory.name" />
+                                        <td v-text="product.orderIndex" />
+                                        <td v-text="product.status" />
+                                        <td>{{ product.updatedAt | dateTimeFormat }}</td>
+                                    </tr>
+                                </Draggable>
+                            </table>
+                        </TableSkeleton>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -99,43 +89,44 @@
 </template>
 
 <script>
-    import PulseLoader from "vue-spinner/src/PulseLoader";
-    import Draggable from 'vuedraggable';
+import Draggable from "vuedraggable";
+import TableSkeleton from "../../components/skeleton/TableSkeleton";
 
-    export default {
-        components: {
-            PulseLoader,
-            Draggable,
-        },
-        props:[],
-        data() {
-            return {
-                products: {},
-                loading: true,
-            };
-        },
-        created() {
+export default {
+    components: {
+        Draggable,
+        TableSkeleton
+    },
+    props: [],
+    data() {
+        return {
+            products: {},
+            loading: true
+        };
+    },
+    created() {
+        axios
+            .get("/api/products")
+            .then(response => (this.products = response.data))
+            .catch(error => {
+                console.log(error);
+            })
+            .finally(() => (this.loading = false));
+        console.log("Component mounted.");
+    },
+    methods: {
+        saveSort() {
+            let me = this;
+            let ids = this.products.data.map(product => product.id);
             axios
-                .get('/api/products')
-                .then(response => this.products = response.data).catch(error => {
-                    console.log(error)
+                .post("/api/products/order", {
+                    ids: ids
                 })
-                .finally(() => this.loading = false);
-            console.log('Component mounted.');
+                .then(response => me.setProducts(response.data.data));
         },
-        methods: {
-            saveSort() {
-                let me = this;
-                let ids = this.products.data.map(product => product.id);
-                axios
-                    .post('/api/products/order', {
-                        ids: ids,
-                    })
-                    .then(response => me.setProducts(response.data.data));
-            },
-            setProducts(products) {
-                this.products.data = products.sort((a, b) => a.orderIndex - b.orderIndex);
-            }
+        setProducts(products) {
+            this.products.data = products.sort((a, b) => a.orderIndex - b.orderIndex);
         }
     }
+};
 </script>

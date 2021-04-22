@@ -1,137 +1,133 @@
 <template>
-    <div :class="[{'vuetable-wrapper ui basic segment': true}, 'box-body table-responsive no-padding']">
-        <div class="loadingArea">
-            <pulse-loader
-                :loading="loading"
-                color="#3c8dbc"
-            />
-        </div>
-        <vuetable
-            ref="vuetable"
-            :api-url="apiUrl"
-            :http-method="httpMethod"
-            data-path="data"
-            :fields="columns"
-            :css="{
-                tableClass: 'table table-hover',
-                ascendingIcon: 'fa fa-sort-amount-up',
-                descendingIcon: 'fa fa-sort-amount-down'
-            }"
-            :sort-order="sortOrder"
-            :append-params="params"
-            track-by="id"
-            @vuetable:checkbox-toggled="onCheckboxToggled"
-            @vuetable:checkbox-toggled-all="onCheckboxToggled"
-            @vuetable:loading="showLoader"
-            @vuetable:loaded="hideLoader"
-        >
-            <template
-                slot="link"
-                slot-scope="props"
+    <div :class="[{ 'vuetable-wrapper ui basic segment': true }, 'box-body table-responsive no-padding']">
+        <TableSkeleton :loading="loading">
+            <vuetable
+                ref="vuetable"
+                :api-url="apiUrl"
+                :http-method="httpMethod"
+                data-path="data"
+                :fields="columns"
+                :css="{
+                    tableClass: 'table table-hover',
+                    ascendingIcon: 'fa fa-sort-amount-up',
+                    descendingIcon: 'fa fa-sort-amount-down'
+                }"
+                :sort-order="sortOrder"
+                :append-params="params"
+                track-by="id"
+                @vuetable:checkbox-toggled="onCheckboxToggled"
+                @vuetable:checkbox-toggled-all="onCheckboxToggled"
+                @vuetable:loading="showLoader"
+                @vuetable:loaded="hideLoader"
             >
-                <router-link :to="editRoute + props.rowData.id">
-                    <i class="fa fa-edit" /> {{ props.rowData[linkDisplayProperty] }}
-                </router-link>
-            </template>
-            <template v-slot:actions="{rowData}">
-                <slot
-                    name="actions"
-                    :rowData="rowData"
-                />
-            </template>
-        </vuetable>
+                <template
+                    slot="link"
+                    slot-scope="props"
+                >
+                    <router-link :to="editRoute + props.rowData.id">
+                        <i class="fa fa-edit" /> {{ props.rowData[linkDisplayProperty] }}
+                    </router-link>
+                </template>
+                <template v-slot:actions="{ rowData }">
+                    <slot
+                        name="actions"
+                        :rowData="rowData"
+                    />
+                </template>
+            </vuetable>
+        </TableSkeleton>
     </div>
 </template>
 
 <script>
-    import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
-    import Vuetable from 'vuetable-2/src/components/Vuetable.vue'
+import Vuetable from "vuetable-2/src/components/Vuetable.vue";
+import TableSkeleton from "../components/skeleton/TableSkeleton";
 
-    export default {
-        name: "TableStatic",
-        components: {
-            Vuetable,
-            PulseLoader,
+export default {
+    name: "TableStatic",
+    components: {
+        Vuetable,
+        TableSkeleton
+    },
+    props: {
+        columns: { type: Array, required: true },
+        apiUrl: { type: String, required: true },
+        httpMethod: { type: String, default: "get" },
+        editRoute: { type: String },
+        sortOrder: { type: Array },
+        params: { type: Object },
+        linkDisplayProperty: { type: String, default: "id" }
+    },
+    data() {
+        return {
+            loading: false
+        };
+    },
+    mounted() {
+        this.$events.$on("filter-set", eventData => this.onFilterSet(eventData));
+        console.log(this.loading);
+    },
+    methods: {
+        showLoader() {
+            this.loading = true;
+            console.log("show loader");
         },
-        props:{
-            columns: { type: Array, required: true },
-            apiUrl: { type: String, required: true },
-            httpMethod: { type: String, default: 'get' },
-            editRoute: { type: String },
-            sortOrder: { type: Array },
-            params: { type: Object },
-            linkDisplayProperty: { type: String, default: 'id' }
+        hideLoader() {
+            this.loading = false;
+            console.log("hide loader");
         },
-        data () {
-            return {
-                loading: false,
-            }
+        refresh() {
+            Vue.nextTick(() => this.$refs.vuetable.refresh());
         },
-        mounted() {
-            this.$events.$on('filter-set', eventData => this.onFilterSet(eventData));
-            console.log(this.loading);
+        reinitializeFields() {
+            this.$nextTick(() => {
+                this.$refs.vuetable.normalizeFields();
+            });
         },
-        methods: {
-            showLoader () {
-                this.loading = true;
-                console.log('show loader');
-            },
-            hideLoader () {
-                this.loading = false;
-                console.log('hide loader');
-            },
-            refresh() {
-                Vue.nextTick( () => this.$refs.vuetable.refresh() );
-            },
-            reinitializeFields() {
-                this.$nextTick(() => {
-                    this.$refs.vuetable.normalizeFields();
-                });
-            },
-            dateTimeFormat: function (date) {
-                let d = moment(date);
-                if (!d.isValid(date)) return null;
-                return d.format('MM/DD/YYYY h:mm a');
-            },
-            dateFormat: function (date) {
-                let d = moment(date).tz('Etc/UTC');
-                if (!d.isValid(date)) return null;
-                return d.format('MM/DD/YYYY');
-            },
-            periodFormat: function (date) {
-                let d = moment(date).tz('Etc/UTC');
-                if (!d.isValid(date)) return null;
-                return d.format('YYYY-MM');
-            },
-            statusFormat: function (status) {
-                if (status == null) return null;
+        dateTimeFormat: function(date) {
+            let d = moment(date);
+            if (!d.isValid(date)) return null;
+            return d.format("MM/DD/YYYY h:mm a");
+        },
+        dateFormat: function(date) {
+            let d = moment(date).tz("Etc/UTC");
+            if (!d.isValid(date)) return null;
+            return d.format("MM/DD/YYYY");
+        },
+        periodFormat: function(date) {
+            let d = moment(date).tz("Etc/UTC");
+            if (!d.isValid(date)) return null;
+            return d.format("YYYY-MM");
+        },
+        statusFormat: function(status) {
+            if (status == null) return null;
 
-                return status
-                    .toLowerCase()
-                    .split('_')
-                    .map(upperStatus => upperStatus.charAt(0).toUpperCase() + upperStatus.slice(1))
-                    .join(' ');
-            },
-            onPaginationData (paginationData) {
-                this.$refs.pagination.setPaginationData(paginationData);
-                this.$refs.paginationInfo.setPaginationData(paginationData);
-            },
-            onChangePage (page) {
-                this.$refs.vuetable.changePage(page)
-            },
-            onFilterSet (filters) {
-                this.params = filters;
-                this.clearSelected();
-                this.refresh();
-                console.log('filter-set', filters);
-            },
-            onCheckboxToggled () {
-                this.$events.fire('selection-change', this.$refs.vuetable.selectedTo);
-            },
-            clearSelected () {
-                this.$refs.vuetable.selectedTo = [];
-                this.$events.fire('selection-change', this.$refs.vuetable.selectedTo);
-            },
+            return status
+                .toLowerCase()
+                .split("_")
+                .map(upperStatus => upperStatus.charAt(0).toUpperCase() + upperStatus.slice(1))
+                .join(" ");
+        },
+        onPaginationData(paginationData) {
+            this.$refs.pagination.setPaginationData(paginationData);
+            this.$refs.paginationInfo.setPaginationData(paginationData);
+        },
+        onChangePage(page) {
+            this.$refs.vuetable.changePage(page);
+        },
+        onFilterSet(filters) {
+            this.params = filters;
+            this.clearSelected();
+            this.refresh();
+            console.log("filter-set", filters);
+        },
+        onCheckboxToggled() {
+            this.$events.fire("selection-change", this.$refs.vuetable.selectedTo);
+        },
+        clearSelected() {
+            this.$refs.vuetable.selectedTo = [];
+            this.$events.fire("selection-change", this.$refs.vuetable.selectedTo);
         }
     }
+};
 </script>

@@ -1,7 +1,7 @@
 <template>
     <section class="content">
         <router-link
-            :to="{ name: 'admin-user-new'}"
+            :to="{ name: 'admin-user-new' }"
             class="btn btn-success btn-flat pull-right"
         >
             <i class="fa fa-plus-circle fa-fw" />Create User
@@ -28,56 +28,46 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
-                        <div
-                            v-if="loading"
-                            class="loadingArea"
-                        >
-                            <pulse-loader
-                                :loading="loading"
-                                color="#3c8dbc"
-                            />
-                        </div>
-                        <table
-                            v-else
-                            class="table table-hover"
-                        >
-                            <thead>
-                                <tr>
-                                    <th>User ID</th>
-                                    <th>User Email</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Groups</th>
-                                    <th>Last Updated</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr
-                                    v-for="user in users.data"
-                                    :key="user.id"
-                                >
-                                    <td>
-                                        <router-link :to="{ name: 'admin-user-edit', params: { id: user.id }}">
-                                            <i class="fa fa-edit" />{{ user.id }}
-                                        </router-link>
-                                    </td>
-                                    <td v-text="user.email" />
-                                    <td v-text="user.name.firstName" />
-                                    <td v-text="user.name.lastName" />
-                                    <td>
-                                        <ul class="bulletless-list">
-                                            <li
-                                                v-for="group in user.groups"
-                                                :key="group.id"
-                                            >
-                                                {{ group.name }}
-                                            </li>
-                                        </ul>
-                                    </td>
-                                    <td>{{ user.updatedAt | dateTimeFormat }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <TableSkeleton :loading="loading">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>User ID</th>
+                                        <th>User Email</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Groups</th>
+                                        <th>Last Updated</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        v-for="user in users.data"
+                                        :key="user.id"
+                                    >
+                                        <td>
+                                            <router-link :to="{ name: 'admin-user-edit', params: { id: user.id } }">
+                                                <i class="fa fa-edit" />{{ user.id }}
+                                            </router-link>
+                                        </td>
+                                        <td v-text="user.email" />
+                                        <td v-text="user.name.firstName" />
+                                        <td v-text="user.name.lastName" />
+                                        <td>
+                                            <ul class="bulletless-list">
+                                                <li
+                                                    v-for="group in user.groups"
+                                                    :key="group.id"
+                                                >
+                                                    {{ group.name }}
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td>{{ user.updatedAt | dateTimeFormat }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </TableSkeleton>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -88,42 +78,42 @@
 </template>
 
 <script>
-    import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
-    import VuetablePaginationInfo from "vuetable-2/src/components/VuetablePaginationInfo";
+import VuetablePaginationInfo from "vuetable-2/src/components/VuetablePaginationInfo";
+import TableSkeleton from '../../components/skeleton/TableSkeleton';
 
-    export default {
-        components: {
-            PulseLoader,
-        },
-        props:[],
-        data() {
-            return {
-                users: {
-                    groups: []
-                },
-                groups: [],
-                loading: true,
-            };
-        },
-        created() {
-            axios
-                .get('/api/users', { params: { include: ['groups'] }})
-                .then(response => {
-                    this.users = response.data;
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-                .finally(() => this.loading = false);
-        }
+export default {
+    components: {
+        TableSkeleton
+    },
+    props: [],
+    data() {
+        return {
+            users: {
+                groups: []
+            },
+            groups: [],
+            loading: true
+        };
+    },
+    created() {
+        axios
+            .get("/api/users", { params: { include: ["groups"] } })
+            .then(response => {
+                this.users = response.data;
+            })
+            .catch(error => {
+                console.log(error);
+            })
+            .finally(() => (this.loading = false));
     }
+};
 </script>
 
 <style scoped>
-    .bulletless-list {
-        display: inline;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
+.bulletless-list {
+    display: inline;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
 </style>

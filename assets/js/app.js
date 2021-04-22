@@ -9,6 +9,7 @@ require('verte/dist/verte.css');
 require('chosen-js/chosen.css');
 require('chosen-bootstrap-theme/dist/chosen-bootstrap-theme.css');
 require('eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css');
+require('placeholder-loading/src/scss/placeholder-loading.scss');
 require('../sass/app.scss');
 
 // Vue.component('vuetable', require('vuetable-2/src/components/Vuetable.vue'));

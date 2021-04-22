@@ -29,41 +29,31 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
-                        <div
-                            v-if="loading"
-                            class="loadingArea"
-                        >
-                            <pulse-loader
-                                :loading="loading"
-                                color="#3c8dbc"
-                            />
-                        </div>
-                        <table
-                            v-else
-                            class="table table-hover"
-                        >
-                            <thead>
-                                <tr>
-                                    <th>Role ID</th>
-                                    <th>Name</th>
-                                    <th>Last Updated</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr
-                                    v-for="role in groups.data"
-                                    :key="role.id"
-                                >
-                                    <td>
-                                        <router-link :to="{ name: 'admin-group-edit', params: { id: role.id }}">
-                                            <i class="fa fa-edit" />{{ role.id }}
-                                        </router-link>
-                                    </td>
-                                    <td v-text="role.name" />
-                                    <td>{{ role.updatedAt | dateTimeFormat }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <TableSkeleton :loading="loading">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Role ID</th>
+                                        <th>Name</th>
+                                        <th>Last Updated</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        v-for="role in groups.data"
+                                        :key="role.id"
+                                    >
+                                        <td>
+                                            <router-link :to="{ name: 'admin-group-edit', params: { id: role.id } }">
+                                                <i class="fa fa-edit" />{{ role.id }}
+                                            </router-link>
+                                        </td>
+                                        <td v-text="role.name" />
+                                        <td>{{ role.updatedAt | dateTimeFormat }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </TableSkeleton>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -74,31 +64,31 @@
 </template>
 
 <script>
-    import PulseLoader from 'vue-spinner/src/PulseLoader'
+import TableSkeleton from '../../components/skeleton/TableSkeleton';
 
-    export default {
-        components: {
-            PulseLoader,
-        },
-        props:[],
-        data() {
-            return {
-                groups: {},
-                loading: true,
-            };
-        },
-        created() {
-            axios
-                .get('/api/groups')
-                .then(response => {
-                    this.groups = response.data
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-                .finally(() => this.loading = false);
+export default {
+    components: {
+        TableSkeleton
+    },
+    props: [],
+    data() {
+        return {
+            groups: {},
+            loading: true
+        };
+    },
+    created() {
+        axios
+            .get("/api/groups")
+            .then(response => {
+                this.groups = response.data;
+            })
+            .catch(error => {
+                console.log(error);
+            })
+            .finally(() => (this.loading = false));
 
-            console.log('Component mounted.')
-        },
+        console.log("Component mounted.");
     }
+};
 </script>
