@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Orders\MerchandiseOrder;
 use App\Entity\Orders\MerchandiseOrderLineItem;
 use App\Entity\Warehouse;
-use App\Security\PartnerOrderVoter;
+use App\Security\MerchandiseOrderVoter;
 use App\Transformers\MerchandiseOrderTransformer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -108,13 +108,11 @@ class MerchandiseOrderController extends BaseOrderController
 
     protected function getEditVoter(): string
     {
-        // TODO ticket # 273: create a MerchandiseOrderVoter
-        return PartnerOrderVoter::EDIT;
+        return MerchandiseOrderVoter::EDIT;
     }
 
     protected function getViewVoter(): string
     {
-        // TODO ticket # 273: create a MerchandiseOrderVoter
-        return PartnerOrderVoter::VIEW;
+        return MerchandiseOrderVoter::VIEW;
     }
 }
