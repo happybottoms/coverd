@@ -52,6 +52,7 @@
                 <partnerselectionform
                     v-model="filters.partner"
                     label="Partner"
+                    :options="allPartners"
                 />
             </div>
 
@@ -101,72 +102,92 @@
 </template>
 
 <script>
-    import DateField from '../../components/DateField';
-    import PartnerSelectionForm from '../../components/PartnerSelectionForm.vue';
-    import TablePaged from '../../components/TablePaged.vue';
-    export default {
-        components: { 
-            'datefield' : DateField,
-            'partnerselectionform' : PartnerSelectionForm,
-            'tablepaged' : TablePaged
-        },
-        props:[],
-        data() {
-            let columns = [
-                { name: "id", title: "Partner ID", sortField: "p.id" },
-                { name: "name", title: "Partner", sortField: "p.title" },
-                { name: "type", title: "Partner Type", sortField: "p.partnerType" },
-                { name: "total", title: "Total Distributed", sortField: "total", dataClass: "text-right", titleClass: "text-right" },
-            ];
+import DateField from "../../components/DateField";
+import PartnerSelectionForm from "../../components/PartnerSelectionForm.vue";
+import TablePaged from "../../components/TablePaged.vue";
+import { mapGetters } from "vuex";
+export default {
+    components: {
+        datefield: DateField,
+        partnerselectionform: PartnerSelectionForm,
+        tablepaged: TablePaged
+    },
+    props: [],
+    data() {
+        let columns = [
+            { name: "id", title: "Partner ID", sortField: "p.id" },
+            { name: "name", title: "Partner", sortField: "p.title" },
+            { name: "type", title: "Partner Type", sortField: "p.partnerType" },
+            {
+                name: "total",
+                title: "Total Distributed",
+                sortField: "total",
+                dataClass: "text-right",
+                titleClass: "text-right"
+            }
+        ];
 
+        return {
+            transactions: {},
+            locations: [],
+            columns: columns,
+            filters: {
+                partner: {},
+                partnerType: null,
+                endingAt: null,
+                startingAt: null
+            }
+        };
+    },
+    computed: mapGetters(["allPartners"]),
+    mounted() {
+        let me = this;
+        this.$store.dispatch("loadProducts").then(response => {
+            let newColumns = [];
+            me.$store.getters.allOrderableProducts.forEach(function(product) {
+                newColumns.push({
+                    name: product.sku,
+                    title: product.name,
+                    sortField: "total" + product.id,
+                    dataClass: "text-right",
+                    titleClass: "text-right"
+                });
+            });
+            me.columns.splice(-1, 0, ...newColumns);
+            me.$refs.hbtable.reinitializeFields();
+        });
+        console.log("Component mounted.");
+    },
+    methods: {
+        requestParams: function() {
             return {
-                transactions: {},
-                locations: [],
-                columns: columns,
-                filters: {
-                    partner: {},
-                    partnerType: null,
-                    endingAt: null,
-                    startingAt: null,
-                },
+                partner: this.filters.partner.id || null,
+                partnerType: this.filters.partnerType || null,
+                startingAt: this.filters.startingAt
+                    ? moment
+                          .tz(this.filters.startingAt, "Etc/UTC")
+                          .startOf("day")
+                          .toISOString()
+                    : null,
+                endingAt: this.filters.endingAt
+                    ? moment
+                          .tz(this.filters.endingAt, "Etc/UTC")
+                          .endOf("day")
+                          .toISOString()
+                    : null
             };
         },
-        mounted() {
-            let me = this;
-            this.$store.dispatch('loadProducts').then((response)=>{
-                let newColumns = [];
-                me.$store.getters.allOrderableProducts.forEach(function(product) {
-                    newColumns.push(
-                        { name: product.sku, title: product.name, sortField: "total" + product.id, dataClass: "text-right", titleClass: "text-right" }
-                    );
-                });
-                me.columns.splice(-1, 0, ...newColumns);
-                me.$refs.hbtable.reinitializeFields();
-            });
-            console.log('Component mounted.')
+        doFilter() {
+            this.$events.fire("filter-set", this.requestParams());
         },
-        methods: {
-            requestParams: function () {
-                return {
-                    partner: this.filters.partner.id || null,
-                    partnerType: this.filters.partnerType || null,
-                    startingAt: this.filters.startingAt ? moment.tz(this.filters.startingAt, 'Etc/UTC').startOf('day').toISOString() : null,
-                    endingAt: this.filters.endingAt ? moment.tz(this.filters.endingAt, 'Etc/UTC').endOf('day').toISOString() : null,
-                }
-            },
-            doFilter () {
-                this.$events.fire('filter-set', this.requestParams());
-            },
-            downloadExcel () {
-                let params = this.requestParams();
-                params.download = 'xlsx';
-                axios
-                    .get('/api/reports/distribution-totals', { params: params, responseType: 'blob' })
-                    .then(response => {
-                        let filename = response.headers['content-disposition'].match(/filename="(.*)"/)[1]
-                        fileDownload(response.data, filename, response.headers['content-type'])
-                    });
-            }
+        downloadExcel() {
+            let params = this.requestParams();
+            params.download = "xlsx";
+            axios.get("/api/reports/distribution-totals", { params: params, responseType: "blob" }).then(response => {
+                let filename = response.headers["content-disposition"].match(/filename="(.*)"/)[1];
+                fileDownload(response.data, filename, response.headers["content-type"]);
+            });
         }
     }
+};
 </script>

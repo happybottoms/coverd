@@ -23,36 +23,44 @@ const getters = {
         if (state.user == null) return false;
         return state.user.partners
     },
+    isAdmin: (state) => {
+        if (state.user == null) return false;
+        return state.user.isAdmin
+    },
+    isPartner: (state) => {
+        if (state.user == null) return false;
+        return state.user.isPartner
+    }
 };
 
 // actions
 const actions = {
-    async loadCurrentUser ({ commit }) {
-            if (state.user) {
-                return;
-            }
-            await axios
-                .get('/api/system/current-user', {
-                    params: {
-                        include: ['groups', 'partners', 'activePartner']
-                    }
-                })
-                .then((response) => {
-                    commit('setUser', { user: response.data.data });
+    async loadCurrentUser({ commit }) {
+        if (state.user) {
+            return;
+        }
+        await axios
+            .get('/api/system/current-user', {
+                params: {
+                    include: ['groups', 'partners', 'activePartner']
                 }
+            })
+            .then((response) => {
+                commit('setUser', { user: response.data.data });
+            }
             );
     },
-    clearCurrentUser ({commit}) {
+    clearCurrentUser({ commit }) {
         commit('clearUser');
     }
 };
 
 // mutations
 const mutations = {
-    setUser (state, { user }) {
+    setUser(state, { user }) {
         state.user = user;
     },
-    clearUser (state) {
+    clearUser(state) {
         state.user = null;
     }
 };

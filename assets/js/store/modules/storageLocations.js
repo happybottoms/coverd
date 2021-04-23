@@ -9,26 +9,26 @@ const state = {
 const getters = {
     allActiveStorageLocations: state => {
         let active = [...state.all].filter(storageLocation => storageLocation.status === "ACTIVE");
-        let warehouses = active.filter(storageLocation => storageLocation.type === 'Warehouse').sort((a,b) => a.title < b.title ? -1 : 1);
-        let partners = active.filter(storageLocation => storageLocation.type !== 'Warehouse').sort((a,b) => a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1);
+        let warehouses = active.filter(storageLocation => storageLocation.type === 'Warehouse').sort((a, b) => a.title < b.title ? -1 : 1);
+        let partners = active.filter(storageLocation => storageLocation.type !== 'Warehouse').sort((a, b) => a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1);
         return [...warehouses, ...partners];
     },
     allActivePartners: state => {
         let active = [...state.all]
             .filter(storageLocation => storageLocation.status === "ACTIVE" && storageLocation.type !== 'Warehouse')
-            .sort((a,b) => a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1);
+            .sort((a, b) => a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1);
         return active;
     },
     allPartners: state => {
         let active = [...state.all]
             .filter(storageLocation => storageLocation.type !== 'Warehouse')
-            .sort((a,b) => a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1);
+            .sort((a, b) => a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1);
         return active;
     },
     allActiveWarehouses: state => {
         let active = [...state.all]
             .filter(storageLocation => storageLocation.status === "ACTIVE" && storageLocation.type === 'Warehouse')
-            .sort((a,b) => a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1);
+            .sort((a, b) => a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1);
         return active;
     },
     allAgencies: state => {
@@ -44,7 +44,7 @@ const getters = {
 
 // actions
 const actions = {
-    loadStorageLocations ({ commit }, force = false) {
+    loadStorageLocations({ commit }, force = false) {
         if ((state.all.length > 0 || state.loading) && !force) return;
 
         axios
@@ -53,14 +53,14 @@ const actions = {
                 commit('setStorageLocations', { list: response.data.data });
             },
                 (err) => {
-            console.log(err);
-        });
+                    console.log(err);
+                });
     }
 };
 
 // mutations
 const mutations = {
-    setStorageLocations (state, { list }) {
+    setStorageLocations(state, { list }) {
         state.all = list;
     },
 };

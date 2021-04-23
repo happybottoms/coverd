@@ -61,6 +61,7 @@
             <PartnerSelectionForm
                 v-model="value.partner"
                 label="Assigned Partner"
+                :options="allPartners"
             />
         </div>
         <div class="col-md-6">
@@ -118,6 +119,7 @@ import DisplayField from "../../components/DisplayField";
 import ClientDistributionHistory from "./ClientDistributionHistory";
 import { required } from "vuelidate/lib/validators";
 import { mustLessThanNow } from "../../validators";
+import { mapGetters } from "vuex";
 
 export default {
     name: "ClientInfoForm",
@@ -156,6 +158,7 @@ export default {
             }
         }
     },
+    computed: mapGetters(["allPartners"]),
     created() {
         let self = this;
 

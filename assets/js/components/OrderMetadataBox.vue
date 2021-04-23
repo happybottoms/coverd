@@ -70,22 +70,22 @@
 </template>
 
 <script>
-import DateField from '../components/DateField.vue';
+import DateField from "../components/DateField.vue";
 
 export default {
-        components: {
-            'datefield': DateField,
-        },
-        props: {
-            order: { type: Object, required: true },
-            orderType: { type: String, required: true, },
-            editable: { type: Boolean, default: true },
-            v: { type: Object },
-        },
-        computed: {
-            statusError: function () {
-                return this.v && this.v.status && this.v.status.$error;
-            },
+    components: {
+        datefield: DateField
+    },
+    props: {
+        order: { type: Object, required: true },
+        orderType: { type: String, required: true },
+        editable: { type: Boolean, default: true },
+        v: { type: Object }
+    },
+    computed: {
+        statusError: function() {
+            return this.v && this.v.status && this.v.status.$error;
         }
     }
+};
 </script>
