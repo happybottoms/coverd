@@ -317,6 +317,9 @@ export default {
     created() {
         var self = this;
         if (this.new) {
+            self.order.orderPeriod = moment()
+                .add(1, "M")
+                .format("YYYY-MM");
         } else {
             axios
                 .get("/api/orders/partner/" + this.$route.params.id, {

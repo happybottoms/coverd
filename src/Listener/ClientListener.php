@@ -32,9 +32,13 @@ class ClientListener implements EventSubscriber
         $em = $event->getEntityManager();
         $definitions = $em->getRepository(ClientDefinition::class)->findAll();
 
-        $emptyAttributes = array_map(function (ClientDefinition $defintion) {
-            return $defintion->createAttribute();
-        }, $definitions);
+        $emptyAttributes = [];
+
+        foreach ($definitions as $definition) {
+            if (!$client->hasAttributeForDefinition($definition)) {
+                $emptyAttributes[] = $definition->createAttribute();
+            }
+        }
 
         $client->addAttributes($emptyAttributes, false);
     }

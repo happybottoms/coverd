@@ -16,29 +16,28 @@
     </modal>
 </template>
 
-
 <script>
-    import Modal from '../../components/Modal.vue';
+import Modal from "../../components/Modal.vue";
 
-    export default {
-        name: 'ClientTransferModal',
-        components: {
-            'modal' : Modal,
-        },
-        props: {
-            client: { type: Object, required: true },
-            targetPartner: { type: Object, required: true }
-        },
-        methods: {
-            transferClient: function() {
-                let me = this;
-                axios
-                    .post('/api/clients/'+this.client.id+'/transfer', )
-                    .then(response => me.$router.push({name: 'client-edit', params: {id: response.data.data.id}}))
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            }
+export default {
+    name: "ClientTransferModal",
+    components: {
+        modal: Modal
+    },
+    props: {
+        client: { type: Object, required: true },
+        targetPartner: { type: Object, required: true }
+    },
+    methods: {
+        transferClient: function() {
+            let me = this;
+            axios
+                .post("/api/clients/" + this.client.id + "/transfer")
+                .then(response => me.$router.push({ name: "client-edit", params: { id: response.data.data.id } }))
+                .catch(function(error) {
+                    console.log(error);
+                });
         }
     }
+};
 </script>

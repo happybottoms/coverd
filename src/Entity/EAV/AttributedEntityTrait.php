@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 trait AttributedEntityTrait
 {
     /**
-     * @var Collection
+     * @var Attribute[]|Collection
      *
      * @ORM\ManyToMany(
      *     targetEntity="App\Entity\EAV\Attribute",
@@ -116,5 +116,16 @@ trait AttributedEntityTrait
         }
 
         return null;
+    }
+
+    public function hasAttributeForDefinition(Definition $definition): bool
+    {
+        foreach ($this->attributes as $attribute) {
+            if ($attribute->getDefinition()->getId() === $definition->getId()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

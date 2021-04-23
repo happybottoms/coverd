@@ -42,7 +42,7 @@ class ClientController extends BaseController
      */
     public function index(Request $request): JsonResponse
     {
-//        $this->checkViewPermissions($clients);
+        //        $this->checkViewPermissions($clients);
 
         $sort = $request->get('sort') ? explode('|', $request->get('sort')) : null;
         $page = (int) $request->get('page', 1);
@@ -210,7 +210,7 @@ class ClientController extends BaseController
 
         $client->applyChangesFromArray($params);
 
-//        $this->checkEditPermissions($client);
+        //        $this->checkEditPermissions($client);
 
         $this->getEm()->persist($client);
         $this->getEm()->flush();

@@ -235,6 +235,11 @@ export default {
         this.$store.dispatch("loadProducts");
 
         if (this.new) {
+            // set order Period default date to next month
+            self.order.orderPeriod = moment()
+                .add(1, "M")
+                .format("YYYY-MM");
+            self.order.distributionPeriod = moment().format("YYYY-MM");
         } else {
             axios
                 .get("/api/orders/distribution/" + this.$route.params.id, {
