@@ -16,6 +16,7 @@
                 v-datepicker="{ format: format, tz: timezone }"
                 type="text"
                 class="form-control pull-right"
+                :disabled="disabled"
                 @change="$emit('input', dateValue)"
             >
         </div>
@@ -30,7 +31,8 @@ export default {
         label: { type: String, required: false, default: "Date:" },
         helpText: { type: String, required: false, default: "" },
         format: { type: String, default: "MM/DD/YYYY" },
-        timezone: { type: String, required: false, default: "UTC" }
+        timezone: { type: String, required: false, default: "UTC" },
+        disabled: { type: Boolean, default: false }
     },
     data() {
         return { dateValue: null };
