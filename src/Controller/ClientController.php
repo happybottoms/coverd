@@ -530,4 +530,43 @@ class ClientController extends BaseController
 
         return $this->success();
     }
+
+    /**
+     * Bulk update clients information
+     *
+     * @Route(path="/bulk-change", methods={"POST"})
+     */
+    public function bulkChange(Request $request, Registry $workflowRegistry): JsonResponse
+    {
+        $params = $this->getParams($request);
+
+        /** @var Client[] $selectedClients */
+        $selectedClients = $this->getRepository()->findByPublicIds($params['selectedClients']);
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        foreach ($selectedClients as $client) {
+            if ($user->hasRole(Client::ROLE_MANAGE_OWN) || $user->hasRole(Client::ROLE_EDIT_ALL)) {
+                if (isset($params['changes']['partner'])) {
+                    $newPartner = $this->getEm()->find(Partner::class, $params['changes']['partner']);
+                    if (!$newPartner) {
+                        throw new \Exception('Invalid Partner ID provided');
+                    }
+                    $client->setPartner($newPartner);
+                }
+            }
+            if ($user->hasRole(Client::ROLE_EDIT_ALL)) {
+                if (isset($params['changes']['status'])) {
+                    $workflowRegistry
+                        ->get($client)
+                        ->apply($client, $params['changes']['status']);
+                }
+            }
+        }
+
+        $this->getEm()->flush();
+
+        return $this->success();
+    }
 }

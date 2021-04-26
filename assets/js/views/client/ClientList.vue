@@ -73,6 +73,9 @@
                                         <a @click="onClickMerge()">
                                             <i class="fa fa-compress fa-fw" /> Merge Clients
                                         </a>
+                                        <a @click="onClickUpdateClientInfo()">
+                                            <i class="fa fa-compress fa-fw" /> Update Client Info
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
@@ -111,11 +114,17 @@
             ref="clientMerge"
             :selected-client-ids="selection"
         />
+        <ClientBulkUpdate
+            ref="clientBulkUpdate"
+            :selected-clients="selectedData"
+            @update-bulk-clients="doBulkChange"
+        />
     </section>
 </template>
 
 <script>
 import ClientMerge from "./ClientMerge";
+import ClientBulkUpdate from "./ClientBulkUpdate";
 import PartnerSelectionForm from "../../components/PartnerSelectionForm";
 import TablePaged from "../../components/TablePaged";
 import TextField from "../../components/TextField";
@@ -125,6 +134,7 @@ export default {
     components: {
         TextField,
         ClientMerge,
+        ClientBulkUpdate,
         PartnerSelectionForm,
         TablePaged
     },
@@ -147,16 +157,21 @@ export default {
                 keyword: null,
                 partner: { id: null }
             },
-            selection: []
+            selectedData: []
         };
     },
-    computed: mapGetters(["allPartners"]),
+    computed: {
+        ...mapGetters(["allPartners"]),
+        selection: function() {
+            return this.selectedData.map(d => d.id);
+        }
+    },
     created() {
         axios.get("/api/clients").then(response => (this.clients = response.data));
         console.log("Component mounted.");
     },
     mounted() {
-        this.$events.$on("selection-change", eventData => this.onSelectionChange(eventData));
+        this.$events.$on("selection-change-details", eventData => this.onSelectionChange(eventData));
     },
     methods: {
         routerLink: function(id) {
@@ -179,23 +194,17 @@ export default {
             this.$events.fire("filter-set", this.requestParams());
         },
         onSelectionChange(selection) {
-            this.selection = selection;
-        },
-        bulkStatusChange(statusId) {
-            $("#bulkChangeModal").modal("show");
-            this.bulkChange = {
-                status: statusId
-            };
+            this.selectedData = selection;
         },
         refreshTable() {
             this.$refs.hbtable.refresh();
         },
-        doBulkChange() {
+        doBulkChange(changes) {
             let self = this;
             axios
-                .patch("/api/clients/bulk-change", {
-                    ids: self.selection,
-                    changes: self.bulkChange
+                .post("/api/clients/bulk-change", {
+                    selectedClients: self.selection,
+                    changes
                 })
                 .then(response => self.refreshTable())
                 .catch(function(error) {
@@ -213,6 +222,11 @@ export default {
         onClickMerge: function() {
             this.$refs.clientMerge.reset();
             $("#clientMergeModal").modal("show");
+        },
+        onClickUpdateClientInfo: function() {
+            this.$refs.clientBulkUpdate.reset();
+            $("#clientBlukUpdateModal").modal("show");
+            this.$refs.clientBulkUpdate.fetchData();
         },
         onMarkReviewClicked: function(clientId) {
             axios
