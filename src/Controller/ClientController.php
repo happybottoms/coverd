@@ -41,7 +41,7 @@ class ClientController extends BaseController
      */
     public function index(Request $request): JsonResponse
     {
-//        $this->checkViewPermissions($clients);
+        //        $this->checkViewPermissions($clients);
 
         $sort = $request->get('sort') ? explode('|', $request->get('sort')) : null;
         $page = (int) $request->get('page', 1);
@@ -209,7 +209,7 @@ class ClientController extends BaseController
 
         $client->applyChangesFromArray($params);
 
-//        $this->checkEditPermissions($client);
+        //        $this->checkEditPermissions($client);
 
         $this->getEm()->persist($client);
         $this->getEm()->flush();
@@ -230,6 +230,22 @@ class ClientController extends BaseController
         /** @var Client $client */
         $client = $this->getClientById($publicId);
         $this->denyAccessUnlessGranted(ClientVoter::EDIT, $client);
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        // check client expiration changes
+        // if the user has no role of ROLE_CLIENT_OVERRIDE_EXPIRATIONS,
+        // unset those information from params
+        if (!$user->hasRole(Client::ROLE_CLIENT_OVERRIDE_EXPIRATIONS)) {
+            unset(
+                $params["ageExpiresAt"],
+                $params["isExpirationOverridden"],
+                $params["distributionExpiresAt"],
+                $params["pullupDistributionMax"],
+                $params["pullupDistributionCount"]
+            );
+        }
 
         if ($params['firstName'] && $params['lastName']) {
             $name = new Name($params['firstName'], $params['lastName']);

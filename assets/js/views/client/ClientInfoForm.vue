@@ -61,6 +61,7 @@
             <PartnerSelectionForm
                 v-model="value.partner"
                 label="Assigned Partner"
+                :options="allPartners"
             />
         </div>
         <div class="col-md-6">
@@ -79,20 +80,24 @@
                     <BooleanField
                         v-model="value.isExpirationOverridden"
                         label="Override Expirations"
+                        :disabled="readOnlyExpiration"
                     />
                     <DateField
                         v-model="value.ageExpiresAt"
                         label="Age Expiration"
                         format="YYYY-MM-DD"
+                        :disabled="readOnlyExpiration"
                     />
                     <DateField
                         v-model="value.distributionExpiresAt"
                         label="Distribution Expiration"
                         format="YYYY-MM-DD"
+                        :disabled="readOnlyExpiration"
                     />
                     <NumberField
                         v-model="value.pullupDistributionMax"
                         label="Pullup Maximum Limit"
+                        :disabled="readOnlyExpiration"
                     />
                     <DisplayField
                         v-model="value.pullupDistributionCount"
@@ -112,11 +117,12 @@ import BooleanField from "../../components/ToggleField";
 import NumberField from "../../components/NumberField";
 import DisplayField from "../../components/DisplayField";
 import ClientDistributionHistory from "./ClientDistributionHistory";
-import {required} from 'vuelidate/lib/validators';
-import {mustLessThanNow} from '../../validators';
+import { required } from "vuelidate/lib/validators";
+import { mustLessThanNow } from "../../validators";
+import { mapGetters } from "vuex";
 
 export default {
-    name: 'ClientInfoForm',
+    name: "ClientInfoForm",
     components: {
         DisplayField,
         NumberField,
@@ -136,6 +142,7 @@ export default {
             required: false
         },
         value: { required: true, type: [Object, Array] },
+        readOnlyExpiration: { type: Boolean, default: false }
     },
     validations: {
         value: {
@@ -148,13 +155,14 @@ export default {
             birthdate: {
                 required,
                 mustLessThanNow
-            },
+            }
         }
     },
+    computed: mapGetters(["allPartners"]),
     created() {
         let self = this;
 
-        console.log('ClientEdit Component mounted.');
-    },
-}
+        console.log("ClientEdit Component mounted.");
+    }
+};
 </script>

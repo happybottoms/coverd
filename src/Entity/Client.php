@@ -49,6 +49,7 @@ class Client extends CoreEntity implements AttributedEntityInterface
     public const ROLE_EDIT_ALL = "ROLE_CLIENT_EDIT_ALL";
     public const ROLE_MANAGE_OWN = "ROLE_CLIENT_MANAGE_OWN";
     public const ROLE_VIEW_ALL = "ROLE_CLIENT_VIEW_ALL";
+    public const ROLE_CLIENT_OVERRIDE_EXPIRATIONS = "ROLE_CLIENT_OVERRIDE_EXPIRATIONS";
 
     /**
      * The unique auto incremented primary key.
@@ -176,6 +177,24 @@ class Client extends CoreEntity implements AttributedEntityInterface
      */
     protected $lastReviewedAt;
 
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    protected $isDuplicate;
+
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    protected $isExpired;
+
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    protected $isBlocked;
+
     public function __construct(Registry $workflowRegistry)
     {
         $this->attributes = new ArrayCollection();
@@ -186,6 +205,9 @@ class Client extends CoreEntity implements AttributedEntityInterface
         $this->pullupDistributionCount = 0;
         $this->workflowRegistry = $workflowRegistry;
         $this->status = self::STATUS_CREATION;
+        $this->isDuplicate = false;
+        $this->isExpired = false;
+        $this->isBlocked = false;
     }
 
     public function __toString()
@@ -493,5 +515,41 @@ class Client extends CoreEntity implements AttributedEntityInterface
     public function canPartnerTransfer(): bool
     {
         return in_array($this->status, [self::STATUS_INACTIVE, self::STATUS_CREATION]);
+    }
+
+    public function isDuplicate(): ?bool
+    {
+        return $this->isDuplicate;
+    }
+
+    public function setIsDuplicate(bool $isDuplicate): self
+    {
+        $this->isDuplicate = $isDuplicate;
+
+        return $this;
+    }
+
+    public function isExpired(): ?bool
+    {
+        return $this->isExpired;
+    }
+
+    public function setIsExpired(bool $isExpired): self
+    {
+        $this->isExpired = $isExpired;
+
+        return $this;
+    }
+
+    public function isBlocked(): ?bool
+    {
+        return $this->isBlocked;
+    }
+
+    public function setIsBlocked(bool $isBlocked): self
+    {
+        $this->isBlocked = $isBlocked;
+
+        return $this;
     }
 }
