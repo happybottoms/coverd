@@ -207,7 +207,10 @@ class ClientController extends BaseController
             // it should not work.
             $user = $this->getUser();
             $activePartner = $user->getActivePartner();
-            if (!$user->isAdmin() && $user->isPartner() && (is_null($activePartner) || !$activePartner->canCreateClient())) {
+            if (
+                !$user->isAdmin() && $user->isPartner() &&
+                (is_null($activePartner) || !$activePartner->canCreateClient())
+            ) {
                 throw new \Exception('The active partner can\'t create new client.');
             }
             $client->setPartner($newPartner);
