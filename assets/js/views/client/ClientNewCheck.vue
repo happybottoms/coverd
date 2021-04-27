@@ -171,6 +171,7 @@
                                 ref="clientInfoForm"
                                 v-model="client"
                                 :show-expirations="false"
+                                :new="true"
                             />
                             <AttributesEditForm v-model="client.attributes" />
                         </div>
@@ -230,12 +231,22 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["userActivePartner"]),
+        ...mapGetters(["userActivePartner", "isPartner"]),
         foundDuplicates: function() {
             return this.checked && this.duplicates.length > 0;
         },
         noDuplicates: function() {
             return this.checked && this.duplicates.length === 0;
+        }
+    },
+    watch: {
+        'userActivePartner': {
+            handler(activePartner) {
+                if (this.isPartner) {
+                    this.client.partner = activePartner
+                }
+            },
+            deep: true
         }
     },
     created() {
