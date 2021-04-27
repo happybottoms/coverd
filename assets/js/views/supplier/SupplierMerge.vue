@@ -131,6 +131,11 @@
         methods: {
             mergeSuppliers: function() {
                 let me = this;
+                console.log({
+                        targetSupplier: this.targetSupplier.id,
+                        sourceSuppliers: this.getSourcesSupplierIds(),
+                        context: this.mergeContext,
+                    })
                 axios
                     .post('/api/suppliers/merge', {
                         targetSupplier: this.targetSupplier.id,
