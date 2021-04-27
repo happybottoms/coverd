@@ -1,6 +1,9 @@
 <template>
     <section class="content">
+        {{ isDisabledCreate }}
         <router-link
+            :disabled="isDisabledCreate"
+            :event="isDisabledCreate ? '' : 'click'"
             :to="{ name: 'client-new' }"
             class="btn btn-success btn-flat pull-right"
         >
@@ -150,7 +153,14 @@ export default {
             selection: []
         };
     },
-    computed: mapGetters(["allPartners"]),
+    computed: {
+        ...mapGetters(["allPartners", "userActivePartner", "isAdmin", "isPartner"]),
+        isDisabledCreate: function() {
+            if (this.isAdmin || !this.isPartner) return false
+            if (!this.userActivePartner) return true
+            return this.userActivePartner.status !== 'ACTIVE' && this.userActivePartner.status !== 'NEEDS_PROFILE_REVIEW'
+        }
+    },
     created() {
         axios.get("/api/clients").then(response => (this.clients = response.data));
         console.log("Component mounted.");

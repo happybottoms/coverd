@@ -202,6 +202,14 @@ class ClientController extends BaseController
             if (!$newPartner) {
                 throw new \Exception('Invalid Partner ID provided');
             }
+
+            // if the current user is partner and partner status is not STATUS_ACTIVE or STATUS_NEEDS_PROFILE_REVIEW
+            // it should not work.
+            $user = $this->getUser();
+            $activePartner = $user->getActivePartner();
+            if (!$user->isAdmin() && $user->isPartner() && (is_null($activePartner) || !$activePartner->canCreateClient())) {
+                throw new \Exception('The active partner can\'t create new client.');
+            }
             $client->setPartner($newPartner);
         }
 

@@ -106,6 +106,21 @@ parameters:
 			path: src/Controller/ClientController.php
 
 		-
+			message: "#^Cannot call method getActivePartner\\(\\) on object\\|null\\.$#"
+			count: 1
+			path: src/Controller/ClientController.php
+
+		-
+			message: "#^Cannot call method isAdmin\\(\\) on object\\|null\\.$#"
+			count: 1
+			path: src/Controller/ClientController.php
+
+		-
+			message: "#^Cannot call method isPartner\\(\\) on object\\|null\\.$#"
+			count: 1
+			path: src/Controller/ClientController.php
+
+		-
 			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\:\\:findOneByPublicId\\(\\)\\.$#"
 			count: 2
 			path: src/Controller/ClientController.php
@@ -249,6 +264,21 @@ parameters:
 			message: "#^Method App\\\\Controller\\\\PartnerFulfillmentPeriodController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Controller/PartnerFulfillmentPeriodController.php
+
+		-
+			message: "#^Cannot call method getActivePartner\\(\\) on object\\|null\\.$#"
+			count: 1
+			path: src/Controller/PartnerOrderController.php
+
+		-
+			message: "#^Cannot call method isAdmin\\(\\) on object\\|null\\.$#"
+			count: 1
+			path: src/Controller/PartnerOrderController.php
+
+		-
+			message: "#^Cannot call method isPartner\\(\\) on object\\|null\\.$#"
+			count: 1
+			path: src/Controller/PartnerOrderController.php
 
 		-
 			message: "#^Method App\\\\Controller\\\\ProductCategoryController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
