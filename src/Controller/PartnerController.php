@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Workflow\Registry;
-use Symfony\Component\Workflow\Transition;
 
 /**
  * Class PartnerController
@@ -221,26 +220,5 @@ class PartnerController extends BaseController
         }
 
         return $partner;
-    }
-
-    /**
-     *
-     * @param Registry $workflowRegistry
-     * @param Partner $partner
-     * @return array
-     *
-     */
-    protected function getEnabledTransitions(Registry $workflowRegistry, Partner $partner): array
-    {
-        $workflow = $workflowRegistry->get($partner);
-        $enabledTransitions = $workflow->getEnabledTransitions($partner);
-
-        return array_map(function (Transition $transition) use ($workflow) {
-            $title = $workflow->getMetadataStore()->getTransitionMetadata($transition)['title'];
-            return [
-                'transition' => $transition->getName(),
-                'title' => $title
-            ];
-        }, $enabledTransitions);
     }
 }

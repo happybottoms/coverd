@@ -59,7 +59,7 @@
                         <table-paged
                             :columns="columns"
                             api-url="/api/warehouses"
-                            edit-route="warehouses"
+                            edit-route="warehouses/"
                             :sort-order="[{ field: 'id', direction: 'desc'}]"
                             :params="requestParams()"
                             :per-page="10"
