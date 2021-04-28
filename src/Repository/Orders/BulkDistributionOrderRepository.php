@@ -95,5 +95,19 @@ class BulkDistributionOrderRepository extends OrderRepository
             $qb->andWhere('o.distributionPeriod <= :endingAt')
                 ->setParameter('endingAt', new \DateTime($params->get('endingAt')));
         }
+
+        if ($params->has('distributionMonth')) {
+            $date = new \DateTime($params->get('distributionMonth'));
+            $qb->andWhere('year(o.distributionPeriod) = :y')
+                ->setParameter(
+                    'y',
+                    $date->format('Y')
+                )
+                ->andWhere('month(o.distributionPeriod) = :m')
+                ->setParameter(
+                    'm',
+                    $date->format('m')
+                );
+        }
     }
 }

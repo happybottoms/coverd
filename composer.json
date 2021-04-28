@@ -13,6 +13,7 @@
         "php": "^7.3.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "beberlei/doctrineextensions": "^1.3",
         "composer/package-versions-deprecated": "^1.11",
         "doctrine/annotations": "^1.6",
         "doctrine/common": "^2",
