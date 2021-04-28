@@ -147,9 +147,8 @@
                 ],
                 selection: [],
                 filterStatuses: [
-                    { id: "IN_PROCESS", name: "In Process" },
-                    { id: "PENDING", name: "Pending" },
-                    { id: "SHIPPED", name: "Shipped" }
+                    { id: "COMPLETED", name: "Completed" },
+                    { id: "PENDING", name: "Pending" }
                 ],
                 filters: {
                     status: null,
