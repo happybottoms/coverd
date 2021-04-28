@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Doctrine\ORM\QueryBuilder;
 
 class ProductRepository extends EntityRepository
 {
@@ -67,5 +69,68 @@ class ProductRepository extends EntityRepository
         $results = $qb->getQuery()->execute();
 
         return $results;
+    }
+
+    public function findAllPaged(
+        $page = null,
+        $limit = null,
+        $sortField = null,
+        $sortDirection = 'ASC',
+        ParameterBag $params = null
+    ) {
+        $qb = $this->createQueryBuilder('s');
+
+        $this->joinRelatedTables($qb);
+
+        if ($page && $limit) {
+            $qb->setFirstResult(($page - 1) * $limit)
+                ->setMaxResults($limit);
+        }
+
+        if ($sortField) {
+            if (!strstr($sortField, '.')) {
+                $sortField = 's.' . $sortField;
+            }
+            $qb->orderBy($sortField, $sortDirection);
+        }
+
+        $this->addCriteria($qb, $params);
+
+        $results = $qb->getQuery()->execute();
+        return $results;
+    }
+
+    public function findAllCount(ParameterBag $params)
+    {
+        $qb = $this->createQueryBuilder('s')
+            ->select('count(s)');
+        $this->joinRelatedTables($qb);
+
+        $this->addCriteria($qb, $params);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    protected function joinRelatedTables(QueryBuilder $qb)
+    {
+        $qb->join('s.productCategory', 'pc');
+    }
+
+    protected function addCriteria(QueryBuilder $qb, ParameterBag $params)
+    {
+        if ($params->has('status') && $params->get('status')) {
+            $qb->andWhere('s.status = :status')
+                ->setParameter('status', $params->get('status'));
+        }
+
+        if ($params->has('category') && $params->get('category')) {
+            $qb->andWhere('pc.id = :categoryId')
+                ->setParameter('categoryId', $params->get('category'));
+        }
+
+        if ($params->has('name') && $params->get('name')) {
+            $qb->andWhere('s.name LIKE :name')
+                ->setParameter('name', '%' . $params->get('name') . '%');
+        }
     }
 }

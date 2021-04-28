@@ -266,6 +266,16 @@ parameters:
 			path: src/Controller/ProductController.php
 
 		-
+			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\:\\:findAllPaged\\(\\)\\.$#"
+			count: 1
+			path: src/Controller/ProductController.php
+
+		-
+			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\:\\:findAllCount\\(\\)\\.$#"
+			count: 1
+			path: src/Controller/ProductController.php
+
+		-
 			message: "#^Method App\\\\Controller\\\\ProductController\\:\\:show\\(\\) has parameter \\$id with no typehint specified\\.$#"
 			count: 1
 			path: src/Controller/ProductController.php
@@ -2127,6 +2137,51 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:findByPartnerOrderable\\(\\) has parameter \\$partnerOrderable with no typehint specified\\.$#"
+			count: 1
+			path: src/Entity/ProductRepository.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:findAllPaged\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: src/Entity/ProductRepository.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:findAllPaged\\(\\) has parameter \\$limit with no typehint specified\\.$#"
+			count: 1
+			path: src/Entity/ProductRepository.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:findAllPaged\\(\\) has parameter \\$page with no typehint specified\\.$#"
+			count: 1
+			path: src/Entity/ProductRepository.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:findAllPaged\\(\\) has parameter \\$sortDirection with no typehint specified\\.$#"
+			count: 1
+			path: src/Entity/ProductRepository.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:findAllPaged\\(\\) has parameter \\$sortField with no typehint specified\\.$#"
+			count: 1
+			path: src/Entity/ProductRepository.php
+
+		-
+			message: "#^Parameter \\#2 \\$params of method App\\\\Entity\\\\ProductRepository\\:\\:addCriteria\\(\\) expects Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag, Symfony\\\\Component\\\\HttpFoundation\\\\ParameterBag\\|null given\\.$#"
+			count: 1
+			path: src/Entity/ProductRepository.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:findAllCount\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: src/Entity/ProductRepository.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:joinRelatedTables\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: src/Entity/ProductRepository.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:addCriteria\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Entity/ProductRepository.php
 

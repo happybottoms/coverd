@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
  * Class ProductController
@@ -34,13 +35,44 @@ class ProductController extends BaseController
     {
         $partnerOrderable = $request->get('partnerOrderable');
 
-        if ($partnerOrderable == null) {
-            $products = $this->getRepository()->findAllSorted();
-        } else {
-            $products = $this->getRepository()->findByPartnerOrderable($partnerOrderable);
+        if (!$request->get('page')) {
+            if ($partnerOrderable == null) {
+                $products = $this->getRepository()->findAllSorted();
+            } else {
+                $products = $this->getRepository()->findByPartnerOrderable($partnerOrderable);
+            }
+            return $this->serialize($request, $products);
         }
 
-        return $this->serialize($request, $products);
+        $sort = $request->get('sort') ? explode('|', $request->get('sort')) : null;
+        $page = $request->get('page', 1);
+        $limit = $request->get('per_page', 10);
+
+        $params = $this->buildFilterParams($request);
+
+        $suppliers = $this->getRepository()->findAllPaged(
+            $page,
+            $limit,
+            $sort ? $sort[0] : null,
+            $sort ? $sort[1] : null,
+            $params
+        );
+
+        $total = $this->getRepository()->findAllCount($params);
+
+        $meta = [
+            'pagination' => [
+                'total' => (int) $total,
+                'per_page' => (int) $limit,
+                'current_page' => (int) $page,
+                'last_page' => ceil($total / $limit),
+                'next_page_url' => null,
+                'prev_page_url' => null,
+                'from' => (($page - 1) * $limit) + 1,
+                'to' => ($page * $limit),
+            ]
+        ];
+        return $this->serialize($request, $suppliers, null, $meta);
     }
 
     /**
@@ -212,5 +244,27 @@ class ProductController extends BaseController
     protected function getDefaultTransformer()
     {
         return new ProductTransformer();
+    }
+
+    /**
+     * @param Request $request
+     * @return ParameterBag
+     */
+    protected function buildFilterParams(Request $request)
+    {
+        $params = new ParameterBag();
+
+        if ($request->get('status')) {
+            $params->set('status', $request->get('status'));
+        }
+        if ($request->get('category')) {
+            $params->set('category', $request->get('category'));
+        }
+        if ($request->get('name')) {
+            $params->set('name', $request->get('name'));
+        }
+
+
+        return $params;
     }
 }
