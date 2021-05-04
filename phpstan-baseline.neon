@@ -26,11 +26,6 @@ parameters:
 			path: src/Command/ZipCountyImportCommand.php
 
 		-
-			message: "#^Method App\\\\Controller\\\\AdjustmentOrderController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/AdjustmentOrderController.php
-
-		-
 			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\:\\:findAllSorted\\(\\)\\.$#"
 			count: 2
 			path: src/Controller/BaseAttributeDefinitionController.php
@@ -211,91 +206,6 @@ parameters:
 			path: src/Controller/LoginController.php
 
 		-
-			message: "#^Method App\\\\Controller\\\\MerchandiseOrderController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/MerchandiseOrderController.php
-
-		-
-			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\:\\:findAllPaged\\(\\)\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\:\\:findAllCount\\(\\)\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Cannot call method isDeletable\\(\\) on App\\\\Entity\\\\Order\\|null\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Order\\|null\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 2
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\OrderController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\OrderController\\:\\:processLineItems\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\OrderController\\:\\:processLineItems\\(\\) has parameter \\$lineItemsArray with no typehint specified\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Parameter \\#1 \\$line of method App\\\\Controller\\\\OrderController\\:\\:extraLineItemProcessing\\(\\) expects App\\\\Entity\\\\LineItem, App\\\\Entity\\\\LineItem\\|bool given\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Parameter \\#1 \\$lineItem of method App\\\\Entity\\\\Order\\:\\:removeLineItem\\(\\) expects App\\\\Entity\\\\LineItem, App\\\\Entity\\\\LineItem\\|bool given\\.$#"
-			count: 2
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Cannot call method getProduct\\(\\) on App\\\\Entity\\\\LineItem\\|bool\\.$#"
-			count: 2
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Cannot call method setProduct\\(\\) on App\\\\Entity\\\\LineItem\\|bool\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Cannot call method applyChangesFromArray\\(\\) on App\\\\Entity\\\\LineItem\\|bool\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Cannot call method getQuantity\\(\\) on App\\\\Entity\\\\LineItem\\|bool\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\OrderController\\:\\:extraLineItemProcessing\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\OrderController\\:\\:checkEditable\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/OrderController.php
-
-		-
 			message: "#^Method App\\\\Controller\\\\PartnerController\\:\\:index\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Controller/PartnerController.php
@@ -331,16 +241,6 @@ parameters:
 			path: src/Controller/PartnerController.php
 
 		-
-			message: "#^Method App\\\\Controller\\\\PartnerDistributionController\\:\\:extraLineItemProcessing\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/PartnerDistributionController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\PartnerDistributionController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/PartnerDistributionController.php
-
-		-
 			message: "#^Method App\\\\Controller\\\\PartnerDistributionMethodController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Controller/PartnerDistributionMethodController.php
@@ -349,11 +249,6 @@ parameters:
 			message: "#^Method App\\\\Controller\\\\PartnerFulfillmentPeriodController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Controller/PartnerFulfillmentPeriodController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\PartnerOrderController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/PartnerOrderController.php
 
 		-
 			message: "#^Method App\\\\Controller\\\\ProductCategoryController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
@@ -656,19 +551,9 @@ parameters:
 			path: src/Controller/SupplierController.php
 
 		-
-			message: "#^Method App\\\\Controller\\\\SupplyOrderController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/SupplyOrderController.php
-
-		-
 			message: "#^Method App\\\\Controller\\\\SystemController\\:\\:getSettings\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Controller/SystemController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\TransferOrderController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/TransferOrderController.php
 
 		-
 			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\:\\:findByPartner\\(\\)\\.$#"
@@ -719,21 +604,6 @@ parameters:
 			message: "#^Negated boolean expression is always false\\.$#"
 			count: 1
 			path: src/Controller/UserController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\WarehouseController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Controller/WarehouseController.php
-
-		-
-			message: "#^Method App\\\\Controller\\\\WarehouseController\\:\\:getWarehouseById\\(\\) has parameter \\$id with no typehint specified\\.$#"
-			count: 1
-			path: src/Controller/WarehouseController.php
-
-		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: src/Controller/WarehouseController.php
 
 		-
 			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\:\\:findAllInConstraints\\(\\)\\.$#"
@@ -1056,11 +926,6 @@ parameters:
 			path: src/Entity/Client.php
 
 		-
-			message: "#^Property App\\\\Entity\\\\Client\\:\\:\\$attributes type mapping mismatch\\: property can contain Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but database expects Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\EAV\\\\Attribute\\>\\.$#"
-			count: 1
-			path: src/Entity/Client.php
-
-		-
 			message: "#^Cannot call method setValue\\(\\) on App\\\\Entity\\\\EAV\\\\Attribute\\|null\\.$#"
 			count: 1
 			path: src/Entity/Client.php
@@ -1077,21 +942,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$attribute of method App\\\\Entity\\\\Client\\:\\:removeAttribute\\(\\) expects App\\\\Entity\\\\EAV\\\\Attribute, App\\\\Entity\\\\EAV\\\\Attribute\\|null given\\.$#"
-			count: 1
-			path: src/Entity/Client.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Client\\:\\:getAttributeById\\(\\) should return App\\\\Entity\\\\EAV\\\\Attribute\\|null but return statement is missing\\.$#"
-			count: 1
-			path: src/Entity/Client.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Client\\:\\:getDefinitionById\\(\\) never returns null so it can be removed from the return typehint\\.$#"
-			count: 1
-			path: src/Entity/Client.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Client\\:\\:getDefinitionById\\(\\) should return App\\\\Entity\\\\EAV\\\\Definition\\|null but return statement is missing\\.$#"
 			count: 1
 			path: src/Entity/Client.php
 
@@ -1281,11 +1131,6 @@ parameters:
 			path: src/Entity/EAV/Attribute.php
 
 		-
-			message: "#^Property App\\\\Entity\\\\PartnerProfile\\:\\:\\$attributes type mapping mismatch\\: property can contain Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but database expects Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\EAV\\\\Attribute\\>\\.$#"
-			count: 1
-			path: src/Entity/PartnerProfile.php
-
-		-
 			message: "#^Cannot call method setValue\\(\\) on App\\\\Entity\\\\EAV\\\\Attribute\\|null\\.$#"
 			count: 1
 			path: src/Entity/PartnerProfile.php
@@ -1302,21 +1147,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$attribute of method App\\\\Entity\\\\PartnerProfile\\:\\:removeAttribute\\(\\) expects App\\\\Entity\\\\EAV\\\\Attribute, App\\\\Entity\\\\EAV\\\\Attribute\\|null given\\.$#"
-			count: 1
-			path: src/Entity/PartnerProfile.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\PartnerProfile\\:\\:getAttributeById\\(\\) should return App\\\\Entity\\\\EAV\\\\Attribute\\|null but return statement is missing\\.$#"
-			count: 1
-			path: src/Entity/PartnerProfile.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\PartnerProfile\\:\\:getDefinitionById\\(\\) never returns null so it can be removed from the return typehint\\.$#"
-			count: 1
-			path: src/Entity/PartnerProfile.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\PartnerProfile\\:\\:getDefinitionById\\(\\) should return App\\\\Entity\\\\EAV\\\\Definition\\|null but return statement is missing\\.$#"
 			count: 1
 			path: src/Entity/PartnerProfile.php
 
@@ -1851,16 +1681,6 @@ parameters:
 			path: src/Entity/Order.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\Order\\:\\:setStatus\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Order.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Order\\:\\:isComplete\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Order.php
-
-		-
 			message: "#^Property App\\\\Entity\\\\Orders\\\\AdjustmentOrder\\:\\:\\$storageLocation type mapping mismatch\\: database can contain App\\\\Entity\\\\StorageLocation\\|null but property expects App\\\\Entity\\\\StorageLocation\\.$#"
 			count: 1
 			path: src/Entity/Orders/AdjustmentOrder.php
@@ -1887,11 +1707,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Entity\\\\Orders\\\\BulkDistribution\\:\\:setPartner\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Orders/BulkDistribution.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Orders\\\\BulkDistribution\\:\\:isComplete\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Entity/Orders/BulkDistribution.php
 
@@ -1931,52 +1746,12 @@ parameters:
 			path: src/Entity/Orders/MerchandiseOrder.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\Orders\\\\MerchandiseOrder\\:\\:isComplete\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Orders/MerchandiseOrder.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\Orders\\\\PartnerOrder\\:\\:\\$portalOrderId type mapping mismatch\\: database can contain int\\|null but property expects int\\.$#"
-			count: 1
-			path: src/Entity/Orders/PartnerOrder.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Orders\\\\PartnerOrder\\:\\:setPartner\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Orders/PartnerOrder.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Orders\\\\PartnerOrder\\:\\:setWarehouse\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Orders/PartnerOrder.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Orders\\\\PartnerOrder\\:\\:isComplete\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Orders/PartnerOrder.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Orders\\\\PartnerOrder\\:\\:buildBags\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Orders/PartnerOrder.php
-
-		-
 			message: "#^Cannot call method addPack\\(\\) on App\\\\Helpers\\\\Bag\\|null\\.$#"
 			count: 1
 			path: src/Entity/Orders/PartnerOrder.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\Orders\\\\PartnerOrder\\:\\:setOrderPeriod\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Orders/PartnerOrder.php
-
-		-
 			message: "#^Method App\\\\Entity\\\\Orders\\\\PartnerOrder\\:\\:setPortalOrderId\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Orders/PartnerOrder.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\Orders\\\\PartnerOrder\\:\\:\\$portalOrderId \\(int\\) does not accept int\\|null\\.$#"
 			count: 1
 			path: src/Entity/Orders/PartnerOrder.php
 
@@ -2012,11 +1787,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Entity\\\\Orders\\\\SupplyOrder\\:\\:setWarehouse\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/Orders/SupplyOrder.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Orders\\\\SupplyOrder\\:\\:isComplete\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Entity/Orders/SupplyOrder.php
 
@@ -3301,37 +3071,12 @@ parameters:
 			path: src/Security/SupplyOrderVoter.php
 
 		-
-			message: "#^Class App\\\\Security\\\\TransferOrder not found\\.$#"
-			count: 1
-			path: src/Security/TransferOrderVoter.php
-
-		-
 			message: "#^Method App\\\\Security\\\\TransferOrderVoter\\:\\:canView\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Security/TransferOrderVoter.php
 
 		-
-			message: "#^Parameter \\$transferOrder of method App\\\\Security\\\\TransferOrderVoter\\:\\:canView\\(\\) has invalid typehint type App\\\\Security\\\\TransferOrder\\.$#"
-			count: 1
-			path: src/Security/TransferOrderVoter.php
-
-		-
-			message: "#^Access to constant ROLE_VIEW on an unknown class App\\\\Security\\\\TransferOrder\\.$#"
-			count: 1
-			path: src/Security/TransferOrderVoter.php
-
-		-
 			message: "#^Method App\\\\Security\\\\TransferOrderVoter\\:\\:canEdit\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Security/TransferOrderVoter.php
-
-		-
-			message: "#^Parameter \\$transferOrder of method App\\\\Security\\\\TransferOrderVoter\\:\\:canEdit\\(\\) has invalid typehint type App\\\\Security\\\\TransferOrder\\.$#"
-			count: 1
-			path: src/Security/TransferOrderVoter.php
-
-		-
-			message: "#^Access to constant ROLE_EDIT on an unknown class App\\\\Security\\\\TransferOrder\\.$#"
 			count: 1
 			path: src/Security/TransferOrderVoter.php
 

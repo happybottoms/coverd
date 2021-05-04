@@ -6,8 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Bridge\Monolog\Logger;
-use Symfony\Component\Workflow\Exception\LogicException;
 use Symfony\Component\Workflow\Registry;
 
 /**
@@ -47,14 +45,6 @@ class Partner extends StorageLocation
         self::STATUS_REVIEW_PAST_DUE,
         self::STATUS_START,
     ];
-
-    public const TRANSITION_ACTIVATE = 'ACTIVATE';
-    public const TRANSITION_DEACTIVATE = 'DEACTIVATE';
-    public const TRANSITION_FLAG_FOR_REVIEW = 'FLAG_FOR_REVIEW';
-    public const TRANSITION_FLAG_FOR_REVIEW_PAST_DUE = 'FLAG_FOR_REVIEW_PAST_DUE';
-    public const TRANSITION_REVIEWED = 'REVIEWED';
-    public const TRANSITION_SUBMIT = 'SUBMIT';
-    public const TRANSITION_SUBMIT_PRIORITY = 'SUBMIT_PRIORITY';
 
     /**
      * @var string
@@ -197,20 +187,6 @@ class Partner extends StorageLocation
         $this->legacyId = $legacyId;
     }
 
-    /**
-     * {@inheritDoc}
-     * @throws \Exception
-     */
-    public function applyChangesFromArray(array $changes): void
-    {
-        if (isset($changes['transition'])) {
-            $this->applyTransition($changes['transition']);
-            unset($changes['transition']);
-        }
-
-        parent::applyChangesFromArray($changes);
-    }
-
     public function getProfile(): PartnerProfile
     {
         return $this->profile;
@@ -236,23 +212,6 @@ class Partner extends StorageLocation
     public function getUsers(): Collection
     {
         return $this->users;
-    }
-
-    public function applyTransition(string $transition): void
-    {
-        $stateMachine = $this->workflowRegistry->get($this);
-        try {
-            $stateMachine->apply($this, $transition);
-        } catch (LogicException $ex) {
-            // TODO log this instead
-            throw new \Exception(
-                sprintf(
-                    '%s is not a valid transition at this time. Exception thrown: %s',
-                    $transition,
-                    $ex->getMessage()
-                )
-            );
-        }
     }
 
     public function isReviewing(): bool

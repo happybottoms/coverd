@@ -41,6 +41,7 @@ class Group extends CoreEntity
         Client::ROLE_VIEW_ALL,
         Client::ROLE_EDIT_ALL,
         Client::ROLE_MANAGE_OWN,
+        Client::ROLE_CLIENT_OVERRIDE_EXPIRATIONS,
 
         Product::ROLE_VIEW,
         Product::ROLE_EDIT,

@@ -2,27 +2,11 @@
     <section class="content">
         <div class="pull-right">
             <div class="btn-group">
-                <button
-                    class="btn btn-info btn-flat dropdown-toggle"
-                    data-toggle="dropdown"
-                >
-                    <i class="fa fa-project-diagram fa-fw" /> Status: {{ client.status | statusFormat }} <i class="fa fa-caret-down fa-fw"></i>
-                </button>
-                <ul
-                    v-if="client.workflow.enabledTransitions"
-                    class="dropdown-menu dropdown-menu-right"
-                >
-                    <li
-                        v-for="enabledTransition in getSortedTransitions()"
-                        :key="enabledTransition.transition"
-                    >
-                        <a
-                            @click.prevent="doTransition(enabledTransition.transition)"
-                        >
-                            <i class="fa fa-arrow-circle-right" />{{ enabledTransition.title }}
-                        </a>
-                    </li>
-                </ul>
+                <workflow-button
+                    entity-api="/api/clients"
+                    :status="client.status"
+                    :workflow="client.workflow"
+                />
             </div>
             <button
                 v-if="client.canReview"
@@ -52,8 +36,7 @@
                         <a
                             href="#"
                             @click.prevent="askDelete"
-                        >
-                            <i class="fa fa-trash fa-fw" />Delete Client</a>
+                        > <i class="fa fa-trash fa-fw" />Delete Client</a>
                     </li>
                 </ul>
             </div>
@@ -97,7 +80,9 @@
                                 </ul>
                                 <div class="tab-content">
                                     <ClientInfoForm
+                                        ref="clientInfoForm"
                                         v-model="client"
+                                        :read-only-expiration="!userHasRole('ROLE_CLIENT_OVERRIDE_EXPIRATIONS')"
                                     />
                                     <AttributesEditForm
                                         id="profile_tab"
@@ -127,141 +112,124 @@
             <template slot="header">
                 Delete Client
             </template>
-            <p>Are you sure you want to delete <strong>{{ client.firstName }} {{ client.lastName }}</strong>?</p>
+            <p>
+                Are you sure you want to delete <strong>{{ client.firstName }} {{ client.lastName }}</strong>?
+            </p>
             <template slot="confirmButton">
                 Delete Client
             </template>
         </modal>
+
+        <modalinvalid />
     </section>
 </template>
 
 <script>
-import Modal from '../../components/Modal.vue';
+import Modal from "../../components/Modal.vue";
 import AttributesEditForm from "../../components/AttributesEditForm";
 import ClientDistributionHistory from "./ClientDistributionHistory";
 import ClientInfoForm from "./ClientInfoForm";
+import WorkflowButton from "../../components/WorkflowButton";
+import ModalOrderInvalid from "../../components/ModalOrderInvalid";
+import { mapGetters } from "vuex";
 
 export default {
-        name: 'ClientEdit',
-        components: {
-            ClientInfoForm,
-            ClientDistributionHistory,
-            AttributesEditForm,
-            'modal' : Modal
-        },
-        props: {
-            new: {
-                type: Boolean,
-                default: false,
-                required: false
-            }
+    name: "ClientEdit",
+    components: {
+        WorkflowButton,
+        ClientInfoForm,
+        ClientDistributionHistory,
+        AttributesEditForm,
+        modal: Modal,
+        modalinvalid: ModalOrderInvalid
+    },
+    props: {
+        new: {
+            type: Boolean,
+            default: false,
+            required: false
+        }
+    },
+    data() {
+        return {
+            client: {
+                partner: {},
+                attributes: [],
+                status: "",
+                workflow: {}
+            },
+            transition: ""
+        };
+    },
+    created() {
+        let self = this;
 
-        },
-        data() {
-            return {
-                client: {
-                    partner: {},
-                    attributes: [],
-                    status: '',
-                    workflow: {},
-                },
-                transition: '',
-            };
-        },
-        created() {
+        if (!this.new) {
+            axios
+                .get("/api/clients/" + this.$route.params.id, {
+                    params: { include: ["partner", "attributes", "attributes.options"] }
+                })
+                .then(response => {
+                    self.client = response.data.data;
+                    self.client.workflow = response.data.meta;
+                })
+                .catch(error => console.log("Error receiving clients %o", error));
+        }
+
+        console.log("ClientEdit Component mounted.");
+    },
+    computed: mapGetters(["userHasRole"]),
+    methods: {
+        save: function() {
             let self = this;
-
-            if (!this.new) {
-                axios
-                    .get('/api/clients/' + this.$route.params.id, {
-                        params: { include: ['partner', 'attributes', 'attributes.options']}
-                    })
-                    .then(response => {
-                        self.client = response.data.data;
-                        self.client.workflow = response.data.meta;
-                    })
-                    .catch(error => console.log("Error receiving clients %o", error));
-            }
-
-            console.log('ClientEdit Component mounted.');
-        },
-        methods: {
-            save: function () {
-                let self = this;
-                if (this.new) {
-                    axios
-                        .post('/api/clients', this.client)
-                        .then(response => self.$router.push({ name: 'clients' }))
-                        .catch(function (error) {
-                            console.log("Save this.client error %o", error);
-                        });
-                } else {
-                    axios
-                        .patch('/api/clients/' + this.$route.params.id, this.client)
-                        .then(response => self.$router.push({ name: 'clients' }))
-                        .catch(function (error) {
-                            console.log("Save this.client error with params id %o", error);
-                        });
+            if (this.$refs.clientInfoForm) {
+                this.$refs.clientInfoForm.$v.$touch();
+                if (this.$refs.clientInfoForm.$v.$invalid) {
+                    $("#invalidModal").modal("show");
+                    return false;
                 }
-            },
-            doTransition: function(transition) {
-                let self = this;
-                axios.patch('/api/clients/' + this.$route.params.id + '/transition', {'transition': transition})
-                    .then(response => {
-                        self.client.workflow = response.data.meta;
-                        self.client.status = response.data.data.status;
-                    });
-            },
-            askDelete: function() {
-                $('#confirmModal').modal('show');
-            },
-            deleteClient: function() {
-                let self = this;
-                axios
-                    .delete('/api/clients/' + this.$route.params.id)
-                    .then(response => self.$router.push({ name: 'clients' }));
-            },
-            review: function() {
-                let self = this;
-                axios
-                    .post('/api/clients/' + this.$route.params.id + '/review', {
-                        params: { include: ['partner', 'attributes']}
-                    })
-                    .then(response => {
-                        self.client = response.data.data;
-                        self.client.workflow = response.data.meta;
-                    })
-                    .catch(function (error) {
-                        console.log("Save this.client error with params id %o", error);
-                    }
-                );
-            },
-            getSortedTransitions() {
-                const inputObject = this.client.workflow.enabledTransitions;
-
-                return Object
-                    .keys(inputObject)
-                    .map((key) => inputObject[key])
-                    .sort(function (a, b) {
-                        let titleA = a.title.toUpperCase();
-                        let titleB = b.title.toUpperCase();
-
-                        if (titleA < titleB) {
-                            return -1;
-                        }
-
-                        if (titleA > titleB) {
-                            return 1;
-                        }
-
-                        return 0;
-                    }
-                );
             }
+            if (this.new) {
+                axios
+                    .post("/api/clients", this.client)
+                    .then(response => self.$router.push({ name: "clients" }))
+                    .catch(function(error) {
+                        console.log("Save this.client error %o", error);
+                    });
+            } else {
+                axios
+                    .patch("/api/clients/" + this.$route.params.id, this.client)
+                    .then(response => self.$router.push({ name: "clients" }))
+                    .catch(function(error) {
+                        console.log("Save this.client error with params id %o", error);
+                    });
+            }
+        },
+        askDelete: function() {
+            $("#confirmModal").modal("show");
+        },
+        deleteClient: function() {
+            let self = this;
+            axios
+                .delete("/api/clients/" + this.$route.params.id)
+                .then(response => self.$router.push({ name: "clients" }));
+        },
+        review: function() {
+            let self = this;
+            axios
+                .post("/api/clients/" + this.$route.params.id + "/review", {
+                    params: { include: ["partner", "attributes"] }
+                })
+                .then(response => {
+                    self.client = response.data.data;
+                    self.client.workflow = response.data.meta;
+                })
+                .catch(function(error) {
+                    console.log("Save this.client error with params id %o", error);
+                });
         }
     }
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

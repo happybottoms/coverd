@@ -13,21 +13,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Workflow\Registry;
 
 /**
  * @Route(path="/api/orders/supply")
  */
-class SupplyOrderController extends OrderController
+class SupplyOrderController extends BaseOrderController
 {
     protected $defaultEntityName = SupplyOrder::class;
-
-    /**
-     * @return \App\Entity\Orders\SupplyOrderLineItem
-     */
-    protected function createLineItem()
-    {
-        return new SupplyOrderLineItem();
-    }
 
     /**
      * Save a new Supply Order
@@ -118,10 +111,32 @@ class SupplyOrderController extends OrderController
         return $this->serialize($request, $order);
     }
 
+    /**
+     * @Route("/{id}/transition", methods={"PATCH"})
+     * @IsGranted({"ROLE_SUPPLY_ORDER_EDIT"})
+     */
+    public function transition(Request $request, Registry $workflowRegistry, int $id): JsonResponse
+    {
+        return parent::transition($request, $workflowRegistry, $id);
+    }
 
-
-    protected function getDefaultTransformer()
+    protected function getDefaultTransformer(): SupplyOrderTransformer
     {
         return new SupplyOrderTransformer();
+    }
+
+    protected function createLineItem()
+    {
+        return new SupplyOrderLineItem();
+    }
+
+    protected function getEditVoter(): string
+    {
+        return SupplyOrderVoter::EDIT;
+    }
+
+    protected function getViewVoter(): string
+    {
+        return SupplyOrderVoter::VIEW;
     }
 }

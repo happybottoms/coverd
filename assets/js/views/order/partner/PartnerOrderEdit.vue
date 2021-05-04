@@ -4,17 +4,25 @@
             v-if="!partnerCanOrder"
             class="callout callout-danger"
         >
-            <h4><i class="icon fa fa-ban"></i> Alert!</h4>
-            The selected partner has already created a distribution for {{ order.distributionPeriod|dateTimeMonthFormat }}
+            <h4><i class="icon fa fa-ban" /> Alert!</h4>
+            The selected partner has already created a distribution for
+            {{ order.distributionPeriod | dateTimeMonthFormat }}
         </div>
         <div class="pull-right">
-            <button
-                class="btn btn-success btn-flat"
-                :disabled="!order.isEditable"
-                @click.prevent="saveVerify"
-            >
-                <i class="fa fa-save fa-fw" />Save Order
-            </button>
+            <div class="btn-group">
+                <workflow-button
+                    entity-api="/api/orders/partner"
+                    :status="order.status"
+                    :workflow="order.workflow"
+                />
+                <button
+                    class="btn btn-success btn-flat"
+                    :disabled="!order.isEditable"
+                    @click.prevent="saveVerify"
+                >
+                    <i class="fa fa-save fa-fw" />Save Order
+                </button>
+            </div>
             <div class="btn-group">
                 <button
                     type="button"
@@ -28,9 +36,7 @@
                         <a
                             href="#"
                             @click.prevent="askDelete"
-                        >
-                            <i class="fa fa-trash fa-fw" />Delete Order
-                        </a>
+                        > <i class="fa fa-trash fa-fw" />Delete Order </a>
                     </li>
                     <li>
                         <router-link :to="'/orders/partner/' + order.id + '/fill-sheet'">
@@ -50,7 +56,6 @@
                     <ordermetadatabox
                         :order="order"
                         order-type="Partner Order"
-                        :statuses="statuses"
                         :editable="order.isEditable"
                         :v="$v.order"
                     />
@@ -71,6 +76,7 @@
                                     v-model="order.partner"
                                     :label="false"
                                     :editable="order.isEditable"
+                                    :options="isAdmin ? allPartners : isPartner ? allActivePartners : []"
                                     @change="$v.order.partner.$touch()"
                                     @loaded="$v.order.partner.$reset()"
                                 />
@@ -113,15 +119,24 @@
                                 At least one line item must have a quantity
                             </fielderror>
                             <h3 class="box-title">
-                                <a data-toggle="collapse" href="#orderByClient" aria-expanded="true" aria-controls="orderByClient">
+                                <a
+                                    data-toggle="collapse"
+                                    href="#orderByClient"
+                                    aria-expanded="true"
+                                    aria-controls="orderByClient"
+                                >
                                     <i class="icon fa fa-child fa-fw" />Order by Client
                                 </a>
                             </h3>
                         </div>
-                        <div id="orderByClient" class="panel-collapse collapse in" aria-expanded="true">
+                        <div
+                            id="orderByClient"
+                            class="panel-collapse collapse in"
+                            aria-expanded="true"
+                        >
                             <LineItemByClientForm
                                 :products="allOrderableProducts"
-                                :line-items="order.lineItems.filter((item) => item.client)"
+                                :line-items="order.lineItems.filter(item => item.client)"
                                 :editable="order.isEditable"
                                 :show-packs="true"
                                 :filter-text="filterText"
@@ -167,208 +182,232 @@
             :action="this.save"
             :order-title="order.sequence"
         />
-        <Modal classes="modal-danger" title="Partner not active" id="inactive-partner-modal" :has-action="false">
+        <Modal
+            id="inactive-partner-modal"
+            classes="modal-danger"
+            title="Partner not active"
+            :has-action="false"
+        >
             This partner is not in an active status and cannot place an order at this time.
         </Modal>
     </section>
 </template>
 
-
 <script>
-    import { required } from 'vuelidate/lib/validators';
-    import { linesRequired, mod } from '../../../validators';
-    import ModalOrderConfirmComplete from '../../../components/ModalOrderConfirmComplete';
-    import ModalOrderConfirmDelete from '../../../components/ModalOrderConfirmDelete';
-    import ModalOrderInvalid from '../../../components/ModalOrderInvalid';
-    import FieldError from '../../../components/FieldError';
-    import OrderMetadataBox from '../../../components/OrderMetadataBox.vue';
-    import WarehouseSelectionForm from '../../../components/WarehouseSelectionForm.vue'
-    import LineItemForm from '../../../components/order/LineItemByProductForm.vue';
-    import PartnerSelectionForm from '../../../components/PartnerSelectionForm.vue';
-    import Modal from "../../../components/Modal";
-    import axios from "axios";
-    import LineItemByClientForm from "../../../components/order/LineItemByClientForm";
-    import {mapGetters} from "vuex";
-    export default {
-        components: {
-            LineItemByClientForm,
-            Modal,
-            'modalcomplete' : ModalOrderConfirmComplete,
-            'modaldelete' : ModalOrderConfirmDelete,
-            'modalinvalid' : ModalOrderInvalid,
-            'fielderror' : FieldError,
-            'ordermetadatabox' : OrderMetadataBox,
-            'warehouseselectionform' : WarehouseSelectionForm,
-            'lineitemform' : LineItemForm,
-            'partnerselectionform' : PartnerSelectionForm
-        },
-        props: {
-            new: { type: Boolean, default: false}
-        },
-        data() {
-            return {
-                order: {
-                    lineItems: [],
-                    partner: { id: null },
-                    warehouse: { id: null },
-                    isEditable: true,
-                    isDeletable: false,
-                    status: "",
-                    orderPeriod: "",
-                },
-                products: [],
-                statuses: [
-                    {id: "IN_PROCESS", name: "In Process"},
-                    {id: "PENDING", name: "Pending"},
-                    {id: "SHIPPED", name: "Shipped", commit: true },
-                ],
-                partnerType: 'AGENCY',
-                partnerCanOrder: true
-            };
-        },
-        validations: {
+import { required } from "vuelidate/lib/validators";
+import { linesRequired } from "../../../validators";
+import ModalOrderConfirmComplete from "../../../components/ModalOrderConfirmComplete";
+import ModalOrderConfirmDelete from "../../../components/ModalOrderConfirmDelete";
+import ModalOrderInvalid from "../../../components/ModalOrderInvalid";
+import FieldError from "../../../components/FieldError";
+import OrderMetadataBox from "../../../components/OrderMetadataBox.vue";
+import WarehouseSelectionForm from "../../../components/WarehouseSelectionForm.vue";
+import LineItemForm from "../../../components/order/LineItemByProductForm.vue";
+import PartnerSelectionForm from "../../../components/PartnerSelectionForm.vue";
+import Modal from "../../../components/Modal";
+import axios from "axios";
+import LineItemByClientForm from "../../../components/order/LineItemByClientForm";
+import { mapGetters } from "vuex";
+import WorkflowButton from "../../../components/WorkflowButton";
+
+export default {
+    components: {
+        WorkflowButton,
+        LineItemByClientForm,
+        Modal,
+        modalcomplete: ModalOrderConfirmComplete,
+        modaldelete: ModalOrderConfirmDelete,
+        modalinvalid: ModalOrderInvalid,
+        fielderror: FieldError,
+        ordermetadatabox: OrderMetadataBox,
+        warehouseselectionform: WarehouseSelectionForm,
+        lineitemform: LineItemForm,
+        partnerselectionform: PartnerSelectionForm
+    },
+    props: {
+        new: { type: Boolean, default: false }
+    },
+    data() {
+        return {
             order: {
-                partner: {
-                    id: {
-                        required
-                    }
-                },
-                warehouse: {
-                    id: {
-                        required
-                    }
-                },
-                status: {
+                lineItems: [],
+                partner: { id: null },
+                warehouse: { id: null },
+                isEditable: true,
+                isDeletable: false,
+                orderPeriod: "",
+                status: "",
+                workflow: {}
+            },
+            products: [],
+            partnerType: "AGENCY",
+            partnerCanOrder: true
+        };
+    },
+    validations: {
+        order: {
+            partner: {
+                id: {
                     required
-                },
-                lineItems: { linesRequired }
-            }
-        },
-        computed: {
-            statusIsCompleted: function () {
-                var self = this;
-                var status = this.statuses.filter(function(item) {
-                    return self.order.status == item.id
-                });
-                return status[0].commit === true;
+                }
             },
-            ...mapGetters([
-                'allOrderableProducts'
-            ])
-        },
-        watch: {
-            'order.partner': {
-                handler(val) {
-                    if (this.new && this.order.partner.id && this.order.orderPeriod) {
-                        axios
-                            .get('/api/orders/partner/partner-can-order', {
-                                params: {
-                                    partnerId: this.order.partner.id,
-                                    orderPeriod: this.order.orderPeriod
-                                }
-                            })
-                            .then(response => {
-                                this.partnerCanOrder = response.data.success;
-                            });
-                    }
-                },
-                deep: true
+            warehouse: {
+                id: {
+                    required
+                }
             },
-            'order.orderPeriod': {
-                handler(val) {
-                    if (this.new && this.order.partner.id && this.order.orderPeriod) {
-                        axios
-                            .get('/api/orders/partner/partner-can-order', {
-                                params: {
-                                    partnerId: this.order.partner.id,
-                                    orderPeriod: this.order.orderPeriod
-                                }
-                            })
-                            .then(response => {
-                                this.partnerCanOrder = response.data.success;
-                            });
-                    }
-                },
-            }
-        },
-        created() {
+            status: {
+                required
+            },
+            lineItems: { linesRequired }
+        }
+    },
+    computed: {
+        statusIsCompleted: function() {
             var self = this;
-            if (this.new) {
-            } else {
-                axios
-                    .get('/api/orders/partner/' + this.$route.params.id, {
-                        params: { include: ['lineItems', 'lineItems.product', 'lineItems.transactions', 'partner.addresses', 'partnerAddress']}
-                    })
-                    .then(response => self.order = response.data.data);
-            }
+            var status = this.statuses.filter(function(item) {
+                return self.order.status === item.id;
+            });
+            return status[0].commit === true;
         },
-        mounted() {
-            this.$refs.partnerSelection.$on('partner-change', eventData => this.onPartnerChange(eventData));
-            this.$store.dispatch('loadProducts');
-            console.log('Component mounted.')
-        },
-        methods: {
-            saveVerify: function () {
-                this.$v.$touch();
-                if (this.$v.$invalid) {
-                    $('#invalidModal').modal('show');
-                    return false;
-                }
-                if (this.statusIsCompleted) {
-                    $('#confirmCommitModal').modal('show');
-                } else {
-                    this.save();
-                }
-            },
-            save: function () {
-                var self = this;
-                if (this.new) {
+        ...mapGetters([
+            "allOrderableProducts",
+            "allPartners",
+            "allActivePartners",
+            "isAdmin",
+            "isPartner",
+            "userActivePartner"
+        ])
+    },
+    watch: {
+        "order.partner": {
+            handler(val) {
+                if (this.new && this.order.partner.id && this.order.orderPeriod) {
                     axios
-                        .post('/api/orders/partner', this.order)
-                        .then(response => self.$router.push('/orders/partner'))
-                        .catch(function (error) {
-                            console.log(error);
+                        .get("/api/orders/partner/partner-can-order", {
+                            params: {
+                                partnerId: this.order.partner.id,
+                                orderPeriod: this.order.orderPeriod
+                            }
+                        })
+                        .then(response => {
+                            this.partnerCanOrder = response.data.success;
                         });
-                } else {
+                }
+            },
+            deep: true
+        },
+        "order.orderPeriod": {
+            handler(val) {
+                if (this.new && this.order.partner.id && this.order.orderPeriod) {
                     axios
-                        .patch('/api/orders/partner/' + this.$route.params.id, this.order)
-                        .then(response => self.$router.push('/orders/partner'))
-                        .catch(function (error) {
-                            console.log(error);
-                    });
+                        .get("/api/orders/partner/partner-can-order", {
+                            params: {
+                                partnerId: this.order.partner.id,
+                                orderPeriod: this.order.orderPeriod
+                            }
+                        })
+                        .then(response => {
+                            this.partnerCanOrder = response.data.success;
+                        });
                 }
-            },
-            askDelete: function() {
-                $('#confirmModal').modal('show');
-            },
-            deleteOrder: function() {
-                var self = this;
-                axios
-                    .delete('/api/orders/partner/' + this.$route.params.id)
-                    .then(self.$router.push('/orders/partner'));
-            },
-            onPartnerChange: function(partner) {
-                let self = this;
-                this.$v.order.partner.$touch();
-
-                this.partnerType = partner.partnerType;
-                if(!partner.canPlaceOrders && this.new) {
-                    $('#inactive-partner-modal').modal('show');
-                }
-
-                axios
-                    .get('/api/orders/partner/new-line-items-for-partner/' + partner.id, {
-                        params: { include: ['client.lastDistribution']}
-                    })
-                    .then((response) => {
-                            self.order.lineItems = response.data.data;
-                            // resolve(response);
-                        },
-                        (err) => {
-                            // reject(err);
-                        }
-                    );
             }
         }
+    },
+    created() {
+        var self = this;
+        if (this.new) {
+            self.order.orderPeriod = moment()
+                .add(1, "M")
+                .format("YYYY-MM");
+        } else {
+            axios
+                .get("/api/orders/partner/" + this.$route.params.id, {
+                    params: {
+                        include: [
+                            "lineItems",
+                            "lineItems.product",
+                            "lineItems.transactions",
+                            "partner.addresses",
+                            "partnerAddress"
+                        ]
+                    }
+                })
+                .then(response => {
+                    self.order = response.data.data;
+                    self.order.workflow = response.data.meta;
+                });
+        }
+    },
+    mounted() {
+        this.$refs.partnerSelection.$on("partner-change", eventData => this.onPartnerChange(eventData));
+        this.$store.dispatch("loadProducts");
+        if (this.userActivePartner) {
+            this.order.partner.id = this.userActivePartner.id;
+        }
+        console.log("Component mounted.");
+    },
+    methods: {
+        saveVerify: function() {
+            this.$v.$touch();
+            if (this.$v.$invalid) {
+                $("#invalidModal").modal("show");
+                return false;
+            }
+            if (this.statusIsCompleted) {
+                $("#confirmCommitModal").modal("show");
+            } else {
+                this.save();
+            }
+        },
+        save: function() {
+            var self = this;
+            if (this.new) {
+                axios
+                    .post("/api/orders/partner", this.order)
+                    .then(response => self.$router.push("/orders/partner"))
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+            } else {
+                axios
+                    .patch("/api/orders/partner/" + this.$route.params.id, this.order)
+                    .then(response => self.$router.push("/orders/partner"))
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+            }
+        },
+        askDelete: function() {
+            $("#confirmModal").modal("show");
+        },
+        deleteOrder: function() {
+            var self = this;
+            axios.delete("/api/orders/partner/" + this.$route.params.id).then(self.$router.push("/orders/partner"));
+        },
+        onPartnerChange: function(partner) {
+            let self = this;
+            this.$v.order.partner.$touch();
+
+            this.partnerType = partner.partnerType;
+            if (!partner.canPlaceOrders && this.new) {
+                $("#inactive-partner-modal").modal("show");
+            }
+
+            axios
+                .get("/api/orders/partner/new-line-items-for-partner/" + partner.id, {
+                    params: { include: ["client.lastDistribution"] }
+                })
+                .then(
+                    response => {
+                        self.order.lineItems = response.data.data;
+                        // resolve(response);
+                    },
+                    err => {
+                        // reject(err);
+                    }
+                );
+        }
     }
+};
 </script>

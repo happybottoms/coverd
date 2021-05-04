@@ -9,6 +9,34 @@
         <h3 class="box-title">
             Warehouse List
         </h3>
+        <div class="row">
+            <div class="col-xs-4">
+                <option-list
+                    v-model="filters"
+                    label="Warehouse Name"
+                    api-path="warehouses"
+                    property="id"
+                    display-property="title"
+                    empty-string="-- All Warehouses --"
+                />
+            </div>
+            <div class="col-xs-4">
+                <option-list-static
+                    v-model="filters.status"
+                    label="Status"
+                    :preloaded-options="statuses"
+                    empty-string="-- All Statuses --"
+                />
+            </div>
+            <div class="col-xs-4">
+                <button
+                    class="btn btn-success btn-flat"
+                    @click="doFilter"
+                >
+                    <i class="fa fa-fw fa-filter" />Filter
+                </button>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-xs-12">
@@ -33,6 +61,8 @@
                             api-url="/api/warehouses"
                             edit-route="warehouses/"
                             :sort-order="[{ field: 'id', direction: 'desc'}]"
+                            :params="requestParams()"
+                            :per-page="10"
                         />
                     </div>
                     <!-- /.box-body -->
@@ -44,21 +74,45 @@
 </template>
 <script>
 import TablePaged from '../../components/TablePaged.vue';
+import OptionListStatic from '../../components/OptionListStatic.vue';
+import OptionList from '../../components/OptionListEntity.vue';
 
 export default {
     components: {
-        TablePaged
+        TablePaged,
+        OptionListStatic,
+        OptionList
     },
     data() {
         return {
             columns: [
                 { name: '__checkbox', title: "#" },
-                { name: '__slot:link', title: "Warehouse Id", sortField: 'warehouse.id' },
-                { name: 'title', title: "Title", sortField: 'warehouse.title' },
-                { name: 'status', title: "Status", sortField: 'warehouse.status' },
-                { name: 'updatedAt', title: "Last Updated", callback: 'dateTimeFormat', sortField: 'warehouse.updatedAt' },
-            ]
+                { name: '__slot:link', title: "Warehouse Id", sortField: 'id' },
+                { name: 'title', title: "Title", sortField: 'title' },
+                { name: 'status', title: "Status", sortField: 'status' },
+                { name: 'updatedAt', title: "Last Updated", callback: 'dateTimeFormat', sortField: 'updatedAt' },
+            ],
+            statuses: [
+                { id: "ACTIVE", name: "Active" },
+                { id: "INACTIVE", name: "Inactive" }
+            ],
+            filters: {
+                status: null,
+                id: null
+            },
         };
+    },
+    methods: {
+        doFilter () {
+            console.log('doFilter:', this.requestParams(), this.filters);
+            this.$events.fire('filter-set', this.requestParams());
+        },
+        requestParams: function () {
+            return {
+                status: this.filters.status || null,
+                id: this.filters.id || null,
+            }
+        },
     }
 }
 </script>

@@ -37,7 +37,7 @@ class BulkDistributionFixtures extends BaseFixture implements DependentFixtureIn
                 $order = new BulkDistribution($partner);
 
                 // If this is the current month, set the order to pending, otherwise completed
-                $status = $i == 0 ? BulkDistribution::STATUS_PENDING : BulkDistribution::STATUS_COMPLETED;
+                $status = $i === 0 ? BulkDistribution::STATUS_CREATING : BulkDistribution::STATUS_COMPLETED;
                 $order->setStatus($status);
 
                 $orderDate = new Moment();

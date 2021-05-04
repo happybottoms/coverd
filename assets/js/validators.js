@@ -9,3 +9,5 @@ export const mod = divisor => withParams(
     { type: 'mod', d: divisor },
     value => value.quantity % d == 0
 );
+
+export const mustLessThanNow = (value) => (value ? moment(value) < new Date() : false)

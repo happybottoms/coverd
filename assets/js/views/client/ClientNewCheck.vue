@@ -43,39 +43,55 @@
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body">
-                                <div id="client_info" class="row active">
+                                <div
+                                    id="client_info"
+                                    class="row active"
+                                >
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>First Name</label>
-                                            <input
-                                                v-model="client.firstName"
-                                                type="text"
-                                                class="form-control"
-                                                placeholder="Enter first name"
-                                            >
-
+                                            <div :class="{ 'has-error': $v.client.firstName.$error }">
+                                                <input
+                                                    v-model="client.firstName"
+                                                    type="text"
+                                                    class="form-control"
+                                                    placeholder="Enter first name"
+                                                >
+                                                <fielderror v-if="$v.client.firstName.$error">
+                                                    First Name is required
+                                                </fielderror>
+                                            </div>
                                             <label>Last Name</label>
-                                            <input
-                                                v-model="client.lastName"
-                                                type="text"
-                                                class="form-control"
-                                                placeholder="Enter last name"
-                                            >
+                                            <div :class="{ 'has-error': $v.client.lastName.$error }">
+                                                <input
+                                                    v-model="client.lastName"
+                                                    type="text"
+                                                    class="form-control"
+                                                    placeholder="Enter last name"
+                                                >
+                                                <fielderror v-if="$v.client.lastName.$error">
+                                                    Last Name is required
+                                                </fielderror>
+                                            </div>
                                         </div>
-                                        <DateField
-                                            v-model="client.birthdate"
-                                            label="Birthdate"
-                                            format="YYYY-MM-DD"
-                                        />
+                                        <div :class="{ 'has-error': $v.client.birthdate.$error }">
+                                            <DateField
+                                                v-model="client.birthdate"
+                                                label="Birthdate"
+                                                format="YYYY-MM-DD"
+                                            />
+                                            <fielderror v-if="$v.client.birthdate.$error">
+                                                Birthdate should be a date in the past
+                                            </fielderror>
+                                        </div>
                                     </div>
                                 </div>
                                 <AttributesEditForm
                                     id="profile_tab"
                                     v-model="client.attributes"
-                                    :filter="(attribute) => attribute.isDuplicateReference"
+                                    :filter="attribute => attribute.isDuplicateReference"
                                 />
                                 <!-- text input -->
-
                             </div>
                             <!-- /.box-body -->
                         </div>
@@ -83,8 +99,7 @@
                 </form>
             </div>
             <div class="row">
-                <div class="col-md-12">
-                </div>
+                <div class="col-md-12" />
             </div>
         </section>
 
@@ -94,7 +109,8 @@
         >
             <div class="callout callout-danger">
                 <h3>Duplicate Clients Found</h3>
-                Based on the information provided, this client appears to be a duplicate of the following client(s). If inactive, please transfer a client below to your partner agency.
+                Based on the information provided, this client appears to be a duplicate of the following client(s). If
+                inactive, please transfer a client below to your partner agency.
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -106,31 +122,31 @@
                                     <th>Status</th>
                                     <th>Last Activity</th>
                                     <th>Partner</th>
-                                    <th></th>
+                                    <th />
                                 </thead>
                                 <tbody>
                                     <tr
                                         v-for="duplicate in duplicates"
                                         :key="duplicate.id"
                                     >
-                                        <td v-text="duplicate.fullName"></td>
-                                        <td v-text="duplicate.status"></td>
+                                        <td v-text="duplicate.fullName" />
+                                        <td v-text="duplicate.status" />
                                         <td>
                                             <span
                                                 v-if="duplicate.lastDistribution"
                                                 v-text="duplicate.lastDistribution.order.distributionPeriod"
-                                            ></span>
+                                            />
                                         </td>
-                                        <td v-text="duplicate.partner ? duplicate.partner.title : ''"></td>
+                                        <td v-text="duplicate.partner ? duplicate.partner.title : ''" />
                                         <td>
                                             <button
-                                                :disabled="!duplicate.canPartnerTransfer"
                                                 v-tooltip
+                                                :disabled="!duplicate.canPartnerTransfer"
                                                 :title="transferButtonTooltip(duplicate)"
                                                 class="btn btn-xs btn-primary"
                                                 @click="onTransferClicked(duplicate)"
                                             >
-                                                <i class="fa fa-exchange-alt fa-fw"></i>
+                                                <i class="fa fa-exchange-alt fa-fw" />
                                                 Transfer to Active Partner
                                             </button>
                                         </td>
@@ -145,24 +161,26 @@
 
         <section
             v-if="noDuplicates"
-            id="new-client">
+            id="new-client"
+        >
             <div class="row">
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-body">
                             <ClientInfoForm
+                                ref="clientInfoForm"
                                 v-model="client"
                                 :show-expirations="false"
+                                :new="true"
                             />
-                            <AttributesEditForm
-                                v-model="client.attributes"
-                            />
+                            <AttributesEditForm v-model="client.attributes" />
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <modalinvalid />
     </section>
 </template>
 
@@ -170,81 +188,125 @@
 import AttributesEditForm from "../../components/AttributesEditForm";
 import DateField from "../../components/DateField";
 import ClientInfoForm from "./ClientInfoForm";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 import ClientTransferModal from "./ClientTransferModal";
+import { required } from "vuelidate/lib/validators";
+import { mustLessThanNow } from "../../validators";
+import FieldError from "../../components/FieldError";
+import ModalOrderInvalid from "../../components/ModalOrderInvalid";
 
 export default {
-    name: 'ClientNewCheck',
+    name: "ClientNewCheck",
     components: {
         ClientTransferModal,
         ClientInfoForm,
         DateField,
         AttributesEditForm,
+        fielderror: FieldError,
+        modalinvalid: ModalOrderInvalid
     },
     data() {
         return {
             client: {
                 attributes: [],
-                partner: {},
+                partner: {}
             },
             duplicates: [],
             checked: false,
             transferClient: {}
         };
     },
+    validations: {
+        client: {
+            firstName: {
+                required
+            },
+            lastName: {
+                required
+            },
+            birthdate: {
+                required,
+                mustLessThanNow
+            }
+        }
+    },
     computed: {
-        ...mapGetters([
-            'userActivePartner'
-        ]),
-        foundDuplicates: function() { return this.checked && this.duplicates.length > 0 },
-        noDuplicates: function() { return this.checked && this.duplicates.length === 0 }
+        ...mapGetters(["userActivePartner", "isPartner"]),
+        foundDuplicates: function() {
+            return this.checked && this.duplicates.length > 0;
+        },
+        noDuplicates: function() {
+            return this.checked && this.duplicates.length === 0;
+        }
+    },
+    watch: {
+        'userActivePartner': {
+            handler(activePartner) {
+                if (this.isPartner) {
+                    this.client.partner = activePartner
+                }
+            },
+            deep: true
+        }
     },
     created() {
         let self = this;
         axios
-            .get('/api/clients/fields', {
-                params: { include: ['options']}
+            .get("/api/clients/fields", {
+                params: { include: ["options"] }
             })
-            .then(response => this.client.attributes = response.data.data)
-            .catch(function (error) {
+            .then(response => (this.client.attributes = response.data.data))
+            .catch(function(error) {
                 console.log("Save this.client error %o", error);
             });
-        console.log('ClientEdit Component mounted.');
+        console.log("ClientEdit Component mounted.");
     },
     methods: {
-        check: function () {
+        check: function() {
             let self = this;
+            this.$v.$touch();
+            if (this.$v.$invalid) {
+                $("#invalidModal").modal("show");
+                return false;
+            }
             axios
-                .post('/api/clients/new-check', this.client, {
-                    params: { include: ['partner', 'lastDistribution', 'lastDistribution.order']}
+                .post("/api/clients/new-check", this.client, {
+                    params: { include: ["partner", "lastDistribution", "lastDistribution.order"] }
                 })
                 .then(response => {
                     self.duplicates = response.data.data;
                     self.checked = true;
                 })
-                .catch(function (error) {
+                .catch(function(error) {
                     console.log("Save this.client error %o", error);
                 });
         },
-        save: function () {
+        save: function() {
             let self = this;
+            if (this.$refs.clientInfoForm) {
+                this.$refs.clientInfoForm.$v.$touch();
+                if (this.$refs.clientInfoForm.$v.$invalid) {
+                    $("#invalidModal").modal("show");
+                    return false;
+                }
+            }
             axios
-                .post('/api/clients', this.client)
-                .then(response => self.$router.push({ name: 'clients' }))
-                .catch(function (error) {
+                .post("/api/clients", this.client)
+                .then(response => self.$router.push({ name: "clients" }))
+                .catch(function(error) {
                     console.log("Save this.client error %o", error);
                 });
         },
         onTransferClicked: function(client) {
             this.transferClient = client;
-            $('#clientTransferModal').modal('show');
+            $("#clientTransferModal").modal("show");
         },
         transferButtonTooltip: function(rowData) {
-            if(rowData.canPartnerTransfer) {
-                return 'Transfer client to ' + this.userActivePartner.title;
+            if (rowData.canPartnerTransfer) {
+                return "Transfer client to " + this.userActivePartner.title;
             }
-            return 'This client is not in a transferable status or you do not have access.';
+            return "This client is not in a transferable status or you do not have access.";
         }
     }
-}
+};
 </script>

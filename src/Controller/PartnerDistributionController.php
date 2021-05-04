@@ -9,11 +9,14 @@ use App\Entity\Orders\BulkDistributionLineItem;
 use App\Entity\Partner;
 use App\Entity\User;
 use App\Exception\UserInterfaceException;
+use App\Security\BulkDistributionVoter;
 use App\Transformers\BulkDistributionLineItemTransformer;
 use App\Transformers\BulkDistributionTransformer;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Workflow\Registry;
 
 /**
  * Class PartnerOrderController
@@ -21,18 +24,9 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route(path="/api/orders/distribution")
  */
-class PartnerDistributionController extends OrderController
+class PartnerDistributionController extends BaseOrderController
 {
     protected $defaultEntityName = BulkDistribution::class;
-
-    /**
-     * @return BulkDistributionLineItem
-     */
-    protected function createLineItem()
-    {
-        return new BulkDistributionLineItem();
-    }
-
 
     /**
      * Save a new partner distribution
@@ -129,7 +123,7 @@ class PartnerDistributionController extends OrderController
      * @param BulkDistributionLineItem $lineItem
      * @param array $lineItemArray
      */
-    protected function extraLineItemProcessing(LineItem $lineItem, array $lineItemArray)
+    protected function extraLineItemProcessing(LineItem $lineItem, array $lineItemArray): void
     {
         $client = $this->getEm()->getRepository(Client::class)->findOneByPublicId($lineItemArray['client']['id']);
         $lineItem->setClient($client);
@@ -207,8 +201,32 @@ class PartnerDistributionController extends OrderController
         return $params;
     }
 
-    protected function getDefaultTransformer()
+    /**
+     * @Route("/{id}/transition", methods={"PATCH"})
+     * @IsGranted({"ROLE_DISTRIBUTION_ORDER_EDIT", "ROLE_ORDER_MANAGE_OWN"})
+     */
+    public function transition(Request $request, Registry $workflowRegistry, int $id): JsonResponse
+    {
+        return parent::transition($request, $workflowRegistry, $id);
+    }
+
+    protected function getDefaultTransformer(): BulkDistributionTransformer
     {
         return new BulkDistributionTransformer();
+    }
+
+    protected function createLineItem()
+    {
+        return new BulkDistributionLineItem();
+    }
+
+    protected function getEditVoter(): string
+    {
+        return BulkDistributionVoter::EDIT;
+    }
+
+    protected function getViewVoter(): string
+    {
+        return BulkDistributionVoter::VIEW;
     }
 }

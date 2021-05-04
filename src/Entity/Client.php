@@ -10,7 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Moment\Moment;
 use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
-use Symfony\Component\Workflow\Exception\LogicException;
 use Symfony\Component\Workflow\Registry;
 
 /**
@@ -47,17 +46,10 @@ class Client extends CoreEntity implements AttributedEntityInterface
         self::STATUS_REVIEW_PAST_DUE,
     ];
 
-    public const TRANSITION_ACTIVATE = 'ACTIVATE';
-    public const TRANSITION_DEACTIVATE = 'DEACTIVATE';
-    public const TRANSITION_DEACTIVATE_BLOCKED = 'BLOCK';
-    public const TRANSITION_DEACTIVATE_DUPLICATE = 'DUPLICATE';
-    public const TRANSITION_DEACTIVATE_EXPIRE = 'EXPIRE';
-    public const TRANSITION_FLAG_FOR_REVIEW = 'FLAG_FOR_REVIEW';
-    public const TRANSITION_FLAG_FOR_REVIEW_PAST_DUE = 'FLAG_FOR_REVIEW_PAST_DUE';
-
     public const ROLE_EDIT_ALL = "ROLE_CLIENT_EDIT_ALL";
     public const ROLE_MANAGE_OWN = "ROLE_CLIENT_MANAGE_OWN";
     public const ROLE_VIEW_ALL = "ROLE_CLIENT_VIEW_ALL";
+    public const ROLE_CLIENT_OVERRIDE_EXPIRATIONS = "ROLE_CLIENT_OVERRIDE_EXPIRATIONS";
 
     /**
      * The unique auto incremented primary key.
@@ -185,6 +177,24 @@ class Client extends CoreEntity implements AttributedEntityInterface
      */
     protected $lastReviewedAt;
 
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    protected $isDuplicate;
+
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    protected $isExpired;
+
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    protected $isBlocked;
+
     public function __construct(Registry $workflowRegistry)
     {
         $this->attributes = new ArrayCollection();
@@ -195,6 +205,9 @@ class Client extends CoreEntity implements AttributedEntityInterface
         $this->pullupDistributionCount = 0;
         $this->workflowRegistry = $workflowRegistry;
         $this->status = self::STATUS_CREATION;
+        $this->isDuplicate = false;
+        $this->isExpired = false;
+        $this->isBlocked = false;
     }
 
     public function __toString()
@@ -208,17 +221,11 @@ class Client extends CoreEntity implements AttributedEntityInterface
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getPublicId(): ?string
     {
         return $this->publicId;
     }
 
-    /**
-     * @param string $publicId
-     */
     public function setPublicId(?string $publicId): void
     {
         $this->publicId = $publicId;
@@ -428,23 +435,6 @@ class Client extends CoreEntity implements AttributedEntityInterface
         $this->distributionExpiresAt = $firstMoment->addYears(3)->addMonths(1)->startOf('month');
     }
 
-    public function applyTransition(string $transition): void
-    {
-        $stateMachine = $this->workflowRegistry->get($this);
-        try {
-            $stateMachine->apply($this, $transition);
-        } catch (LogicException $ex) {
-            // TODO log this instead
-            throw new \Exception(
-                sprintf(
-                    '%s is not a valid transition at this time. Exception thrown: %s',
-                    $transition,
-                    $ex->getMessage()
-                )
-            );
-        }
-    }
-
     /**
      * Status is set by the workflow
      */
@@ -525,5 +515,41 @@ class Client extends CoreEntity implements AttributedEntityInterface
     public function canPartnerTransfer(): bool
     {
         return in_array($this->status, [self::STATUS_INACTIVE, self::STATUS_CREATION]);
+    }
+
+    public function isDuplicate(): ?bool
+    {
+        return $this->isDuplicate;
+    }
+
+    public function setIsDuplicate(bool $isDuplicate): self
+    {
+        $this->isDuplicate = $isDuplicate;
+
+        return $this;
+    }
+
+    public function isExpired(): ?bool
+    {
+        return $this->isExpired;
+    }
+
+    public function setIsExpired(bool $isExpired): self
+    {
+        $this->isExpired = $isExpired;
+
+        return $this;
+    }
+
+    public function isBlocked(): ?bool
+    {
+        return $this->isBlocked;
+    }
+
+    public function setIsBlocked(bool $isBlocked): self
+    {
+        $this->isBlocked = $isBlocked;
+
+        return $this;
     }
 }

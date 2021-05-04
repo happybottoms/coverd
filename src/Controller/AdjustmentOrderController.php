@@ -11,22 +11,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Workflow\Registry;
 
 /**
  * @Route(path="/api/orders/adjustment")
  */
-class AdjustmentOrderController extends OrderController
+class AdjustmentOrderController extends BaseOrderController
 {
     protected $defaultEntityName = AdjustmentOrder::class;
-
-    /**
-     * @return AdjustmentOrderLineItem
-     */
-    protected function createLineItem()
-    {
-        return new AdjustmentOrderLineItem();
-    }
-
 
     /**
      * Save a new Adjustment
@@ -97,8 +89,32 @@ class AdjustmentOrderController extends OrderController
         return $this->serialize($request, $order);
     }
 
-    protected function getDefaultTransformer()
+    /**
+     * @Route("/{id}/transition", methods={"PATCH"})
+     * @IsGranted({"ROLE_ADJUSTMENT_ORDER_EDIT"})
+     */
+    public function transition(Request $request, Registry $workflowRegistry, int $id): JsonResponse
+    {
+        return parent::transition($request, $workflowRegistry, $id);
+    }
+
+    protected function getDefaultTransformer(): AdjustmentOrderTransformer
     {
         return new AdjustmentOrderTransformer();
+    }
+
+    protected function createLineItem()
+    {
+        return new AdjustmentOrderLineItem();
+    }
+
+    protected function getEditVoter(): string
+    {
+        return AdjustmentOrderVoter::EDIT;
+    }
+
+    protected function getViewVoter(): string
+    {
+        return AdjustmentOrderVoter::VIEW;
     }
 }

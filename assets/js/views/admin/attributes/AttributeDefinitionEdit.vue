@@ -44,7 +44,7 @@
                                     v-model="definition.helpText"
                                     class="form-control"
                                     placeholder="Enter help text"
-                                ></textarea>
+                                />
                             </div>
                             <BooleanField
                                 v-if="hasDuplicateCheck"

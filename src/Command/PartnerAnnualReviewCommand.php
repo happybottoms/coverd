@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Configuration\AppConfiguration;
 use App\Entity\Group;
 use App\Entity\Partner;
+use App\Workflow\PartnerWorkflow;
 use Doctrine\ORM\EntityManagerInterface;
 use Moment\Moment;
 use Symfony\Component\Console\Command\Command;
@@ -112,12 +113,12 @@ class PartnerAnnualReviewCommand extends Command
                 $rows[] = [
                     $partner->getTitle(),
                     $partner->getStatus(),
-                    Partner::TRANSITION_FLAG_FOR_REVIEW
+                    PartnerWorkflow::TRANSITION_FLAG_FOR_REVIEW
                 ];
 
                 $this->workflowRegistry
                     ->get($partner)
-                    ->apply($partner, Partner::TRANSITION_FLAG_FOR_REVIEW);
+                    ->apply($partner, PartnerWorkflow::TRANSITION_FLAG_FOR_REVIEW);
 
                 if ($force) {
                     $this->appConfig->set('partnerReviewLastStartRun', $now->format());
@@ -133,12 +134,12 @@ class PartnerAnnualReviewCommand extends Command
                 $rows[] = [
                     $partner->getTitle(),
                     $partner->getStatus(),
-                    Partner::TRANSITION_FLAG_FOR_REVIEW_PAST_DUE
+                    PartnerWorkflow::TRANSITION_FLAG_FOR_REVIEW_PAST_DUE
                 ];
 
                 $this->workflowRegistry
                     ->get($partner)
-                    ->apply($partner, Partner::TRANSITION_FLAG_FOR_REVIEW_PAST_DUE);
+                    ->apply($partner, PartnerWorkflow::TRANSITION_FLAG_FOR_REVIEW_PAST_DUE);
 
                 if ($force) {
                     $this->appConfig->set('partnerReviewLastEndRun', $now->format());

@@ -112,7 +112,6 @@
         },
         mounted() {
             this.$events.$on('filter-set', eventData => this.onFilterSet(eventData));
-            console.log(this.loading);
         },
         methods: {
             showLoader () {

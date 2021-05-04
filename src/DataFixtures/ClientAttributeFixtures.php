@@ -49,7 +49,7 @@ class ClientAttributeFixtures extends BaseFixture
                 'description' => '',
                 'required' => true,
                 'type' => Definition::TYPE_OPTION_LIST,
-                'interface' => Attribute::UI_CHECKBOX_GROUP,
+                'interface' => Attribute::UI_SELECT_SINGLE,
                 'options' => [
                     '501c3' => '501(c)3',
                     'religious' => 'Religious Organization',

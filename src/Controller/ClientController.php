@@ -16,6 +16,7 @@ use App\Service\EavAttributeProcessor;
 use App\Transformers\BulkDistributionLineItemTransformer;
 use App\Transformers\ClientAttributeTransformer;
 use App\Transformers\ClientTransformer;
+use App\Workflow\ClientWorkflow;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -23,7 +24,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Workflow\Registry;
-use Symfony\Component\Workflow\Transition;
 
 /**
  * @Route(path="/api/clients")
@@ -41,7 +41,7 @@ class ClientController extends BaseController
      */
     public function index(Request $request): JsonResponse
     {
-//        $this->checkViewPermissions($clients);
+        //        $this->checkViewPermissions($clients);
 
         $sort = $request->get('sort') ? explode('|', $request->get('sort')) : null;
         $page = (int) $request->get('page', 1);
@@ -209,7 +209,7 @@ class ClientController extends BaseController
 
         $client->applyChangesFromArray($params);
 
-//        $this->checkEditPermissions($client);
+        //        $this->checkEditPermissions($client);
 
         $this->getEm()->persist($client);
         $this->getEm()->flush();
@@ -230,6 +230,22 @@ class ClientController extends BaseController
         /** @var Client $client */
         $client = $this->getClientById($publicId);
         $this->denyAccessUnlessGranted(ClientVoter::EDIT, $client);
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        // check client expiration changes
+        // if the user has no role of ROLE_CLIENT_OVERRIDE_EXPIRATIONS,
+        // unset those information from params
+        if (!$user->hasRole(Client::ROLE_CLIENT_OVERRIDE_EXPIRATIONS)) {
+            unset(
+                $params["ageExpiresAt"],
+                $params["isExpirationOverridden"],
+                $params["distributionExpiresAt"],
+                $params["pullupDistributionMax"],
+                $params["pullupDistributionCount"]
+            );
+        }
 
         if ($params['firstName'] && $params['lastName']) {
             $name = new Name($params['firstName'], $params['lastName']);
@@ -366,7 +382,7 @@ class ClientController extends BaseController
         $this->denyAccessUnlessGranted(ClientVoter::EDIT, $client);
 
         if ($client->canReview()) {
-            $workflowRegistry->get($client)->apply($client, Client::TRANSITION_ACTIVATE);
+            $workflowRegistry->get($client)->apply($client, ClientWorkflow::TRANSITION_ACTIVATE);
             $client->setLastReviewedAt(new \DateTime());
 
             $this->getEm()->flush();
@@ -399,7 +415,7 @@ class ClientController extends BaseController
 
         $client->setPartner($partner);
 
-        $workflowRegistry->get($client)->apply($client, Client::TRANSITION_ACTIVATE);
+        $workflowRegistry->get($client)->apply($client, ClientWorkflow::TRANSITION_ACTIVATE);
 
         $this->getEm()->flush();
 
@@ -454,25 +470,6 @@ class ClientController extends BaseController
         }
 
         return $client;
-    }
-
-    /**
-     * @param Registry $workflowRegistry
-     * @param Client $client
-     * @return array
-     */
-    protected function getEnabledTransitions(Registry $workflowRegistry, Client $client): array
-    {
-        $workflow = $workflowRegistry->get($client);
-        $enabledTransitions = $workflow->getEnabledTransitions($client);
-
-        return array_map(function (Transition $transition) use ($workflow) {
-            $title = $workflow->getMetadataStore()->getTransitionMetadata($transition)['title'];
-            return [
-                'transition' => $transition->getName(),
-                'title' => $title
-            ];
-        }, $enabledTransitions);
     }
 
     /**

@@ -21,8 +21,7 @@
                         <a
                             href="#"
                             @click.prevent="askDelete"
-                        >
-                            <i class="fa fa-trash fa-fw" />Delete User</a>
+                        > <i class="fa fa-trash fa-fw" />Delete User</a>
                     </li>
                 </ul>
             </div>
@@ -81,7 +80,6 @@
                     </div>
                 </div>
 
-
                 <div class="col-md-6">
                     <div class="box box-info">
                         <div class="box-header with-border">
@@ -94,19 +92,18 @@
                                     :key="sysGroup.id"
                                 >
                                     <input
-                                        :id="'group-'+sysGroup.id"
+                                        :id="'group-' + sysGroup.id"
                                         v-model="user.groups"
                                         type="checkbox"
                                         name="group[]"
                                         :value="sysGroup"
                                     >
-                                    <label :for="'group-'+sysGroup.id">{{ sysGroup.name }}</label>
+                                    <label :for="'group-' + sysGroup.id">{{ sysGroup.name }}</label>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
 
                 <div class="col-md-6">
                     <div class="box box-info">
@@ -117,6 +114,7 @@
                             <PartnerSelectionForm
                                 v-model="selectedPartner"
                                 label="Partner Assignments"
+                                :options="allPartners"
                             />
                             <button
                                 class="btn btn-success btn-flat"
@@ -154,7 +152,9 @@
             <template slot="header">
                 Delete User
             </template>
-            <p>Are you sure you want to delete <strong>{{ user.name.firstName }} {{ user.name.lastName }}</strong>?</p>
+            <p>
+                Are you sure you want to delete <strong>{{ user.name.firstName }} {{ user.name.lastName }}</strong>?
+            </p>
             <template slot="confirmButton">
                 Delete User
             </template>
@@ -162,94 +162,89 @@
     </section>
 </template>
 
-
 <script>
-import Modal from '../../components/Modal.vue';
-import {mapGetters} from 'vuex';
+import Modal from "../../components/Modal.vue";
+import { mapGetters } from "vuex";
 import PartnerSelectionForm from "../../components/PartnerSelectionForm";
 
 export default {
-        components: {
-            PartnerSelectionForm,
-            'modal' : Modal
-        },
-        props: ['new'],
-        data() {
-            return {
-                user: {
-                    name: {},
-                    groups: [],
-                    partners: []
-                },
-                sysGroups: {},
-                sysPartners: {},
-                selectedPartner: { id: 0 },
-            };
-        },
-        computed: {
-            ...mapGetters([
-                'allActivePartners',
-            ]),
-        },
-        created() {
-            let self = this;
+    components: {
+        PartnerSelectionForm,
+        modal: Modal
+    },
+    props: ["new"],
+    data() {
+        return {
+            user: {
+                name: {},
+                groups: [],
+                partners: []
+            },
+            sysGroups: {},
+            sysPartners: {},
+            selectedPartner: { id: 0 }
+        };
+    },
+    computed: {
+        ...mapGetters(["allActivePartners", "allPartners"])
+    },
+    created() {
+        let self = this;
 
-            if (!this.new) {
-                axios
-                    .get('/api/users/' + this.$route.params.id, { params: {include: ['groups', 'partners'] }})
-                    .then(response => {
-                        self.user = response.data.data;
-                        console.log('user', response.data.data);
-                    })
-                    .catch(error => console.log("Error receiving users %o", error));
-            }
-
+        if (!this.new) {
             axios
-                .get('/api/groups')
+                .get("/api/users/" + this.$route.params.id, { params: { include: ["groups", "partners"] } })
                 .then(response => {
-                    self.sysGroups = response.data.data;
+                    self.user = response.data.data;
+                    console.log("user", response.data.data);
                 })
-                .catch(error => console.log("Error receiving groups %o", error));
+                .catch(error => console.log("Error receiving users %o", error));
+        }
 
-            this.$store.dispatch('loadStorageLocations');
+        axios
+            .get("/api/groups")
+            .then(response => {
+                self.sysGroups = response.data.data;
+            })
+            .catch(error => console.log("Error receiving groups %o", error));
 
-            console.log('UserEdit Component mounted.');
-        },
-        methods: {
-            save: function () {
-                let self = this;
-                if (this.new) {
-                    axios
-                        .post('/api/users', this.user)
-                        .then(response => self.$router.push({ name: 'admin-users' }))
-                        .catch(function (error) {
-                            console.log("Save this.user error %o", error);
-                        });
-                } else {
-                    axios
-                        .patch('/api/users/' + this.$route.params.id, this.user)
-                        .then(response => self.$router.push({ name: 'admin-users' }))
-                        .catch(function (error) {
-                            console.log("Save this.user error with params id %o", error);
-                        });
-                }
-            },
-            askDelete: function() {
-                $('#confirmModal').modal('show');
-            },
-            deleteUser: function() {
-                let self = this;
+        this.$store.dispatch("loadStorageLocations");
+
+        console.log("UserEdit Component mounted.");
+    },
+    methods: {
+        save: function() {
+            let self = this;
+            if (this.new) {
                 axios
-                    .delete('/api/users/' + this.$route.params.id)
-                    .then(self.$router.push({ name: 'admin-users' }));
-            },
-            onPartnerAddClick: function() {
-                this.user.partners.push(this.$store.getters.getStorageLocationById(this.selectedPartner.id));
-                // this.user.partners = values;
-            },
-            onPartnerRemoveClick: function(partnerId) {
-                this.user.partners = this.user.partners.filter((partner) => partner.id !== partnerId);
+                    .post("/api/users", this.user)
+                    .then(response => self.$router.push({ name: "admin-users" }))
+                    .catch(function(error) {
+                        console.log("Save this.user error %o", error);
+                    });
+            } else {
+                axios
+                    .patch("/api/users/" + this.$route.params.id, this.user)
+                    .then(response => self.$router.push({ name: "admin-users" }))
+                    .catch(function(error) {
+                        console.log("Save this.user error with params id %o", error);
+                    });
             }
+        },
+        askDelete: function() {
+            $("#confirmModal").modal("show");
+        },
+        deleteUser: function() {
+            let self = this;
+            axios.delete("/api/users/" + this.$route.params.id).then(self.$router.push({ name: "admin-users" }));
+        },
+        onPartnerAddClick: function() {
+            this.user.partners.push(this.$store.getters.getStorageLocationById(this.selectedPartner.id));
+            // this.user.partners = values;
+        },
+        onPartnerRemoveClick: function(partnerId) {
+            this.user.partners = this.user.partners.filter(partner => partner.id !== partnerId);
         }
     }
+};
 </script>
