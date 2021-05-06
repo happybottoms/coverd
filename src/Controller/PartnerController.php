@@ -41,6 +41,7 @@ class PartnerController extends BaseController
         $page = $request->get('page', 1);
         $limit = $request->get('per_page', 10);
         $params = $this->buildFilterParams($request);
+        $meta = [];
 
         if ($this->getUser()->hasRole(Partner::ROLE_VIEW_ALL)) {
             /** @var PartnerRepository $repo */
