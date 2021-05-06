@@ -9,15 +9,13 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 class PartnerRepository extends EntityRepository
 {
     public function findAllPaged(
-        $page = null,
-        $limit = null,
-        $sortField = null,
-        $sortDirection = 'ASC',
+        ?int $page = null,
+        ?int $limit = null,
+        ?string $sortField = null,
+        ?string $sortDirection = 'ASC',
         ParameterBag $params = null
-    ) {
+    ): array {
         $qb = $this->createQueryBuilder('p');
-
-        $this->joinRelatedTables($qb);
 
         if ($page && $limit) {
             $qb->setFirstResult(($page - 1) * $limit)
@@ -72,9 +70,5 @@ class PartnerRepository extends EntityRepository
             $qb->andWhere('p.distributionMethod = :distributionMethod')
                 ->setParameter('distributionMethod', $params->get('distributionMethod'));
         }
-    }
-    
-    protected function joinRelatedTables(QueryBuilder $qb)
-    {
     }
 }

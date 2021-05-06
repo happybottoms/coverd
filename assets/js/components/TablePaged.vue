@@ -116,11 +116,9 @@
         methods: {
             showLoader () {
                 this.loading = true;
-                console.log('show loader');
             },
             hideLoader () {
                 this.loading = false;
-                console.log('hide loader');
             },
             refresh() {
                 Vue.nextTick( () => this.$refs.vuetable.refresh() );
@@ -155,7 +153,6 @@
                     .join(' ');
             },
             onPaginationData (paginationData) {
-                console.log(paginationData)
                 this.$refs.pagination.setPaginationData(paginationData);
                 this.$refs.paginationInfo.setPaginationData(paginationData);
             },
@@ -166,7 +163,6 @@
                 this.params = filters;
                 this.clearSelected();
                 this.refresh();
-                console.log('filter-set', filters);
             },
             onCheckboxToggled () {
                 this.$events.fire('selection-change', this.$refs.vuetable.selectedTo);
