@@ -12,19 +12,21 @@
             type="number"
             class="form-control"
             :placeholder="placeholder"
+            :disabled="disabled"
             @input="$emit('input', $event.target.value)"
         >
     </div>
 </template>
 
 <script>
-    export default {
-        name: 'NumberField',
-        props: {
-            value: { type: Number },
-            label: { type: String, required: true },
-            helpText: { type: String, requird: false, default: "" },
-            placeholder: { type: [String,Number] },
-        }
+export default {
+    name: "NumberField",
+    props: {
+        value: { type: Number },
+        label: { type: String, required: true },
+        helpText: { type: String, requird: false, default: "" },
+        placeholder: { type: [String, Number] },
+        disabled: { type: Boolean, default: false }
     }
+};
 </script>

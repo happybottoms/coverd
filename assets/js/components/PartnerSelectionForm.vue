@@ -7,7 +7,7 @@
             <optionlist
                 ref="partnerSelect"
                 v-model="value"
-                :preloaded-options="allPartners"
+                :preloaded-options="options"
                 display-property="title"
                 empty-string="-- Select Partner --"
                 :label="label"
@@ -29,32 +29,29 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
-import Address from '../components/AddressView.vue';
-import OptionListEntity from './OptionListEntity.vue';
+import Address from "../components/AddressView.vue";
+import OptionListEntity from "./OptionListEntity.vue";
 
 export default {
-        components:{
-            'address-view' : Address,
-            'optionlist' : OptionListEntity
-        },
-        props: {
-            value: { type: Object },
-            editable: { type: Boolean, default: true },
-            label: { type: String, default: "Partner" },
-        },
-        computed: mapGetters([
-            'allPartners'
-        ]),
-        mounted: function () {
-            this.$store.dispatch('loadStorageLocations');
-            this.$refs.partnerSelect.$on('change', eventData => this.onSelectionChange(eventData))
-        },
-        methods: {
-            onSelectionChange: function (eventData) {
-                let currentPartner = this.$store.getters.getStorageLocationById(eventData.currentTarget.value);
-                this.$emit('partner-change', currentPartner);
-            }
+    components: {
+        "address-view": Address,
+        optionlist: OptionListEntity
+    },
+    props: {
+        value: { type: Object },
+        editable: { type: Boolean, default: true },
+        label: { type: String, default: "Partner" },
+        options: { type: Array, default: () => [] }
+    },
+    mounted: function() {
+        this.$store.dispatch("loadStorageLocations");
+        this.$refs.partnerSelect.$on("change", eventData => this.onSelectionChange(eventData));
+    },
+    methods: {
+        onSelectionChange: function(eventData) {
+            let currentPartner = this.$store.getters.getStorageLocationById(eventData.currentTarget.value);
+            this.$emit("partner-change", currentPartner);
         }
     }
+};
 </script>

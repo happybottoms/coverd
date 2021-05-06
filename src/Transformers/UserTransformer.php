@@ -20,8 +20,10 @@ class UserTransformer extends TransformerAbstract
             'name' => [
                 'firstName' => $user->getName()->getFirstname(),
                 'lastName' => $user->getName()->getLastname(),
-                ],
+            ],
             'email' => $user->getEmail(),
+            "isAdmin" => $user->isAdmin(),
+            "isPartner" => $user->isPartner(),
             'updatedAt' => $user->getUpdatedAt()->format('c'),
         ];
     }
