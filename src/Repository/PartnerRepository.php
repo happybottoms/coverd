@@ -29,12 +29,14 @@ class PartnerRepository extends EntityRepository
             $qb->orderBy($sortField, $sortDirection);
         }
 
-        $this->addCriteria($qb, $params);
+        if ($params) {
+            $this->addCriteria($qb, $params);
+        }
 
         return $qb->getQuery()->execute();
     }
 
-    public function findAllCount(ParameterBag $params)
+    public function findAllCount(ParameterBag $params): string
     {
         $qb = $this->createQueryBuilder('p')
             ->select('count(p)');
