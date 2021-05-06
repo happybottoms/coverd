@@ -54,19 +54,19 @@ class PartnerController extends BaseController
                 $sort ? $sort[1] : null,
                 $params
             );
-            
-        $meta = [
-            'pagination' => [
-                'total' => (int) $total,
-                'per_page' => (int) $limit,
-                'current_page' => (int) $page,
-                'last_page' => ceil($total / $limit),
-                'next_page_url' => null,
-                'prev_page_url' => null,
-                'from' => (($page - 1) * $limit) + 1,
-                'to' => ($page * $limit),
-            ]
-        ];
+
+            $meta = [
+                'pagination' => [
+                    'total' => (int) $total,
+                    'per_page' => (int) $limit,
+                    'current_page' => (int) $page,
+                    'last_page' => ceil($total / $limit),
+                    'next_page_url' => null,
+                    'prev_page_url' => null,
+                    'from' => (($page - 1) * $limit) + 1,
+                    'to' => ($page * $limit),
+                ]
+            ];
         } else {
             $partners = [$this->getUser()->getActivePartner()];
         }
@@ -252,7 +252,7 @@ class PartnerController extends BaseController
 
         return $partner;
     }
-    
+
     /**
      * @param Request $request
      * @return ParameterBag
