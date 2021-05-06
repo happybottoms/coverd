@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Client;
-use App\Entity\EAV\ClientDefinition;
+use App\Entity\EAV\ClientAttributeDefinition;
 use App\Entity\Orders\BulkDistributionLineItem;
 use App\Entity\Partner;
 use App\Entity\User;
@@ -66,9 +66,9 @@ class ClientController extends BaseController
 
         $meta = [
             'pagination' => [
-                'total' => $total,
-                'per_page' => $limit,
-                'current_page' => $page,
+                'total' => (int) $total,
+                'per_page' => (int) $limit,
+                'current_page' => (int) $page,
                 'last_page' => ceil($total / $limit),
                 'next_page_url' => null,
                 'prev_page_url' => null,
@@ -113,7 +113,7 @@ class ClientController extends BaseController
      */
     public function newClientAttributes(Request $request): JsonResponse
     {
-        $fields = $this->getRepository(ClientDefinition::class)->findBy(['isDuplicateReference' => true]);
+        $fields = $this->getRepository(ClientAttributeDefinition::class)->findBy(['isDuplicateReference' => true]);
 
         $attributes = array_map(function ($definition) {
             return $definition->createAttribute();
@@ -130,7 +130,7 @@ class ClientController extends BaseController
      */
     public function clientAttributes(Request $request): JsonResponse
     {
-        $fields = $this->getRepository(ClientDefinition::class)->findAll();
+        $fields = $this->getRepository(ClientAttributeDefinition::class)->findAll();
 
         $attributes = array_map(function ($definition) {
             return $definition->createAttribute();

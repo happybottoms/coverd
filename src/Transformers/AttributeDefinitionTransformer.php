@@ -2,7 +2,7 @@
 
 namespace App\Transformers;
 
-use App\Entity\EAV\Definition;
+use App\Entity\EAV\AttributeDefinition;
 use League\Fractal\TransformerAbstract;
 
 class AttributeDefinitionTransformer extends TransformerAbstract
@@ -11,7 +11,7 @@ class AttributeDefinitionTransformer extends TransformerAbstract
         'options'
     ];
 
-    public function transform(Definition $definition)
+    public function transform(AttributeDefinition $definition)
     {
         return [
             'id' => (int) $definition->getId(),
@@ -27,7 +27,7 @@ class AttributeDefinitionTransformer extends TransformerAbstract
         ];
     }
 
-    public function includeOptions(Definition $definition)
+    public function includeOptions(AttributeDefinition $definition)
     {
         $options = $definition->getOptions();
 

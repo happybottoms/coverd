@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\EAV\Attribute;
-use App\Entity\EAV\Definition;
+use App\Entity\EAV\AttributeValue;
+use App\Entity\EAV\AttributeDefinition;
 use App\Transformers\AttributeDefinitionTransformer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -91,7 +91,7 @@ abstract class BaseAttributeDefinitionController extends BaseController
         $params = $this->getParams($request);
         $ids = $params['ids'];
 
-        /** @var Definition[] $definitions */
+        /** @var AttributeDefinition[] $definitions */
         $definitions = $this->getRepository()->findAllSorted();
 
         foreach ($definitions as $definition) {
@@ -106,9 +106,9 @@ abstract class BaseAttributeDefinitionController extends BaseController
     /**
      * @throws NotFoundHttpException
      */
-    protected function getDefinition(int $id): Definition
+    protected function getDefinition(int $id): AttributeDefinition
     {
-        /** @var Definition $definition */
+        /** @var AttributeDefinition $definition */
         $definition = $this->getRepository()->find($id);
 
         if (!$definition) {
@@ -124,7 +124,7 @@ abstract class BaseAttributeDefinitionController extends BaseController
     }
 
     /**
-     * @return Definition
+     * @return AttributeDefinition
      */
     abstract protected function getNewDefinition();
 }

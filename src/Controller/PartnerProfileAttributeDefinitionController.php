@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\EAV\PartnerProfileDefinition;
+use App\Entity\EAV\PartnerProfileAttributeDefinition;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -13,10 +13,10 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PartnerProfileAttributeDefinitionController extends BaseAttributeDefinitionController
 {
-    protected $defaultEntityName = PartnerProfileDefinition::class;
+    protected $defaultEntityName = PartnerProfileAttributeDefinition::class;
 
     protected function getNewDefinition()
     {
-        return new PartnerProfileDefinition();
+        return new PartnerProfileAttributeDefinition();
     }
 }

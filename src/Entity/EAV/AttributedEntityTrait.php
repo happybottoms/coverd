@@ -45,11 +45,11 @@ trait AttributedEntityTrait
         }
     }
 
-    public function setAttribute(int $attributeId, $value): void
+    public function setAttribute(int $definitionId, $value): void
     {
         /** @var Attribute|null $attribute */
-        $attribute = $this->attributes->filter(function (Attribute $item) use ($attributeId) {
-            return $item->getDefinition()->getId() == $attributeId;
+        $attribute = $this->attributes->filter(function (Attribute $item) use ($definitionId) {
+            return $item->getDefinition()->getId() == $definitionId;
         })->first();
 
         if ($attribute) {
@@ -78,7 +78,7 @@ trait AttributedEntityTrait
                     $attribute->setValue($attributeChange['value']);
                 } else {
                     $definition = $this->getDefinitionById($attributeChange['definition_id']);
-                    $attribute = $definition->createAttribute();
+                    $attribute = new Attribute($definition);
                     $attribute->setValue($attributeChange['value']);
                     $this->addAttribute($attribute);
                 }
@@ -102,10 +102,13 @@ trait AttributedEntityTrait
         return null;
     }
 
-    private function getDefinitionById(int $id): ?Definition
+    /**
+     * @throws \Exception
+     */
+    private function getDefinitionById(int $id): AttributeDefinition
     {
-        /** @var Definition[] $definitions */
-        $definitions = $this->getAttributes()->map(function (Attribute $attribute) {
+        /** @var AttributeDefinition[] $definitions */
+        $definitions = $this->getAttributes()->map(function (AttributeValue $attribute) {
             return $attribute->getDefinition();
         });
 
@@ -115,10 +118,10 @@ trait AttributedEntityTrait
             }
         }
 
-        return null;
+        throw new \Exception(sprintf('Unknown definition id: %d', $id));
     }
 
-    public function hasAttributeForDefinition(Definition $definition): bool
+    public function hasAttributeForDefinition(AttributeDefinition $definition): bool
     {
         foreach ($this->attributes as $attribute) {
             if ($attribute->getDefinition()->getId() === $definition->getId()) {

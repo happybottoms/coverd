@@ -123,6 +123,8 @@
                 console.log('hide loader');
             },
             refresh() {
+                console.log('refresh');
+
                 Vue.nextTick( () => this.$refs.vuetable.refresh() );
             },
             reinitializeFields() {
@@ -162,6 +164,7 @@
                 this.$refs.vuetable.changePage(page)
             },
             onFilterSet (filters) {
+                console.log('onFilterSet');
                 this.params = filters;
                 this.clearSelected();
                 this.refresh();

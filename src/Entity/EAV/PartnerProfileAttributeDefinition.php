@@ -9,7 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity(repositoryClass="App\Repository\DefinitionRepository")
  */
-class PartnerProfileDefinition extends Definition
+class PartnerProfileAttributeDefinition extends AttributeDefinition
 {
-    public $defaultEntityName = PartnerProfileDefinition::class;
+    /**
+     * @var string
+     */
+    public $defaultEntityName = PartnerProfileAttributeDefinition::class;
 }

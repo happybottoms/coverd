@@ -3,16 +3,17 @@
 namespace App\Entity\EAV;
 
 use App\Entity\CoreEntity;
-use App\Entity\EAV\Type\AddressAttribute;
-use App\Entity\EAV\Type\BooleanAttribute;
-use App\Entity\EAV\Type\DatetimeAttribute;
-use App\Entity\EAV\Type\FloatAttribute;
-use App\Entity\EAV\Type\IntegerAttribute;
-use App\Entity\EAV\Type\OptionListAttribute;
-use App\Entity\EAV\Type\StringAttribute;
-use App\Entity\EAV\Type\TextAttribute;
-use App\Entity\EAV\Type\ZipCountyAttribute;
+use App\Entity\EAV\Type\AddressAttributeValue;
+use App\Entity\EAV\Type\BooleanAttributeValue;
+use App\Entity\EAV\Type\DatetimeAttributeValue;
+use App\Entity\EAV\Type\FloatAttributeValue;
+use App\Entity\EAV\Type\IntegerAttributeValue;
+use App\Entity\EAV\Type\OptionListAttributeValue;
+use App\Entity\EAV\Type\StringAttributeValue;
+use App\Entity\EAV\Type\TextAttributeValue;
+use App\Entity\EAV\Type\ZipCountyAttributeValue;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -25,7 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * })
  * @ORM\InheritanceType("SINGLE_TABLE")
  */
-abstract class Definition extends CoreEntity
+abstract class AttributeDefinition extends CoreEntity
 {
     public const TYPE_STRING = "STRING";
     public const TYPE_INTEGER = "INTEGER";
@@ -65,7 +66,7 @@ abstract class Definition extends CoreEntity
     private $label;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="text", nullable=true)
      */
@@ -79,7 +80,7 @@ abstract class Definition extends CoreEntity
     private $type;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="text", nullable=true)
      */
@@ -93,13 +94,6 @@ abstract class Definition extends CoreEntity
     private $displayInterface;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $unit;
-
-    /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
@@ -107,17 +101,24 @@ abstract class Definition extends CoreEntity
     private $required = false;
 
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer")
      */
     private $orderIndex;
 
     /**
-     * @var ArrayCollection
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $isMultivalued;
+
+    /**
+     * @var AttributeOption[]|ArrayCollection
      *
      * @ORM\OneToMany(
-     *     targetEntity="App\Entity\EAV\Option",
+     *     targetEntity="AttributeOption",
      *     mappedBy="definition",
      *     orphanRemoval=true,
      *     cascade={"persist", "remove"},
@@ -127,21 +128,11 @@ abstract class Definition extends CoreEntity
      */
     private $options;
 
-    /**
-     * @var Attribute
-     *
-     * @ORM\OneToMany(
-     *     targetEntity="App\Entity\EAV\Attribute",
-     *     mappedBy="definition",
-     *     cascade={"remove"}
-     * )
-     */
-    private $attributes;
-
     public function __construct()
     {
         $this->options = new ArrayCollection();
-        $this->attributes = new ArrayCollection();
+        $this->isMultivalued = false;
+        $this->orderIndex = 0;
     }
 
     /**
@@ -209,21 +200,20 @@ abstract class Definition extends CoreEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setType(string $type): Definition
+    public function setType(string $type): AttributeDefinition
     {
         $this->type = $type;
 
         // If not set, use the default interface of the attribute type.
         if (!$this->displayInterface) {
-            $attribute = self::createNewAttributeFromType($type);
-            $this->displayInterface = $attribute->getDefaultDisplayInterface();
+            $this->displayInterface = Attribute::getDefaultDisplayInterface($this);
         }
 
         return $this;
@@ -235,17 +225,14 @@ abstract class Definition extends CoreEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getHelpText()
+    public function getHelpText(): ?string
     {
         return $this->helpText;
     }
 
-    /**
-     * @return $this
-     */
-    public function setHelpText($helpText)
+    public function setHelpText(?string $helpText): AttributeDefinition
     {
         $this->helpText = $helpText;
 
@@ -260,26 +247,6 @@ abstract class Definition extends CoreEntity
     public function setDisplayInterface(string $displayInterface): void
     {
         $this->displayInterface = $displayInterface;
-    }
-
-    /**
-     * @param string $unit
-     *
-     * @return $this
-     */
-    public function setUnit($unit)
-    {
-        $this->unit = $unit;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUnit()
-    {
-        return $this->unit;
     }
 
     /**
@@ -322,12 +289,22 @@ abstract class Definition extends CoreEntity
         return $this->orderIndex;
     }
 
+    public function isMultivalued(): bool
+    {
+        return $this->getDisplayInterface() === OptionListAttributeValue::UI_CHECKBOX_GROUP ? true : !!$this->isMultivalued;
+    }
+
+    public function setIsMultivalued(bool $isMultivalued): void
+    {
+        $this->isMultivalued = $isMultivalued;
+    }
+
     /**
-     * @param Option $option
+     * @param AttributeOption $option
      *
      * @return $this
      */
-    public function addOption(Option $option)
+    public function addOption(AttributeOption $option)
     {
         $this->options[] = $option;
         $option->setDefinition($this);
@@ -335,12 +312,9 @@ abstract class Definition extends CoreEntity
         return $this;
     }
 
-    /**
-     * @param Option $options
-     */
-    public function removeOption(Option $options)
+    public function removeOption(AttributeOption $option): void
     {
-        $this->options->removeElement($options);
+        $this->options->removeElement($option);
     }
 
     /**
@@ -351,32 +325,11 @@ abstract class Definition extends CoreEntity
         return $this->options;
     }
 
-    /**
-     * @param Attribute $attributes
-     *
-     * @return $this
-     */
-    public function addAttribute(Attribute $attributes)
+    public function getOption(int $id): AttributeOption
     {
-        $this->attributes[] = $attributes;
-
-        return $this;
-    }
-
-    /**
-     * @param Attribute $attributes
-     */
-    public function removeAttribute(Attribute $attributes)
-    {
-        $this->attributes->removeElement($attributes);
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getAttributes()
-    {
-        return $this->attributes;
+        return $this->options->filter(function (AttributeOption $option) use ($id) {
+            return $option->getId() == $id;
+        })->first();
     }
 
     public static function getAttributeTypes(): array
@@ -395,62 +348,6 @@ abstract class Definition extends CoreEntity
         ];
     }
 
-    public static function createNewAttributeFromType(string $type): Attribute
-    {
-        $attribute = new StringAttribute();
-
-        switch ($type) {
-            case self::TYPE_STRING:
-                $attribute = new StringAttribute();
-                break;
-            case self::TYPE_TEXT:
-                $attribute = new TextAttribute();
-                break;
-            case self::TYPE_INTEGER:
-                $attribute = new IntegerAttribute();
-                break;
-            case self::TYPE_FLOAT:
-                $attribute = new FloatAttribute();
-                break;
-            case self::TYPE_DATETIME:
-                $attribute = new DatetimeAttribute();
-                break;
-            case self::TYPE_OPTION_LIST:
-                $attribute = new OptionListAttribute();
-                break;
-            case self::TYPE_BOOLEAN:
-                $attribute = new BooleanAttribute();
-                break;
-            case self::TYPE_ADDRESS:
-                $attribute = new AddressAttribute();
-                break;
-            case self::TYPE_ZIPCODE:
-                $attribute = new ZipCountyAttribute();
-                break;
-        }
-
-        return $attribute;
-    }
-
-    public function createAttribute($value = null): Attribute
-    {
-        $attribute = null;
-
-        $attribute = self::createNewAttributeFromType($this->type);
-
-        $attribute->setDefinition($this);
-        $attribute->setValue($value);
-
-        return $attribute;
-    }
-
-    public function getAttributeClass(): string
-    {
-        $attribute = self::createNewAttributeFromType($this->type);
-
-        return get_class($attribute);
-    }
-
     public function applyChangesFromArray(array $changes): void
     {
         if (isset($changes['options'])) {
@@ -458,7 +355,7 @@ abstract class Definition extends CoreEntity
                 if (isset($changedOption['id'])) {
                     $option = $this->getOption($changedOption['id']);
                 } elseif (!isset($changedOption['isDeleted']) || !$changedOption['isDeleted']) {
-                    $option = new Option();
+                    $option = new AttributeOption();
                     $this->addOption($option);
                 } else {
                     continue;
@@ -472,13 +369,6 @@ abstract class Definition extends CoreEntity
             unset($changes['options']);
         }
 
-        parent::applyChangesFromArray($changes); // TODO: Change the autogenerated stub
-    }
-
-    public function getOption(int $id): Option
-    {
-        return $this->options->filter(function (Option $option) use ($id) {
-            return $option->getId() == $id;
-        })->first();
+        parent::applyChangesFromArray($changes);
     }
 }

@@ -8,7 +8,7 @@ use League\Fractal\TransformerAbstract;
 class AddressTransformer extends TransformerAbstract
 {
 
-    public function transform(Address $address)
+    public function transform(Address $address): array
     {
         return [
             'id' => (int) $address->getId(),
