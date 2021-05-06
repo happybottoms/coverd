@@ -7,12 +7,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Workflow\Registry;
-
 /**
  * Class Partner
  * @package App\Entities
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\PartnerRepository")
  * @Gedmo\Loggable()
  */
 class Partner extends StorageLocation

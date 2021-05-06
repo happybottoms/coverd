@@ -31,7 +31,7 @@
                         <table-paged
                             :columns="columns"
                             api-url="/api/partners"
-                            edit-route="partners/" 
+                            edit-route="partners/"
                         />
                     </div>
                     <!-- /.box-body -->
@@ -53,13 +53,13 @@ export default {
             return {
             columns: [
                 { name: '__checkbox', title: "#" },
-                { name: '__slot:link', title: "Partner Id", sortField: 'partner.id' },
-                { name: 'title', title: "Title", sortField: 'partner.title' },
-                { name: 'partnerType', title: "Type", sortField: 'partner.type' },
-                { name: 'status', title: "Status", sortField: 'partner.status' },
-                { name: 'fulfillmentPeriod.name', title: "Fulfillment Period", sortField: 'partner.fulfillmentPeriod' },
-                { name: 'distributionMethod.name', title: "Distribution Method", sortField: 'partner.distributionMethod' },
-                { name: 'updatedAt', title: "Last Updated", callback: 'dateTimeFormat', sortField: 'partner.updatedAt' },
+                { name: '__slot:link', title: "Partner Id", sortField: 'id' },
+                { name: 'title', title: "Title", sortField: 'title' },
+                { name: 'partnerType', title: "Type", sortField: 'partnerType' },
+                { name: 'status', title: "Status", sortField: 'status' },
+                { name: 'fulfillmentPeriod.name', title: "Fulfillment Period", sortField: 'fulfillmentPeriod' },
+                { name: 'distributionMethod.name', title: "Distribution Method", sortField: 'distributionMethod' },
+                { name: 'updatedAt', title: "Last Updated", callback: 'dateTimeFormat', sortField: 'updatedAt' },
             ]
             };
         }

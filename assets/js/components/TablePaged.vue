@@ -155,6 +155,7 @@
                     .join(' ');
             },
             onPaginationData (paginationData) {
+                console.log(paginationData)
                 this.$refs.pagination.setPaginationData(paginationData);
                 this.$refs.paginationInfo.setPaginationData(paginationData);
             },
