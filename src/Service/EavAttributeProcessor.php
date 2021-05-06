@@ -27,14 +27,13 @@ class EavAttributeProcessor
             throw new \Exception('Trying to process attribute changes on an entity that does not support attributes');
         }
 
-        if(!isset($changes['attributes'])) {
+        if (!isset($changes['attributes'])) {
             unset($changes['attributes']);
             return;
         }
 
         // Loop through the submitted attributes
         foreach ($changes['attributes'] as $attributeChange) {
-
             if (isset($attributeChange['id']) && $attributeChange['id'] > 0) {
                 $attribute = $this->getAttributeById($attributeChange['id']);
                 $definition = $attribute->getDefinition();
@@ -54,7 +53,7 @@ class EavAttributeProcessor
                 if ($attribute->hasRelationshipValue() && $attribute->hasOptions()) {
                     $relationId = null;
 
-                    if(is_numeric($rawValue)) {
+                    if (is_numeric($rawValue)) {
                         $relationId = $rawValue;
                     } elseif (isset($rawValue['id'])) {
                         $relationId = $rawValue['id'];

@@ -58,7 +58,7 @@ class AttributeTransformer extends TransformerAbstract
             $jsonValues = $attribute->getJsonValues();
 
             return $attribute->isMultivalued() ?
-                $this->primitive($jsonValues):
+                $this->primitive($jsonValues) :
                 $this->primitive(reset($jsonValues));
         }
 

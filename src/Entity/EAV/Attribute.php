@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Entity\EAV;
 
 use App\Entity\EAV\Type\AddressAttributeValue;
@@ -40,7 +39,12 @@ class Attribute
     /**
      * @var AttributeValue[]|ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="AttributeValue", mappedBy="attribute", orphanRemoval=true, cascade={"persist", "remove"}))
+     * @ORM\OneToMany(
+     *     targetEntity="AttributeValue",
+     *     mappedBy="attribute",
+     *     orphanRemoval=true,
+     *     cascade={"persist", "remove"}
+     * )
      */
     private $values;
 
@@ -70,14 +74,14 @@ class Attribute
      */
     public function getValues()
     {
-        return $this->values->map(function(AttributeValue $value) {
+        return $this->values->map(function (AttributeValue $value) {
             return $value->getValue();
         });
     }
 
     public function getJsonValues(): array
     {
-        $values = $this->values->map(function(AttributeValue $value) {
+        $values = $this->values->map(function (AttributeValue $value) {
             return $value->getJsonValue();
         });
 
@@ -113,7 +117,6 @@ class Attribute
         $delta = 0;
         $newAttributeValues = new ArrayCollection();
         foreach ($values as $value) {
-
             if ($value instanceof AttributeValue) {
                 $attributeValue = $value;
             } elseif (is_array($value) && isset($value['id'])) {
@@ -136,14 +139,14 @@ class Attribute
 
     private function getValueById(int $id): AttributeValue
     {
-        if(!$this->hasRelationshipValue()) {
+        if (!$this->hasRelationshipValue()) {
             throw new \Exception("Trying to find a value by ID on a non-relationship attribute");
         }
 
-        print_r("Trying to find this value id: ".$id."\n");
+        print_r("Trying to find this value id: " . $id . "\n");
 
-        $result = $this->values->filter(function($value) use ($id) {
-            print_r("Found: ".$value->getValue()->getId()."\n");
+        $result = $this->values->filter(function ($value) use ($id) {
+            print_r("Found: " . $value->getValue()->getId() . "\n");
             return $value->getValue()->getId() === $id;
         });
 
@@ -219,7 +222,7 @@ class Attribute
     public function populateFixture(): void
     {
         $fixtureValue = $this->createAttributeValue()->fixtureData();
-        if(is_iterable($fixtureValue)) {
+        if (is_iterable($fixtureValue)) {
             $this->setValues($fixtureValue);
         } else {
             $this->setValue($fixtureValue);

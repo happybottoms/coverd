@@ -32,7 +32,7 @@ class DatetimeAttributeValue extends AttributeValue
      */
     public function setValue($value): AttributeValue
     {
-        if($value === '') {
+        if ($value === '') {
             $value = null;
         } elseif (is_string($value)) {
             $value = \DateTimeImmutable::createFromFormat(\DateTime::RFC3339, $value) ?: null;

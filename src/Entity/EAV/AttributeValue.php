@@ -160,7 +160,7 @@ abstract class AttributeValue
 
     public function getDefinition(): AttributeDefinition
     {
-        if(!$this->attribute) {
+        if (!$this->attribute) {
             throw new \Exception("Attempting to get the definition of a value without and attribute.");
         }
 
