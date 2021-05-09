@@ -2,43 +2,42 @@
 
 namespace App\Entity\EAV\Type;
 
-use App\Entity\EAV\Attribute;
+use App\Entity\EAV\AttributeValue;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class TextAttribute
+ * Class IntegerAttribute
  *
  * @ORM\Entity()
  */
-class TextAttribute extends Attribute
+class IntegerAttributeValue extends AttributeValue
 {
-
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="text_value", type="text", nullable=true)
+     * @ORM\Column(name="integer_value", type="integer")
      */
     protected $value;
 
     public function getTypeLabel(): string
     {
-        return "Long Text";
+        return "Integer";
     }
 
     /**
-     * @param string $value
+     * @param int $value
      *
-     * @return Attribute
+     * @return AttributeValue
      */
-    public function setValue($value): Attribute
+    public function setValue($value): AttributeValue
     {
-        $this->value = $value;
+        $this->value = (int) $value;
 
         return $this;
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getValue()
     {
@@ -47,13 +46,13 @@ class TextAttribute extends Attribute
 
     public function fixtureData()
     {
-        return "This is a test";
+        return rand(0, 100);
     }
 
     public function getDisplayInterfaces(): array
     {
         return [
-            self::UI_TEXTAREA,
+            self::UI_NUMBER,
         ];
     }
 }

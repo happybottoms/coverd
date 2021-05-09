@@ -6,14 +6,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Workflow\Exception\LogicException;
 use Symfony\Component\Workflow\Registry;
 
 /**
  * Class Partner
  * @package App\Entities
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\PartnerRepository")
  * @Gedmo\Loggable()
  */
 class Partner extends StorageLocation
@@ -188,20 +187,6 @@ class Partner extends StorageLocation
         $this->legacyId = $legacyId;
     }
 
-    /**
-     * {@inheritDoc}
-     * @throws \Exception
-     */
-    public function applyChangesFromArray(array $changes): void
-    {
-        if (isset($changes['transition'])) {
-            $this->applyTransition($changes['transition']);
-            unset($changes['transition']);
-        }
-
-        parent::applyChangesFromArray($changes);
-    }
-
     public function getProfile(): PartnerProfile
     {
         return $this->profile;
@@ -227,23 +212,6 @@ class Partner extends StorageLocation
     public function getUsers(): Collection
     {
         return $this->users;
-    }
-
-    public function applyTransition(string $transition): void
-    {
-        $stateMachine = $this->workflowRegistry->get($this);
-        try {
-            $stateMachine->apply($this, $transition);
-        } catch (LogicException $ex) {
-            // TODO log this instead
-            throw new \Exception(
-                sprintf(
-                    '%s is not a valid transition at this time. Exception thrown: %s',
-                    $transition,
-                    $ex->getMessage()
-                )
-            );
-        }
     }
 
     public function isReviewing(): bool

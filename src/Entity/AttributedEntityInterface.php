@@ -12,10 +12,10 @@ interface AttributedEntityInterface
     public function addAttributes(iterable $attributes, bool $overwrite = true): void;
 
     /**
-     * @param int $attributeId
+     * @param int $definitionId
      * @param mixed $value
      */
-    public function setAttribute(int $attributeId, $value): void;
+    public function setAttribute(int $definitionId, $value): void;
 
     public function removeAttribute(Attribute $attribute): void;
 

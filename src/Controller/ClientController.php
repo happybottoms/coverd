@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Client;
-use App\Entity\EAV\ClientDefinition;
+use App\Entity\EAV\ClientAttributeDefinition;
 use App\Entity\Orders\BulkDistributionLineItem;
 use App\Entity\Partner;
 use App\Entity\User;
@@ -24,7 +24,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Workflow\Registry;
-use Symfony\Component\Workflow\Transition;
 
 /**
  * @Route(path="/api/clients")
@@ -66,9 +65,9 @@ class ClientController extends BaseController
 
         $meta = [
             'pagination' => [
-                'total' => $total,
-                'per_page' => $limit,
-                'current_page' => $page,
+                'total' => (int) $total,
+                'per_page' => (int) $limit,
+                'current_page' => (int) $page,
                 'last_page' => ceil($total / $limit),
                 'next_page_url' => null,
                 'prev_page_url' => null,
@@ -113,7 +112,7 @@ class ClientController extends BaseController
      */
     public function newClientAttributes(Request $request): JsonResponse
     {
-        $fields = $this->getRepository(ClientDefinition::class)->findBy(['isDuplicateReference' => true]);
+        $fields = $this->getRepository(ClientAttributeDefinition::class)->findBy(['isDuplicateReference' => true]);
 
         $attributes = array_map(function ($definition) {
             return $definition->createAttribute();
@@ -130,7 +129,7 @@ class ClientController extends BaseController
      */
     public function clientAttributes(Request $request): JsonResponse
     {
-        $fields = $this->getRepository(ClientDefinition::class)->findAll();
+        $fields = $this->getRepository(ClientAttributeDefinition::class)->findAll();
 
         $attributes = array_map(function ($definition) {
             return $definition->createAttribute();
@@ -471,25 +470,6 @@ class ClientController extends BaseController
         }
 
         return $client;
-    }
-
-    /**
-     * @param Registry $workflowRegistry
-     * @param Client $client
-     * @return array
-     */
-    protected function getEnabledTransitions(Registry $workflowRegistry, Client $client): array
-    {
-        $workflow = $workflowRegistry->get($client);
-        $enabledTransitions = $workflow->getEnabledTransitions($client);
-
-        return array_map(function (Transition $transition) use ($workflow) {
-            $title = $workflow->getMetadataStore()->getTransitionMetadata($transition)['title'];
-            return [
-                'transition' => $transition->getName(),
-                'title' => $title
-            ];
-        }, $enabledTransitions);
     }
 
     /**

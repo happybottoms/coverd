@@ -3,7 +3,8 @@
 namespace App\Listener;
 
 use App\Entity\Client;
-use App\Entity\EAV\ClientDefinition;
+use App\Entity\EAV\Attribute;
+use App\Entity\EAV\ClientAttributeDefinition;
 use App\IdGenerator\RandomIdGenerator;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -30,13 +31,13 @@ class ClientListener implements EventSubscriber
         }
 
         $em = $event->getEntityManager();
-        $definitions = $em->getRepository(ClientDefinition::class)->findAll();
+        $definitions = $em->getRepository(ClientAttributeDefinition::class)->findAll();
 
         $emptyAttributes = [];
 
         foreach ($definitions as $definition) {
             if (!$client->hasAttributeForDefinition($definition)) {
-                $emptyAttributes[] = $definition->createAttribute();
+                $emptyAttributes[] = new Attribute($definition);
             }
         }
 

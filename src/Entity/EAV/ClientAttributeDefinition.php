@@ -9,9 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity(repositoryClass="App\Repository\DefinitionRepository")
  */
-class ClientDefinition extends Definition
+class ClientAttributeDefinition extends AttributeDefinition
 {
-    public $defaultEntityName = ClientDefinition::class;
+    /**
+     * @var string
+     */
+    public $defaultEntityName = ClientAttributeDefinition::class;
 
     /**
      * @var boolean|null

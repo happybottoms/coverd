@@ -62,6 +62,7 @@
                 v-model="value.partner"
                 label="Assigned Partner"
                 :options="allPartners"
+                :editable="!this.new"
             />
         </div>
         <div class="col-md-6">

@@ -3,7 +3,9 @@
 namespace App\DataFixtures;
 
 use App\Entity\EAV\Attribute;
-use App\Entity\EAV\PartnerProfileDefinition;
+use App\Entity\EAV\AttributeDefinition;
+use App\Entity\EAV\AttributeValue;
+use App\Entity\EAV\PartnerProfileAttributeDefinition;
 use App\Entity\PartnerProfile;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -23,18 +25,18 @@ class PartnerProfileFixtures extends BaseFixture implements DependentFixtureInte
     public function loadData(ObjectManager $manager)
     {
         $partners = $manager->getRepository(Partner::class)->findAll();
-        $definitions = $manager->getRepository(PartnerProfileDefinition::class)->findAll();
+        $definitions = $manager->getRepository(PartnerProfileAttributeDefinition::class)->findAll();
 
         foreach ($partners as $partner) {
             $profile = new PartnerProfile();
             $profile->setPartner($partner);
 
             foreach ($definitions as $definition) {
-                $attribute = $definition->createAttribute();
-                if ($definition->getType() === Attribute::UI_ZIPCODE) {
+                $attribute = new Attribute($definition);
+                if ($definition->getType() === AttributeDefinition::TYPE_ZIPCODE) {
                     $attribute->setValue($this->getReference('zip_county.1'));
                 } else {
-                    $attribute->setValue($attribute->fixtureData());
+                    $attribute->populateFixture();
                 }
                 $profile->addAttribute($attribute);
             }

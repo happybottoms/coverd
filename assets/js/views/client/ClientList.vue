@@ -83,7 +83,7 @@
                         <TablePaged
                             ref="hbtable"
                             :columns="columns"
-                            api-url="/api/clients/"
+                            api-url="/api/clients"
                             edit-route="/clients/"
                             :sort-order="[{ field: 'id', direction: 'desc' }]"
                             :params="requestParams()"

@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Workflow\Registry;
-use Symfony\Component\Workflow\Transition;
 
 abstract class BaseOrderController extends BaseController
 {
@@ -331,20 +330,6 @@ abstract class BaseOrderController extends BaseController
         }
 
         return $params;
-    }
-
-    protected function getEnabledTransitions(Registry $workflowRegistry, Order $order): array
-    {
-        $workflow = $workflowRegistry->get($order);
-        $enabledTransitions = $workflow->getEnabledTransitions($order);
-
-        return array_map(function (Transition $transition) use ($workflow) {
-            $title = $workflow->getMetadataStore()->getTransitionMetadata($transition)['title'];
-            return [
-                'transition' => $transition->getName(),
-                'title' => $title
-            ];
-        }, $enabledTransitions);
     }
 
     /**
