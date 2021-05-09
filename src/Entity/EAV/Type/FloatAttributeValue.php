@@ -2,34 +2,34 @@
 
 namespace App\Entity\EAV\Type;
 
-use App\Entity\EAV\Attribute;
+use App\Entity\EAV\AttributeValue;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class IntegerAttribute
+ * Class FloatAttribute
  *
  * @ORM\Entity()
  */
-class IntegerAttribute extends Attribute
+class FloatAttributeValue extends AttributeValue
 {
-    /**
-     * @var int
+   /**
+     * @var float
      *
-     * @ORM\Column(name="integer_value", type="integer", nullable=true)
+     * @ORM\Column(name="float_value", type="float")
      */
     protected $value;
 
     public function getTypeLabel(): string
     {
-        return "Integer";
+        return "Decimal";
     }
 
     /**
-     * @param int $value
+     * @param float $value
      *
-     * @return Attribute
+     * @return AttributeValue
      */
-    public function setValue($value): Attribute
+    public function setValue($value): AttributeValue
     {
         $this->value = $value;
 
@@ -37,7 +37,7 @@ class IntegerAttribute extends Attribute
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getValue()
     {
@@ -46,7 +46,7 @@ class IntegerAttribute extends Attribute
 
     public function fixtureData()
     {
-        return rand(0, 100);
+        return rand() / mt_getrandmax() * 10;
     }
 
     public function getDisplayInterfaces(): array

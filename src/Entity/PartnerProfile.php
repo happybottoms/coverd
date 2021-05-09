@@ -55,11 +55,4 @@ class PartnerProfile extends CoreEntity implements AttributedEntityInterface
         $this->partner = $partner;
         $this->partner->setProfile($this);
     }
-
-    public function applyChangesFromArray(array $changes): void
-    {
-        $this->processAttributeChanges($changes);
-
-        parent::applyChangesFromArray($changes);
-    }
 }
