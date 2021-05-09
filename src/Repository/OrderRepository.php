@@ -33,8 +33,7 @@ class OrderRepository extends EntityRepository
 
         $this->addCriteria($qb, $params);
 
-        $results = $qb->getQuery()->execute();
-        return $results;
+        return $qb->getQuery()->execute();
     }
 
     public function findAllCount(ParameterBag $params)
