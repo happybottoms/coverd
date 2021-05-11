@@ -47,7 +47,7 @@
                             :columns="columns"
                             api-url="/api/products"
                             edit-route="/products/"
-                            :sort-order="[{ field: 'id', direction: 'desc' }]"
+                            :sort-order="[{ field: 'orderIndex', direction: 'asc' }]"
                             :per-page="50"
                         />
                     </div>
@@ -73,7 +73,7 @@
                 columns: [
                     { name: "__slot:link", title: "Product ID", sortField: "id" },
                     { name: "name", title: "Name", sortField: "name" },
-                    { name: "productCategory.name", title: "Category", sortField: "productCategory.name" },
+                    { name: "productCategory.name", title: "Category", sortField: "pc.name" },
                     { name: "orderIndex", title: "Order", sortField: "orderIndex" },
                     { name: "status", title: "Status", sortField: "status" },
                     { name: "updatedAt", title: "Last Updated", callback: "dateTimeFormat", sortField: "updatedAt" }

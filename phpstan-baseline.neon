@@ -256,16 +256,6 @@ parameters:
 			path: src/Controller/ProductCategoryController.php
 
 		-
-			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\:\\:findAllSorted\\(\\)\\.$#"
-			count: 2
-			path: src/Controller/ProductController.php
-
-		-
-			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\:\\:findByPartnerOrderable\\(\\)\\.$#"
-			count: 1
-			path: src/Controller/ProductController.php
-
-		-
 			message: "#^Method App\\\\Controller\\\\ProductController\\:\\:show\\(\\) has parameter \\$id with no typehint specified\\.$#"
 			count: 1
 			path: src/Controller/ProductController.php
@@ -359,86 +349,6 @@ parameters:
 			message: "#^Method App\\\\Controller\\\\ProductController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Controller/ProductController.php
-
-		-
-			message: "#^PHPDoc tag @var for variable \\$repo contains unknown class App\\\\Entity\\\\InventoryTransactionRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method findAllPaged\\(\\) on an unknown class App\\\\Entity\\\\InventoryTransactionRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method findAllCount\\(\\) on an unknown class App\\\\Entity\\\\InventoryTransactionRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^PHPDoc tag @var for variable \\$repo contains unknown class App\\\\Entity\\\\Orders\\\\SupplyOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method supplierTotals\\(\\) on an unknown class App\\\\Entity\\\\Orders\\\\SupplyOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method findSupplierTotalsCount\\(\\) on an unknown class App\\\\Entity\\\\Orders\\\\SupplyOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^PHPDoc tag @var for variable \\$repo contains unknown class App\\\\Entity\\\\Orders\\\\BulkDistributionOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method distributionTotals\\(\\) on an unknown class App\\\\Entity\\\\Orders\\\\BulkDistributionOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method findDistributionTotalsCount\\(\\) on an unknown class App\\\\Entity\\\\Orders\\\\BulkDistributionOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^PHPDoc tag @var for variable \\$repo contains unknown class App\\\\Entity\\\\Orders\\\\PartnerOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method partnerOrderTotals\\(\\) on an unknown class App\\\\Entity\\\\Orders\\\\PartnerOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method findPartnerOrderTotalsCount\\(\\) on an unknown class App\\\\Entity\\\\Orders\\\\PartnerOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^PHPDoc tag @var for variable \\$transactionRepo contains unknown class App\\\\Entity\\\\InventoryTransactionRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^PHPDoc tag @var for variable \\$distributionRepo contains unknown class App\\\\Entity\\\\Orders\\\\BulkDistributionOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method getStockLevels\\(\\) on an unknown class App\\\\Entity\\\\InventoryTransactionRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method getDistributionsForForcasting\\(\\) on an unknown class App\\\\Entity\\\\Orders\\\\BulkDistributionOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
 
 		-
 			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\:\\:getStockLevels\\(\\)\\.$#"
@@ -642,11 +552,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\DataFixtures\\\\BaseFixture\\:\\:createContact\\(\\) has parameter \\$class with no typehint specified\\.$#"
-			count: 1
-			path: src/DataFixtures/BaseFixture.php
-
-		-
-			message: "#^Method App\\\\DataFixtures\\\\BaseFixture\\:\\:createMany\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/DataFixtures/BaseFixture.php
 
@@ -1801,36 +1706,6 @@ parameters:
 			path: src/Entity/ProductCategory.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:findAllSorted\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/ProductRepository.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:getWarehouseInventory\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/ProductRepository.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:getNetworkInventory\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/ProductRepository.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:getPartnerInventory\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/ProductRepository.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:findByPartnerOrderable\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/ProductRepository.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:findByPartnerOrderable\\(\\) has parameter \\$partnerOrderable with no typehint specified\\.$#"
-			count: 1
-			path: src/Entity/ProductRepository.php
-
-		-
 			message: "#^Method App\\\\Entity\\\\Sequence\\:\\:__construct\\(\\) has parameter \\$class with no typehint specified\\.$#"
 			count: 1
 			path: src/Entity/Sequence.php
@@ -2284,11 +2159,6 @@ parameters:
 			message: "#^PHPDoc tag @param references unknown parameter\\: \\$product$#"
 			count: 1
 			path: src/Reports/PartnerInventoryRow.php
-
-		-
-			message: "#^PHPDoc tag @param for parameter \\$reportData with type App\\\\Reports\\\\DistributionTotalsReport is incompatible with native type App\\\\Reports\\\\PartnerOrderTotalsReport\\.$#"
-			count: 1
-			path: src/Reports/PartnerOrderTotalsExcel.php
 
 		-
 			message: "#^Property App\\\\Reports\\\\PartnerOrderTotalsExcel\\:\\:\\$reportData \\(App\\\\Reports\\\\DistributionTotalsReport\\) does not accept App\\\\Reports\\\\PartnerOrderTotalsReport\\.$#"
