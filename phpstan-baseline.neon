@@ -251,21 +251,6 @@ parameters:
 			path: src/Controller/PartnerFulfillmentPeriodController.php
 
 		-
-			message: "#^Cannot call method getActivePartner\\(\\) on object\\|null\\.$#"
-			count: 1
-			path: src/Controller/PartnerOrderController.php
-
-		-
-			message: "#^Cannot call method isAdmin\\(\\) on object\\|null\\.$#"
-			count: 1
-			path: src/Controller/PartnerOrderController.php
-
-		-
-			message: "#^Cannot call method isPartner\\(\\) on object\\|null\\.$#"
-			count: 1
-			path: src/Controller/PartnerOrderController.php
-
-		-
 			message: "#^Method App\\\\Controller\\\\ProductCategoryController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Controller/ProductCategoryController.php

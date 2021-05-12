@@ -60,17 +60,6 @@ class PartnerOrderController extends BaseOrderController
                 );
             }
 
-            // if the current user is partner and partner status is not STATUS_ACTIVE or STATUS_NEEDS_PROFILE_REVIEW
-            // it should not work.
-            $user = $this->getUser();
-            $activePartner = $user->getActivePartner();
-            if (
-                !$user->isAdmin() && $user->isPartner() &&
-                (is_null($activePartner) || !$activePartner->canCreateClient())
-            ) {
-                throw new \Exception('The active partner is not in an allowed status to place new orders.');
-            }
-
             $order->setPartner($newPartner);
         }
 
