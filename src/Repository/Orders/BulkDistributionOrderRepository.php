@@ -86,6 +86,11 @@ class BulkDistributionOrderRepository extends OrderRepository
                 ->setParameter('partnerType', $params->get('partnerType'));
         }
 
+        if ($params->has('distributionPeriod')) {
+            $qb->andWhere('o.distributionPeriod = :distributionPeriod')
+                ->setParameter('distributionPeriod', $params->get('distributionPeriod'));
+        }
+
         if ($params->has('startingAt')) {
             $qb->andWhere('o.distributionPeriod >= :startingAt')
                 ->setParameter('startingAt', new \DateTime($params->get('startingAt')));
