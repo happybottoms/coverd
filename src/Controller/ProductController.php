@@ -32,13 +32,14 @@ class ProductController extends BaseController
      *
      * @return JsonResponse
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         /** @var ProductRepository $repo */
         $repo = $this->getRepository();
+
         if (!$request->get('page')) {
-            $suppliers = $repo->findAll();
-            return $this->serialize($request, $suppliers);
+            $products = $repo->findAll();
+            return $this->serialize($request, $products);
         }
 
         $sort = $request->get('sort') ? explode('|', $request->get('sort')) : null;
@@ -47,7 +48,8 @@ class ProductController extends BaseController
 
         $params = $this->buildFilterParams($request);
 
-        $suppliers = $repo->findAllPaged(
+
+        $products = $repo->findAllPaged(
             $page,
             $limit,
             $sort ? $sort[0] : null,
@@ -70,7 +72,7 @@ class ProductController extends BaseController
             ]
         ];
 
-        return $this->serialize($request, $suppliers, null, $meta);
+        return $this->serialize($request, $products, null, $meta);
     }
 
     /**
@@ -134,8 +136,10 @@ class ProductController extends BaseController
         $params = $this->getParams($request);
         $ids = $params['ids'];
 
+        /** @var ProductRepository $repo */
+        $repo = $this->getRepository();
         /** @var Product[] $products */
-        $products = $this->getRepository()->findAll();
+        $products = $repo->findAllSorted();
 
         foreach ($products as $product) {
             $product->setOrderIndex(array_search($product->getId(), $ids));
@@ -249,6 +253,18 @@ class ProductController extends BaseController
 
         if ($request->get('partnerOrderable')) {
             $params->set('partnerOrderable', $request->get('partnerOrderable'));
+        }
+
+        if ($request->get('status')) {
+            $params->set('status', $request->get('status'));
+        }
+
+        if ($request->get('category')) {
+            $params->set('category', $request->get('category'));
+        }
+
+        if ($request->get('name')) {
+            $params->set('name', $request->get('name'));
         }
 
         return $params;

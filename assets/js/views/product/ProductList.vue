@@ -2,16 +2,6 @@
     <section class="content">
         <div class="pull-right">
             <div class="btn-group">
-                <button
-                    type="button"
-                    class="btn btn-default btn-flat"
-                    @click.prevent="saveSort"
-                >
-                    <i class="fa fa-fw fa-save" />
-                    Save Product Order
-                </button>
-            </div>
-            <div class="btn-group">
                 <router-link
                     :to="{ name: 'product-new' }"
                     class="btn btn-success btn-flat pull-right"
@@ -26,66 +16,128 @@
         </h3>
 
         <div class="row">
+            <div class="col-xs-2">
+                <TextField
+                    v-model="filters.name"
+                    label="Name"
+                />
+            </div>
+            <div class="col-xs-2">
+                <OptionListStatic
+                    v-model="filters.category"
+                    label="Category"
+                    :preloaded-options="categories"
+                    empty-string="-- All Category --"
+                />
+            </div>
+
+            <div class="col-xs-2">
+                <OptionListStatic
+                    v-model="filters.status"
+                    label="Status"
+                    :preloaded-options="statuses"
+                    empty-string="-- All Statuses --"
+                />
+                <!-- /.input group -->
+            </div>
+            <div class="col-xs-3">
+                <button
+                    class="btn btn-success btn-flat"
+                    @click="doFilter"
+                >
+                    <i class="fa fa-fw fa-filter" />
+                    Filter
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
             <div class="col-xs-12">
                 <div class="box">
-                    <div class="box-header">
-                        <!--
-                        <div class="box-tools">
-                            <div class="input-group input-group-sm" style="width: 150px;">
-                                <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                                <div class="input-group-btn">
-                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        -->
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body table-responsive no-padding">
-                        <TablePaged
-                            :columns="columns"
-                            api-url="/api/products"
-                            edit-route="/products/"
-                            :sort-order="[{ field: 'orderIndex', direction: 'asc' }]"
-                            :per-page="50"
-                        />
-                    </div>
-                    <!-- /.box-body -->
+                    <TablePaged
+                        ref="hbtable"
+                        :columns="columns"
+                        api-url="/api/products"
+                        edit-route="/products/"
+                        :sort-order="[{ field: 'orderIndex', direction: 'asc'}]"
+                        :params="requestParams()"
+                        :per-page="50"
+                    />
                 </div>
-                <!-- /.box -->
             </div>
         </div>
     </section>
 </template>
 
 <script>
-    import TablePaged from "../../components/TablePaged";
+    import TextField from "../../components/TextField";
+    import OptionListStatic from '../../components/OptionListStatic.vue';
+    import TablePaged from '../../components/TablePaged.vue';
 
     export default {
         components: {
+            TextField,
+            OptionListStatic,
             TablePaged
         },
         props:[],
         data() {
             return {
-                loading: true,
+                filters: {
+                    category: null,
+                    status: "",
+                    name: null
+                },
+                statuses: [
+                    {id: "ACTIVE", name: "Active"},
+                    {id: "INACTIVE", name: "Inactive"},
+                ],
+                categories: [],
                 columns: [
-                    { name: "__slot:link", title: "Product ID", sortField: "id" },
+                    { name: '__slot:link', title: "Product Id", sortField: 'id' },
                     { name: "name", title: "Name", sortField: "name" },
-                    { name: "productCategory.name", title: "Category", sortField: "pc.name" },
+                    { name: "productCategory.name", title: "Category", sortField: "productCategory.name" },
                     { name: "orderIndex", title: "Order", sortField: "orderIndex" },
                     { name: "status", title: "Status", sortField: "status" },
-                    { name: "updatedAt", title: "Last Updated", callback: "dateTimeFormat", sortField: "updatedAt" }
+                    { name: 'updatedAt', title: "Last Updated", callback: 'dateTimeFormat', sortField: 'updatedAt' },
                 ]
             };
         },
         created() {
-            console.log('Component mounted.');
+            axios
+                .get('/api/product-categories')
+                .then(response => {
+                    const {data} = response.data
+                    this.categories = data || []
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         },
         methods: {
             saveSort() {
-                // TO DO:
+                let me = this;
+                let ids = this.products.data.map(product => product.id);
+                axios
+                    .post('/api/products/order', {
+                        ids: ids,
+                    })
+                    .then(response => me.setProducts(response.data.data));
+            },
+            setProducts(products) {
+                this.products.data = products.sort((a, b) => a.orderIndex - b.orderIndex);
+            },
+            doFilter () {
+                console.log('doFilter:', this.requestParams());
+                this.$events.fire('filter-set', this.requestParams());
+            },
+            requestParams: function () {
+                const params = {
+                    status: this.filters.status || null,
+                    category: this.filters.category || null,
+                    name: this.filters.name || null
+                }
+                return params
             },
         }
     }
