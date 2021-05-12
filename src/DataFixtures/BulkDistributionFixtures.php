@@ -69,8 +69,9 @@ class BulkDistributionFixtures extends BaseFixture implements DependentFixtureIn
 
                 $manager->persist($order);
             }
-            $manager->flush();
-            $manager->clear(BulkDistribution::class);
         }
+
+        $manager->flush();
+        $manager->clear(BulkDistribution::class);
     }
 }

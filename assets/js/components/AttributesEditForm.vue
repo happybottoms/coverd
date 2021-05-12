@@ -43,6 +43,14 @@
                     :help-text="attribute.helpText"
                     :preloaded-options="attribute.options"
                 />
+                <CheckboxGroupField
+                    v-else-if="attribute.displayInterface === 'CHECKBOX_GROUP'"
+                    v-model="attribute.value"
+                    :name="attribute.name"
+                    :label="attribute.label"
+                    :help-text="attribute.helpText"
+                    :preloaded-options="attribute.options"
+                />
                 <TextareaField
                     v-else-if="attribute.displayInterface === 'TEXTAREA'"
                     v-model="attribute.value"
@@ -80,6 +88,7 @@
     import OptionListApi from "./OptionListApi";
     import TextareaField from "./TextareaField";
     import RadioField from "./RadioField";
+    import CheckboxGroupField from "./CheckboxGroupField";
     import BooleanField from "./ToggleField";
     import YesNoRadioField from "./YesNoRadioField";
     import AddressField from "./AddressField";
@@ -87,6 +96,7 @@
     export default {
         name: 'AttributesEditForm',
         components: {
+            CheckboxGroupField,
             ZipCountyField,
             AddressField,
             YesNoRadioField,

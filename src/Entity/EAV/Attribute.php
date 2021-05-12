@@ -2,32 +2,23 @@
 
 namespace App\Entity\EAV;
 
+use App\Entity\EAV\Type\AddressAttributeValue;
+use App\Entity\EAV\Type\BooleanAttributeValue;
+use App\Entity\EAV\Type\DatetimeAttributeValue;
+use App\Entity\EAV\Type\FloatAttributeValue;
+use App\Entity\EAV\Type\IntegerAttributeValue;
+use App\Entity\EAV\Type\OptionListAttributeValue;
+use App\Entity\EAV\Type\StringAttributeValue;
+use App\Entity\EAV\Type\TextAttributeValue;
+use App\Entity\EAV\Type\ZipCountyAttributeValue;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\InheritanceType(value="SINGLE_TABLE")
- * @ORM\EntityListeners({"App\Listener\AttributeListener"})
- *
- * Based on: https://github.com/Padam87/AttributeBundle
  */
-abstract class Attribute
+class Attribute
 {
-    public const UI_TEXT = "TEXT";
-    public const UI_NUMBER = "NUMBER";
-    public const UI_TEXTAREA = "TEXTAREA";
-    public const UI_DATETIME = "DATETIME";
-    public const UI_SELECT_SINGLE = "SELECT_SINGLE";
-    public const UI_SELECT_MULTI = "SELECT_MULTI";
-    public const UI_FILE_UPLOAD = "FILE_UPLOAD";
-    public const UI_RADIO = "RADIO";
-    public const UI_CHECKBOX_GROUP = "CHECKBOX_GROUP";
-    public const UI_TOGGLE = "TOGGLE";
-    public const UI_YES_NO_RADIO = "YES_NO_RADIO";
-    public const UI_ADDRESS = "ADDRESS";
-    public const UI_URL = "URL";
-    public const UI_ZIPCODE = "ZIPCODE";
-
     /**
      * @var int
      *
@@ -38,95 +29,219 @@ abstract class Attribute
     private $id;
 
     /**
-     * @var Definition
+     * @var AttributeDefinition
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\EAV\Definition", inversedBy="attributes")
-     * @ORM\JoinColumn(name="definition_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="AttributeDefinition")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $definition;
 
     /**
-     * @return string
+     * @var AttributeValue[]|ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *     targetEntity="AttributeValue",
+     *     mappedBy="attribute",
+     *     orphanRemoval=true,
+     *     cascade={"persist", "remove"}
+     * )
      */
-    public function __toString()
+    private $values;
+
+    public function __construct(AttributeDefinition $definition)
+    {
+        $this->definition = $definition;
+        $this->values = new ArrayCollection();
+    }
+
+    public function __toString(): string
     {
         return $this->getDefinition()->getLabel();
     }
 
-    /**
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Returns a human readable name for this attribute type.
-     */
-    abstract public function getTypeLabel(): string;
-
-    abstract public function setValue($value): Attribute;
-
-    abstract public function getValue();
-
-    public function getValueType(): string
-    {
-        return 'string';
-    }
-
-    abstract public function getDisplayInterfaces(): array;
-
-    /**
-     * By default this will just get the first interface in the list. Override as necessary.
-     */
-    public function getDefaultDisplayInterface(): string
-    {
-        $interfaces = $this->getDisplayInterfaces();
-        return reset($interfaces);
-    }
-
-    /**
-     * Whether this type supports list options (dropdown, radio, checkboxes, etc)
-     */
-    public function hasOptions(): bool
-    {
-        return false;
-    }
-
-    public function isEmpty(): bool
-    {
-        return $this->getValue() === '' || is_null($this->getValue());
-    }
-
-    /**
-     * Returns a value suitable for json responses.
-     * @return mixed
-     */
-    public function getJsonValue()
-    {
-        return $this->getValue() ?: '';
-    }
-
-    /**
-     * @param Definition $definition
-     *
-     * @return Attribute
-     */
-    public function setDefinition(Definition $definition = null)
-    {
-        $this->definition = $definition;
-
-        return $this;
-    }
-
-    /**
-     * @return Definition
-     */
-    public function getDefinition()
+    public function getDefinition(): AttributeDefinition
     {
         return $this->definition;
     }
 
-    abstract public function fixtureData();
+    /**
+     * @return AttributeValue[]|ArrayCollection
+     */
+    public function getValues()
+    {
+        return $this->values->map(function (AttributeValue $value) {
+            return $value->getValue();
+        });
+    }
+
+    public function getJsonValues(): array
+    {
+        $values = $this->values->map(function (AttributeValue $value) {
+            return $value->getJsonValue();
+        });
+
+        return $values->getValues();
+    }
+
+    public function isEmpty(): bool
+    {
+        return $this->values->isEmpty();
+    }
+
+    public function hasRelationshipValue(): bool
+    {
+        return $this->createAttributeValue()::hasRelationship();
+    }
+
+    /**
+     * @param mixed $value
+     */
+    public function setValue($value): void
+    {
+        $values = new ArrayCollection([$value]);
+        $this->setValues($values);
+    }
+
+    public function setValues(iterable $values): void
+    {
+        // If it's an array, convert to ArrayCollection
+        if (is_array($values)) {
+            $values = new ArrayCollection($values);
+        }
+
+        $delta = 0;
+        $newAttributeValues = new ArrayCollection();
+        foreach ($values as $value) {
+            if ($value instanceof AttributeValue) {
+                $attributeValue = $value;
+            } elseif (is_array($value) && isset($value['id'])) {
+                $attributeValue = $this->getValueById($value['id']);
+                $attributeValue->setValue($value);
+            } else {
+                $attributeValue = self::createNewValueFromDefinition($this->definition);
+                $attributeValue->setAttribute($this);
+                $attributeValue->setValue($value);
+            }
+
+            $attributeValue->setDelta($delta);
+            $newAttributeValues->add($attributeValue);
+
+            $delta++;
+        }
+
+        $this->values = $newAttributeValues;
+    }
+
+    private function getValueById(int $id): AttributeValue
+    {
+        if (!$this->hasRelationshipValue()) {
+            throw new \Exception("Trying to find a value by ID on a non-relationship attribute");
+        }
+
+        print_r("Trying to find this value id: " . $id . "\n");
+
+        $result = $this->values->filter(function ($value) use ($id) {
+            print_r("Found: " . $value->getValue()->getId() . "\n");
+            return $value->getValue()->getId() === $id;
+        });
+
+        return $result->first();
+    }
+
+    private static function createNewValueFromDefinition(AttributeDefinition $definition): AttributeValue
+    {
+        return self::createNewValueFromType($definition->getType());
+    }
+
+    private static function createNewValueFromType(string $type): AttributeValue
+    {
+        $value = new StringAttributeValue();
+
+        switch ($type) {
+            case AttributeDefinition::TYPE_STRING:
+                $value = new StringAttributeValue();
+                break;
+            case AttributeDefinition::TYPE_TEXT:
+                $value = new TextAttributeValue();
+                break;
+            case AttributeDefinition::TYPE_INTEGER:
+                $value = new IntegerAttributeValue();
+                break;
+            case AttributeDefinition::TYPE_FLOAT:
+                $value = new FloatAttributeValue();
+                break;
+            case AttributeDefinition::TYPE_DATETIME:
+                $value = new DatetimeAttributeValue();
+                break;
+            case AttributeDefinition::TYPE_OPTION_LIST:
+                $value = new OptionListAttributeValue();
+                break;
+            case AttributeDefinition::TYPE_BOOLEAN:
+                $value = new BooleanAttributeValue();
+                break;
+            case AttributeDefinition::TYPE_ADDRESS:
+                $value = new AddressAttributeValue();
+                break;
+            case AttributeDefinition::TYPE_ZIPCODE:
+                $value = new ZipCountyAttributeValue();
+                break;
+        }
+
+        return $value;
+    }
+
+    public static function getTypeMetaData(string $type): array
+    {
+        $value = self::createNewValueFromType($type);
+        return [
+            'id' => $type,
+            'label' => $value->getTypeLabel(),
+            'hasOptions' => $value->hasOptions(),
+            'displayInterfaces' => $value->getDisplayInterfaces(),
+        ];
+    }
+
+    private function createAttributeValue(): AttributeValue
+    {
+        $value = self::createNewValueFromDefinition($this->definition);
+        $value->setAttribute($this);
+        return $value;
+    }
+
+    public static function getDefaultDisplayInterface(AttributeDefinition $definition): string
+    {
+        $value = self::createNewValueFromDefinition($definition);
+        return $value->getDefaultDisplayInterface();
+    }
+
+    public function populateFixture(): void
+    {
+        $fixtureValue = $this->createAttributeValue()->fixtureData();
+        if (is_iterable($fixtureValue)) {
+            $this->setValues($fixtureValue);
+        } else {
+            $this->setValue($fixtureValue);
+        }
+    }
+
+    public function isMultivalued(): bool
+    {
+        return $this->getDefinition()->isMultivalued();
+    }
+
+    public function hasOptions(): bool
+    {
+        $value = self::createNewValueFromDefinition($this->getDefinition());
+        return $value->hasOptions();
+    }
+
+    public function getValueType(): string
+    {
+        return self::createNewValueFromDefinition($this->definition)->getValueType();
+    }
 }

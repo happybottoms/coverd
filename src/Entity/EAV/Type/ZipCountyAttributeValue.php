@@ -2,7 +2,7 @@
 
 namespace App\Entity\EAV\Type;
 
-use App\Entity\EAV\Attribute;
+use App\Entity\EAV\AttributeValue;
 use App\Entity\EAV\EavAddress;
 use App\Entity\ZipCounty;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,11 +13,11 @@ use http\Exception\UnexpectedValueException;
  *
  * @ORM\Entity()
  */
-class ZipCountyAttribute extends Attribute
+class ZipCountyAttributeValue extends AttributeValue
 {
 
     /**
-     * @var ZipCounty
+     * @var ZipCounty|null
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\ZipCounty")
      * @ORM\JoinColumn(name="zip_county_id")
@@ -30,14 +30,16 @@ class ZipCountyAttribute extends Attribute
     }
 
     /**
-     * @param ZipCounty $value
+     * @param ZipCounty|null $value
      *
-     * @return Attribute
+     * @return AttributeValue
      */
-    public function setValue($value): Attribute
+    public function setValue($value): AttributeValue
     {
-        if (!$value instanceof ZipCounty && !is_null($value)) {
-            throw new \TypeError("Value is not an Zip/County. Got %s", get_class($value));
+        if (empty($value)) {
+            $this->value = null;
+        } elseif (!($value instanceof ZipCounty)) {
+            throw new \TypeError(sprintf("Value is not an Zip/County. Got %s", get_class($value)));
         }
 
         $this->value = $value;
@@ -46,7 +48,7 @@ class ZipCountyAttribute extends Attribute
     }
 
     /**
-     * @return ZipCounty
+     * @return ZipCounty|null
      */
     public function getValue()
     {
@@ -60,7 +62,7 @@ class ZipCountyAttribute extends Attribute
 
     public function isEmpty(): bool
     {
-        return !$this->getValue();
+        return is_null($this->getValue());
     }
 
     public function fixtureData()
@@ -80,5 +82,15 @@ class ZipCountyAttribute extends Attribute
         return [
             self::UI_ZIPCODE,
         ];
+    }
+
+    public function getJsonValue()
+    {
+        return !is_null($this->getValue()) ? $this->getValue()->getId() : null;
+    }
+
+    public static function hasRelationship(): bool
+    {
+        return true;
     }
 }

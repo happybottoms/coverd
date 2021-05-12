@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\EAV\ClientDefinition;
+use App\Entity\EAV\ClientAttributeDefinition;
 use App\Transformers\ClientAttributeDefinitionTransformer;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -14,11 +14,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ClientAttributeDefinitionController extends BaseAttributeDefinitionController
 {
-    protected $defaultEntityName = ClientDefinition::class;
+    protected $defaultEntityName = ClientAttributeDefinition::class;
 
     protected function getNewDefinition()
     {
-        return new ClientDefinition();
+        return new ClientAttributeDefinition();
     }
 
     protected function getDefaultTransformer(): ClientAttributeDefinitionTransformer

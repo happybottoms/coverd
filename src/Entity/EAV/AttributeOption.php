@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="attribute_option")
  */
-class Option extends CoreEntity
+class AttributeOption extends CoreEntity
 {
     /**
      * @var int
@@ -37,10 +37,10 @@ class Option extends CoreEntity
     protected $value;
 
     /**
-     * @var Definition
+     * @var AttributeDefinition
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\EAV\Definition", inversedBy="options")
-     * @ORM\JoinColumn(name="definition_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="AttributeDefinition", inversedBy="options")
+     * @ORM\JoinColumn(name="definition_id", referencedColumnName="id", nullable=false)
      */
     protected $definition;
 
@@ -93,11 +93,11 @@ class Option extends CoreEntity
     }
 
     /**
-     * @param Definition $definition
+     * @param AttributeDefinition $definition
      *
      * @return $this
      */
-    public function setDefinition(Definition $definition = null)
+    public function setDefinition(AttributeDefinition $definition): AttributeOption
     {
         $this->definition = $definition;
 
@@ -105,7 +105,7 @@ class Option extends CoreEntity
     }
 
     /**
-     * @return Definition
+     * @return AttributeDefinition
      */
     public function getDefinition()
     {

@@ -345,7 +345,6 @@ export default {
         if (this.userActivePartner) {
             this.order.partner.id = this.userActivePartner.id;
         }
-        console.log("Component mounted.");
     },
     methods: {
         saveVerify: function() {

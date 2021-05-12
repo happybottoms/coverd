@@ -2,7 +2,7 @@
 
 namespace App\Entity\EAV\Type;
 
-use App\Entity\EAV\Attribute;
+use App\Entity\EAV\AttributeValue;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,11 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity()
  */
-class StringAttribute extends Attribute
+class StringAttributeValue extends AttributeValue
 {
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="string_value", type="string", length=255, nullable=true)
      */
@@ -26,19 +26,23 @@ class StringAttribute extends Attribute
     }
 
     /**
-     * @param string $value
+     * @param string|null $value
      *
-     * @return Attribute
+     * @return AttributeValue
      */
-    public function setValue($value): Attribute
+    public function setValue($value): AttributeValue
     {
+        if ($value === "") {
+            $value = null;
+        }
+
         $this->value = $value;
 
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getValue()
     {

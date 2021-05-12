@@ -199,7 +199,6 @@ export default {
             this.$refs.vuetable.changePage(page);
         },
         doFilter() {
-            console.log("doFilter:", this.requestParams());
             this.$events.fire("filter-set", this.requestParams());
         },
         onSelectionChange(selection) {

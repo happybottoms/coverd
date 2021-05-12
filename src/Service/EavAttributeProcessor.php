@@ -3,12 +3,11 @@
 namespace App\Service;
 
 use App\Entity\AttributedEntityInterface;
+use App\Entity\CoreEntity;
 use App\Entity\EAV\Attribute;
-use App\Entity\EAV\Definition;
-use Doctrine\Common\Annotations\AnnotationReader;
+use App\Entity\EAV\AttributeDefinition;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\ManyToOne;
 
 class EavAttributeProcessor
 {
@@ -28,78 +27,82 @@ class EavAttributeProcessor
             throw new \Exception('Trying to process attribute changes on an entity that does not support attributes');
         }
 
-        if (isset($changes['attributes'])) {
-            foreach ($changes['attributes'] as $attributeChange) {
-                if ($attributeChange['id'] > 0) {
-                    $attribute = $this->getAttributeById($attributeChange['id']);
-                    if (!$attribute) {
+        if (!isset($changes['attributes'])) {
+            unset($changes['attributes']);
+            return;
+        }
+
+        // Loop through the submitted attributes
+        foreach ($changes['attributes'] as $attributeChange) {
+            if (isset($attributeChange['id']) && $attributeChange['id'] > 0) {
+                $attribute = $this->getAttributeById($attributeChange['id']);
+                $definition = $attribute->getDefinition();
+            } else {
+                $definition = $this->getDefinitionById($attributeChange['definition_id']);
+                $attribute = new Attribute($definition);
+                $entity->addAttribute($attribute);
+            }
+
+            // If this is a not a multivalued attribute, wrap it in an array for processing
+            $rawValues = ($definition->isMultivalued()) ? $attributeChange['value'] : [$attributeChange['value']];
+
+            $values = new ArrayCollection();
+
+            // Loop through the values of the changed attribute and update the entities
+            foreach ($rawValues as $rawValue) {
+                if ($attribute->hasRelationshipValue() && $attribute->hasOptions()) {
+                    $relationId = null;
+
+                    if (is_numeric($rawValue)) {
+                        $relationId = $rawValue;
+                    } elseif (isset($rawValue['id'])) {
+                        $relationId = $rawValue['id'];
+                    } else {
                         continue;
                     }
-                } else {
-                    $definition = $this->getDefinitionById($attributeChange['definition_id']);
-                    $attribute = $definition->createAttribute();
-                    $entity->addAttribute($attribute);
-                }
 
-                if ($this->isPropertyParentRelationship($attribute, 'value')) {
-                    if (is_array($attributeChange['value']) && key_exists('id', $attributeChange['value'])) {
-                        $valueRef = $this->em->getReference(
-                            $attribute->getValueType(),
-                            $attributeChange['value']['id']
-                        );
-                    } else {
-                        $valueRef = $this->em->getReference($attribute->getValueType(), $attributeChange['value']);
+                    /** @var CoreEntity|null $relatedEntity */
+                    $relatedEntity = $this->em->getReference(
+                        $attribute->getValueType(),
+                        $relationId
+                    );
+
+                    if (!$relatedEntity) {
+                        continue;
                     }
-                    $attribute->setValue($valueRef);
-                } else {
-                    $attribute->setValue($attributeChange['value']);
-                }
 
-                if ($attribute->isEmpty()) {
-                    $entity->removeAttribute($attribute);
+                    $values->add($relatedEntity);
+                } else {
+                    $values->add($rawValue);
                 }
+            }
+
+            $attribute->setValues($values);
+
+            // After processing the changed values, if the attribute is empty, remove it from the entity
+            if ($attribute->isEmpty()) {
+                $entity->removeAttribute($attribute);
             }
         }
 
         unset($changes['attributes']);
     }
 
-    private function getAttributeById(int $id): ?Attribute
+    private function getAttributeById(int $id): Attribute
     {
-        return $this->em->getRepository(Attribute::class)->find($id);
+        $attribute = $this->em->getRepository(Attribute::class)->find($id);
+        if (!$attribute) {
+            throw new \Exception(sprintf("Unknown attribute id: %d", $id));
+        }
+        return $attribute;
     }
 
-    private function getDefinitionById(int $id): ?Definition
+    private function getDefinitionById(int $id): AttributeDefinition
     {
-        return $this->em->getRepository(Definition::class)->find($id);
-    }
-
-
-    private function getPropertyAnnotations(Attribute $attribute, string $property)
-    {
-        $reader = new AnnotationReader();
-        $reflClass = new \ReflectionClass(get_class($attribute));
-
-        if (!$reflClass->hasProperty($property)) {
-            return false;
+        $definition = $this->em->getRepository(AttributeDefinition::class)->find($id);
+        if (!$definition) {
+            throw new \Exception(sprintf("Unknown defintion id: %d", $id));
         }
-
-        return $reader->getPropertyAnnotations($reflClass->getProperty($property));
-    }
-
-    private function isPropertyParentRelationship(Attribute $attribute, string $property)
-    {
-        $annotations = $this->getPropertyAnnotations($attribute, $property);
-        if (!$annotations) {
-            return false;
-        }
-
-        foreach ($annotations as $annotation) {
-            if ($annotation instanceof ManyToMany || $annotation instanceof ManyToOne) {
-                return true;
-            }
-        }
-
-        return false;
+        return $definition;
     }
 }

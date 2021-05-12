@@ -2,12 +2,12 @@
 
 namespace App\Transformers;
 
-use App\Entity\EAV\Option;
+use App\Entity\EAV\AttributeOption;
 use League\Fractal\TransformerAbstract;
 
 class AttributeDefinitionOptionTransformer extends TransformerAbstract
 {
-    public function transform(Option $option)
+    public function transform(AttributeOption $option)
     {
         return [
             'id' => (int) $option->getId(),
