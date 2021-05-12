@@ -16,7 +16,7 @@ class ProductRepository extends EntityRepository
         ?string $sortField = null,
         ?string $sortDirection = 'ASC',
         ?ParameterBag $params = null
-    ): ArrayCollection {
+    ): array {
         $qb = $this->createQueryBuilder('p');
 
         $this->joinRelatedTables($qb);
@@ -35,7 +35,9 @@ class ProductRepository extends EntityRepository
             $qb->orderBy('p.orderIndex', 'ASC');
         }
 
-        $this->addCriteria($qb, $params);
+        if ($params) {
+            $this->addCriteria($qb, $params);
+        }
 
         return $qb->getQuery()->execute();
     }
@@ -44,6 +46,7 @@ class ProductRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('p')
             ->select('count(p)');
+        $this->joinRelatedTables($qb);
 
         $this->addCriteria($qb, $params);
 
@@ -115,21 +118,31 @@ class ProductRepository extends EntityRepository
         return $qb->getQuery()->execute();
     }
 
-
-    protected function addCriteria(QueryBuilder $qb, ?ParameterBag $params): void
+    protected function joinRelatedTables(QueryBuilder $qb): void
     {
-        if (!$params) {
-            return;
-        }
+        $qb->join('p.productCategory', 'pc');
+    }
 
+    protected function addCriteria(QueryBuilder $qb, ParameterBag $params): void
+    {
         if ($params->has('partnerOrderable') && $params->get('partnerOrderable')) {
             $qb->andWhere('pc.isPartnerOrderable = :isPartnerOrderable')
                 ->setParameter('isPartnerOrderable', (bool) $params->get('partnerOrderable', true));
         }
-    }
 
-    protected function joinRelatedTables(QueryBuilder $qb): void
-    {
-        $qb->join('p.productCategory', 'pc');
+        if ($params->has('status') && $params->get('status')) {
+            $qb->andWhere('p.status = :status')
+                ->setParameter('status', $params->get('status'));
+        }
+
+        if ($params->has('category') && $params->get('category')) {
+            $qb->andWhere('pc.id = :categoryId')
+                ->setParameter('categoryId', $params->get('category'));
+        }
+
+        if ($params->has('name') && $params->get('name')) {
+            $qb->andWhere('p.name LIKE :name')
+                ->setParameter('name', '%' . $params->get('name') . '%');
+        }
     }
 }
