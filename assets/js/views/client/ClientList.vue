@@ -1,6 +1,5 @@
 <template>
     <section class="content">
-        {{ isDisabledCreate }}
         <router-link
             :disabled="isDisabledCreate"
             :event="isDisabledCreate ? '' : 'click'"
@@ -86,7 +85,7 @@
                         <TablePaged
                             ref="hbtable"
                             :columns="columns"
-                            api-url="/api/clients"
+                            api-url="/api/clients/"
                             edit-route="/clients/"
                             :sort-order="[{ field: 'id', direction: 'desc' }]"
                             :params="requestParams()"
@@ -160,10 +159,6 @@ export default {
             if (!this.userActivePartner) return true
             return this.userActivePartner.status !== 'ACTIVE' && this.userActivePartner.status !== 'NEEDS_PROFILE_REVIEW'
         }
-    },
-    created() {
-        axios.get("/api/clients").then(response => (this.clients = response.data));
-        console.log("Component mounted.");
     },
     mounted() {
         this.$events.$on("selection-change", eventData => this.onSelectionChange(eventData));

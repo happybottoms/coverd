@@ -79,8 +79,7 @@ class PartnerOrderController extends BaseOrderController
 
         $order->applyChangesFromArray($params);
 
-        // TODO: get permissions working (#1)
-        // $this->checkEditPermissions($order);
+        $this->denyAccessUnlessGranted(PartnerOrderVoter::EDIT, $order);
 
         // Check if the partner has already submitted an order for the specified month.
         $existingOrder = $this->getRepository()->findOneBy([
@@ -121,8 +120,7 @@ class PartnerOrderController extends BaseOrderController
         /** @var PartnerOrder $order */
         $order = $this->getOrder($id);
 
-        // TODO: get permissions working (#1)
-        // $this->checkEditPermissions($order);
+        $this->denyAccessUnlessGranted(PartnerOrderVoter::EDIT, $order);
 
         $this->checkEditable($order);
 

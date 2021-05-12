@@ -41,8 +41,6 @@ class ClientController extends BaseController
      */
     public function index(Request $request): JsonResponse
     {
-        //        $this->checkViewPermissions($clients);
-
         $sort = $request->get('sort') ? explode('|', $request->get('sort')) : null;
         $page = (int) $request->get('page', 1);
         $limit = (int) $request->get('per_page', 10);
@@ -52,7 +50,7 @@ class ClientController extends BaseController
         $total = (int) $this->getRepository()->findAllCount($params);
 
         if ($limit === -1) {
-            $limit = $total;
+            $limit = $total ?: 1;
         }
 
         $clients = $this->getRepository()->findAllPaged(
@@ -187,6 +185,7 @@ class ClientController extends BaseController
      * @Route(path="", methods={"POST"})
      * @IsGranted({"ROLE_CLIENT_EDIT_ALL","ROLE_CLIENT_MANAGE_OWN"})
      *
+     * @throws \Exception
      */
     public function store(
         Request $request,
@@ -203,16 +202,6 @@ class ClientController extends BaseController
                 throw new \Exception('Invalid Partner ID provided');
             }
 
-            // if the current user is partner and partner status is not STATUS_ACTIVE or STATUS_NEEDS_PROFILE_REVIEW
-            // it should not work.
-            $user = $this->getUser();
-            $activePartner = $user->getActivePartner();
-            if (
-                !$user->isAdmin() && $user->isPartner() &&
-                (is_null($activePartner) || !$activePartner->canCreateClient())
-            ) {
-                throw new \Exception('The active partner can\'t create new client.');
-            }
             $client->setPartner($newPartner);
         }
 
@@ -220,7 +209,7 @@ class ClientController extends BaseController
 
         $client->applyChangesFromArray($params);
 
-        //        $this->checkEditPermissions($client);
+        $this->denyAccessUnlessGranted(ClientVoter::EDIT, $client);
 
         $this->getEm()->persist($client);
         $this->getEm()->flush();
