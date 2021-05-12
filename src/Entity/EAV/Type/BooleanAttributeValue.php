@@ -2,7 +2,7 @@
 
 namespace App\Entity\EAV\Type;
 
-use App\Entity\EAV\Attribute;
+use App\Entity\EAV\AttributeValue;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,12 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity()
  */
-class BooleanAttribute extends Attribute
+class BooleanAttributeValue extends AttributeValue
 {
     /**
      * @var boolean
      *
-     * @ORM\Column(name="boolean_value", type="boolean", nullable=true)
+     * @ORM\Column(name="boolean_value", type="boolean")
      */
     protected $value;
 
@@ -27,9 +27,9 @@ class BooleanAttribute extends Attribute
     /**
      * @param boolean $value
      *
-     * @return Attribute
+     * @return AttributeValue
      */
-    public function setValue($value): Attribute
+    public function setValue($value): AttributeValue
     {
         $this->value = $value;
 

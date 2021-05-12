@@ -116,8 +116,7 @@ abstract class BaseOrderController extends BaseController
         /** @var Order $order */
         $order = $this->getOrder($id);
 
-        // TODO: get permissions working (#1)
-        // $this->checkEditPermissions($order);
+        $this->denyAccessUnlessGranted($this->getEditVoter(), $order);
 
         $this->processLineItems($order, $params['lineItems']);
 

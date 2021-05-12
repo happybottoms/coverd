@@ -184,12 +184,13 @@ class SupplierController extends BaseController
      */
     public function merge(Request $request)
     {
+        $params = $this->getParams($request);
 
         /** @var Supplier $target */
-        $target = $this->getRepository()->find($request->get('targetSupplier'));
+        $target = $this->getRepository()->find($params['targetSupplier']);
         /** @var Supplier[] $sources */
-        $sources = $this->getRepository()->findBy(['id' => $request->get('sourceSuppliers')]);
-        $context = $request->get('context');
+        $sources = $this->getRepository()->findBy(['id' => $params['sourceSuppliers']]);
+        $context = $params['context'];
 
         foreach ($sources as $source) {
             if (in_array('orders', $context)) {

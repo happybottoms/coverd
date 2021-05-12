@@ -52,8 +52,7 @@ class PartnerDistributionController extends BaseOrderController
 
         $order->applyChangesFromArray($params);
 
-        // TODO: get permissions working (#1)
-        // $this->checkEditPermissions($order);
+        $this->denyAccessUnlessGranted(BulkDistributionVoter::EDIT, $order);
 
         // Check if the partner has already submitted an order for the specified month.
         $existingOrder = $this->getRepository()->findOneBy([
@@ -93,8 +92,7 @@ class PartnerDistributionController extends BaseOrderController
         /** @var BulkDistribution $order */
         $order = $this->getOrder($id);
 
-        // TODO: get permissions working (#1)
-        // $this->checkEditPermissions($order);
+        $this->denyAccessUnlessGranted(BulkDistributionVoter::EDIT, $order);
 
         if (!$request->get('reason')) {
             $this->checkEditable($order);

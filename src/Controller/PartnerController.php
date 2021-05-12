@@ -6,12 +6,14 @@ use App\Entity\Partner;
 use App\Entity\PartnerDistributionMethod;
 use App\Entity\PartnerFulfillmentPeriod;
 use App\Entity\PartnerProfile;
+use App\Repository\PartnerRepository;
 use App\Security\PartnerVoter;
 use App\Service\EavAttributeProcessor;
 use App\Transformers\ClientTransformer;
 use App\Transformers\PartnerTransformer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,13 +37,42 @@ class PartnerController extends BaseController
      */
     public function index(Request $request)
     {
+        $sort = $request->get('sort') ? explode('|', $request->get('sort')) : null;
+        $page = $request->get('page', 1);
+        $limit = $request->get('per_page', 10);
+        $params = $this->buildFilterParams($request);
+        $meta = [];
+
         if ($this->getUser()->hasRole(Partner::ROLE_VIEW_ALL)) {
-            $partners = $this->getRepository(Partner::class)->findAll();
+            /** @var PartnerRepository $repo */
+            $repo = $this->getRepository(Partner::class);
+            $total = $repo->findAllCount($params);
+            $partners = $repo->findAllPaged(
+                $page,
+                $limit,
+                $sort ? $sort[0] : null,
+                $sort ? $sort[1] : null,
+                $params
+            );
+
+            $meta = [
+                'pagination' => [
+                    'total' => (int) $total,
+                    'per_page' => (int) $limit,
+                    'current_page' => (int) $page,
+                    'last_page' => ceil($total / $limit),
+                    'next_page_url' => null,
+                    'prev_page_url' => null,
+                    'from' => (($page - 1) * $limit) + 1,
+                    'to' => ($page * $limit),
+                ]
+            ];
         } else {
             $partners = [$this->getUser()->getActivePartner()];
         }
 
-        return $this->serialize($request, $partners);
+
+        return $this->serialize($request, $partners, null, $meta);
     }
 
     /**
@@ -220,5 +251,24 @@ class PartnerController extends BaseController
         }
 
         return $partner;
+    }
+
+    /**
+     * @param Request $request
+     * @return ParameterBag
+     */
+    protected function buildFilterParams(Request $request)
+    {
+        $params = new ParameterBag();
+
+        if ($request->get('status')) {
+            $params->set('status', $request->get('status'));
+        }
+
+        if ($request->get('id')) {
+            $params->set('id', $request->get('id'));
+        }
+
+        return $params;
     }
 }

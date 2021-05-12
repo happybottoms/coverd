@@ -1,6 +1,8 @@
 <template>
     <section class="content">
         <router-link
+            :disabled="isDisabledCreate"
+            :event="isDisabledCreate ? '' : 'click'"
             :to="{ name: 'order-partner-new' }"
             class="btn btn-success btn-flat pull-right"
         >
@@ -169,7 +171,14 @@ export default {
             bulkChange: {}
         };
     },
-    computed: mapGetters(["allPartners"]),
+    computed: {
+        ...mapGetters(["allPartners", "userActivePartner", "isAdmin", "isPartner"]),
+        isDisabledCreate: function() {
+            if (this.isAdmin || !this.isPartner) return false
+            if (!this.userActivePartner) return true
+            return this.userActivePartner.status !== 'ACTIVE' && this.userActivePartner.status !== 'NEEDS_PROFILE_REVIEW'
+        }
+    },
     mounted() {
         this.$events.$on("selection-change", eventData => this.onSelectionChange(eventData));
     },
@@ -190,7 +199,6 @@ export default {
             this.$refs.vuetable.changePage(page);
         },
         doFilter() {
-            console.log("doFilter:", this.requestParams());
             this.$events.fire("filter-set", this.requestParams());
         },
         onSelectionChange(selection) {

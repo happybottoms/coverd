@@ -2,42 +2,47 @@
 
 namespace App\Entity\EAV\Type;
 
-use App\Entity\EAV\Attribute;
+use App\Entity\EAV\AttributeValue;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class FloatAttribute
+ * Class TextAttribute
  *
  * @ORM\Entity()
  */
-class FloatAttribute extends Attribute
+class TextAttributeValue extends AttributeValue
 {
-   /**
-     * @var float
+
+    /**
+     * @var string|null
      *
-     * @ORM\Column(name="float_value", type="float", nullable=true)
+     * @ORM\Column(name="text_value", type="text", nullable=true)
      */
     protected $value;
 
     public function getTypeLabel(): string
     {
-        return "Decimal";
+        return "Long Text";
     }
 
     /**
-     * @param float $value
+     * @param string|null $value
      *
-     * @return Attribute
+     * @return AttributeValue
      */
-    public function setValue($value): Attribute
+    public function setValue($value): AttributeValue
     {
+        if ($value === "") {
+            $value = null;
+        }
+
         $this->value = $value;
 
         return $this;
     }
 
     /**
-     * @return float
+     * @return string|null
      */
     public function getValue()
     {
@@ -46,13 +51,13 @@ class FloatAttribute extends Attribute
 
     public function fixtureData()
     {
-        return rand() / mt_getrandmax() * 10;
+        return "This is a test";
     }
 
     public function getDisplayInterfaces(): array
     {
         return [
-            self::UI_NUMBER,
+            self::UI_TEXTAREA,
         ];
     }
 }
