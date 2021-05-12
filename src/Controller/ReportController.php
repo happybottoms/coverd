@@ -3,16 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\InventoryTransaction;
-use App\Entity\InventoryTransactionRepository;
+use App\Repository\InventoryTransactionRepository;
 use App\Entity\Orders\BulkDistribution;
-use App\Entity\Orders\BulkDistributionOrderRepository;
+use App\Repository\Orders\BulkDistributionOrderRepository;
 use App\Entity\Orders\PartnerOrder;
-use App\Entity\Orders\PartnerOrderRepository;
+use App\Repository\Orders\PartnerOrderRepository;
 use App\Entity\Orders\SupplyOrder;
-use App\Entity\Orders\SupplyOrderRepository;
+use App\Repository\Orders\SupplyOrderRepository;
 use App\Entity\Partner;
 use App\Entity\Product;
-use App\Entity\ProductRepository;
+use App\Repository\ProductRepository;
 use App\Entity\StorageLocation;
 use App\Entity\Supplier;
 use App\Reports\DistributionTotalsExcel;

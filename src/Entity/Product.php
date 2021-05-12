@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class Product
  *
- * @ORM\Entity(repositoryClass="App\Entity\ProductRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  * @Gedmo\Loggable()
  */
