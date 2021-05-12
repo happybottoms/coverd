@@ -224,6 +224,11 @@ class Partner extends StorageLocation
         return in_array($this->status, [self::STATUS_ACTIVE, self::STATUS_NEEDS_PROFILE_REVIEW]);
     }
 
+    public function canCreateClient(): bool
+    {
+        return in_array($this->status, [self::STATUS_ACTIVE, self::STATUS_NEEDS_PROFILE_REVIEW]);
+    }
+
     /**
      * @return PartnerContact[]|ArrayCollection
      */

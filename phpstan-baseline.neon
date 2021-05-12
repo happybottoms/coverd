@@ -2591,26 +2591,6 @@ parameters:
 			path: src/Security/AdjustmentOrderVoter.php
 
 		-
-			message: "#^Method App\\\\Security\\\\BulkDistributionVoter\\:\\:canView\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Security/BulkDistributionVoter.php
-
-		-
-			message: "#^Method App\\\\Security\\\\BulkDistributionVoter\\:\\:canEdit\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Security/BulkDistributionVoter.php
-
-		-
-			message: "#^Method App\\\\Security\\\\PartnerOrderVoter\\:\\:canView\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Security/PartnerOrderVoter.php
-
-		-
-			message: "#^Method App\\\\Security\\\\PartnerOrderVoter\\:\\:canEdit\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Security/PartnerOrderVoter.php
-
-		-
 			message: "#^Method App\\\\Security\\\\SupplierVoter\\:\\:canView\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Security/SupplierVoter.php

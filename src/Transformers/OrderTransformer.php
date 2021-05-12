@@ -23,6 +23,7 @@ class OrderTransformer extends TransformerAbstract
             'updatedAt' => $order->getUpdatedAt()->format('c'),
             'isEditable' => $order->isEditable(),
             'isDeletable' => $order->isDeletable(),
+            'isComplete' => $order->isComplete(),
         ];
     }
 

@@ -2,7 +2,8 @@ import axios from 'axios';
 
 // initial state
 const state = {
-    all: []
+    all: [],
+    loading: false,
 };
 
 // getters
@@ -20,33 +21,23 @@ const getters = {
 
 // actions
 const actions = {
-    loadClients ({ commit }) {
+    loadClients ({ commit }, force = false) {
+        if ((state.all.length > 0 || state.loading) && !force) return;
+
+        state.loading = true;
         return new Promise((resolve, reject) => {
             axios
-                .get('/api/clients',  {
+                .get('/api/clients/',  {
                     params: {per_page: -1}
                 })
                 .then((response) => {
                     commit('setClients', { list: response.data.data });
                     resolve(response);
-                },
-                    (err) => {
-                    reject(err);
-            });
-        });
-    },
-    loadPartnerClients ({ commit }, partnerId) {
-        return new Promise((resolve, reject) => {
-            axios
-                .get('/api/partners/' + partnerId + '/clients')
-                .then((response) => {
-                    commit('setClients', { list: response.data.data });
-                    resolve(response);
+                    state.loading = false;
                 },
                 (err) => {
                     reject(err);
-                }
-            );
+            });
         });
     }
 };
