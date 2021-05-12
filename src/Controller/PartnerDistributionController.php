@@ -181,8 +181,8 @@ class PartnerDistributionController extends BaseOrderController
     {
         $params = parent::buildFilterParams($request);
 
-        if ($request->get('orderPeriod')) {
-            $params->set('orderPeriod', new \DateTime($request->get('orderPeriod')));
+        if ($request->get('distributionPeriod')) {
+            $params->set('distributionPeriod', new \DateTime($request->get('distributionPeriod')));
         }
         if ($request->get('partner')) {
             $params->set('partner', $this->getRepository(Partner::class)->find($request->get('partner')));

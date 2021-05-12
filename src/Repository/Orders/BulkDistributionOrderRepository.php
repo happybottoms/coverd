@@ -86,6 +86,11 @@ class BulkDistributionOrderRepository extends OrderRepository
                 ->setParameter('partnerType', $params->get('partnerType'));
         }
 
+        if ($params->has('distributionPeriod')) {
+            $qb->andWhere('o.distributionPeriod = :distributionPeriod')
+                ->setParameter('distributionPeriod', $params->get('distributionPeriod'));
+        }
+
         if ($params->has('startingAt')) {
             $qb->andWhere('o.distributionPeriod >= :startingAt')
                 ->setParameter('startingAt', new \DateTime($params->get('startingAt')));
@@ -94,20 +99,6 @@ class BulkDistributionOrderRepository extends OrderRepository
         if ($params->has('endingAt')) {
             $qb->andWhere('o.distributionPeriod <= :endingAt')
                 ->setParameter('endingAt', new \DateTime($params->get('endingAt')));
-        }
-
-        if ($params->has('distributionMonth')) {
-            $date = new \DateTime($params->get('distributionMonth'));
-            $qb->andWhere('year(o.distributionPeriod) = :y')
-                ->setParameter(
-                    'y',
-                    $date->format('Y')
-                )
-                ->andWhere('month(o.distributionPeriod) = :m')
-                ->setParameter(
-                    'm',
-                    $date->format('m')
-                );
         }
     }
 }

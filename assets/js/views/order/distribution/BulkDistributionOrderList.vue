@@ -14,9 +14,9 @@
         <div class="row">
             <div class="col-xs-2">
                 <datefield
-                    v-model="filters.distributionMonth"
-                    label="Distribution month"
-                    format="YYYY-MM"
+                    v-model="filters.distributionPeriod"
+                    label="Distribution Period"
+                    format="YYYY-MM-01"
                     timezone="Etc/UTC"
                 />
             </div>
@@ -152,7 +152,7 @@
                 ],
                 filters: {
                     status: null,
-                    distributionMonth: null,
+                    distributionPeriod: null,
                     partner: {}
                 },
 
@@ -212,7 +212,7 @@
             requestParams: function() {
                 return {
                     status: this.filters.status || null,
-                    distributionMonth: this.filters.distributionMonth || null,
+                    distributionPeriod: this.filters.distributionPeriod || null,
                     partner: this.filters.partner.id || null
                 };
             }
