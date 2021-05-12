@@ -2,7 +2,7 @@
 
 namespace App\Entity\EAV\Type;
 
-use App\Entity\EAV\Attribute;
+use App\Entity\EAV\AttributeValue;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,12 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity()
  */
-class DatetimeAttribute extends Attribute
+class DatetimeAttributeValue extends AttributeValue
 {
     /**
-     * @var \DateTime
+     * @var \DateTimeImmutable
      *
-     * @ORM\Column(name="datetime_value", type="datetime_immutable", nullable=true)
+     * @ORM\Column(name="datetime_value", type="datetime_immutable")
      */
     protected $value;
 
@@ -27,12 +27,19 @@ class DatetimeAttribute extends Attribute
     /**
      * @param \DateTimeImmutable|string $value
      *
-     * @return Attribute
+     * @return AttributeValue
+     * @throws \Exception
      */
-    public function setValue($value): Attribute
+    public function setValue($value): AttributeValue
     {
-        if (is_string($value) && $value !== '') {
-            $value = \DateTimeImmutable::createFromFormat(\DateTime::RFC3339, $value);
+        if ($value === '') {
+            $value = null;
+        } elseif (is_string($value)) {
+            $value = \DateTimeImmutable::createFromFormat(\DateTime::RFC3339, $value) ?: null;
+        }
+
+        if (is_null($value)) {
+            throw new \Exception('Invalid DateTime passed to setValue');
         }
 
         $this->value = $value;
@@ -41,7 +48,7 @@ class DatetimeAttribute extends Attribute
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getValue()
     {
@@ -55,7 +62,7 @@ class DatetimeAttribute extends Attribute
 
     public function getJsonValue()
     {
-        return $this->value ? $this->value->format('c') : '';
+        return $this->value->format('c');
     }
 
     public function fixtureData()

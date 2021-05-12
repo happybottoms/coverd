@@ -3,6 +3,7 @@
 namespace App\Entity\EAV\Type;
 
 use App\Entity\EAV\Attribute;
+use App\Entity\EAV\AttributeValue;
 use App\Entity\EAV\EavAddress;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,16 +12,23 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity()
  */
-class AddressAttribute extends Attribute
+class AddressAttributeValue extends AttributeValue
 {
 
     /**
-     * @var EavAddress
+     * @var EavAddress|null
      *
      * @ORM\OneToOne(targetEntity="App\Entity\EAV\EavAddress", cascade={"persist"}, orphanRemoval=true)
      * @ORM\JoinColumn(name="address_id")
      */
     private $value;
+
+    public function __construct(Attribute $attribute = null)
+    {
+        parent::__construct($attribute);
+
+        $this->value = new EavAddress();
+    }
 
     public function getTypeLabel(): string
     {
@@ -30,26 +38,22 @@ class AddressAttribute extends Attribute
     /**
      * @param EavAddress|array $value
      *
-     * @return Attribute
+     * @return AttributeValue
      */
-    public function setValue($value): Attribute
+    public function setValue($value): AttributeValue
     {
         if (is_array($value)) {
-            if (isset($value['id'])) {
-                $address = $this->getValue();
-            } else {
-                $address = new EavAddress();
-            }
+            $address = $this->getValue();
             $address->applyChangesFromArray($value);
         } else {
             $address = $value;
         }
 
-        if (!$address instanceof EavAddress && !is_null($address)) {
-            throw new \TypeError("Value is not an Address. It's an %s", get_class($address));
-        }
-
         $this->value = $address;
+
+        if (!($address instanceof EavAddress)) {
+            throw new \TypeError(sprintf("Value is not an Address. It's an %s", get_class($address)));
+        }
 
         return $this;
     }
@@ -59,7 +63,8 @@ class AddressAttribute extends Attribute
      */
     public function getValue()
     {
-        return $this->value;
+
+        return $this->value ?: new EavAddress();
     }
 
     public function getValueType(): string
@@ -67,9 +72,19 @@ class AddressAttribute extends Attribute
         return EavAddress::class;
     }
 
+    public static function hasRelationship(): bool
+    {
+        return true;
+    }
+
     public function isEmpty(): bool
     {
-        return !$this->getValue();
+        return $this->getValue()->isEmpty();
+    }
+
+    public function getJsonValue()
+    {
+        return $this->getValue()->getId();
     }
 
     public function fixtureData()

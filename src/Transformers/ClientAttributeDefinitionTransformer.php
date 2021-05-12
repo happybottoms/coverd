@@ -2,16 +2,16 @@
 
 namespace App\Transformers;
 
-use App\Entity\EAV\ClientDefinition;
-use App\Entity\EAV\Definition;
+use App\Entity\EAV\ClientAttributeDefinition;
+use App\Entity\EAV\AttributeDefinition;
 
 class ClientAttributeDefinitionTransformer extends AttributeDefinitionTransformer
 {
     /**
-     * @param ClientDefinition $attribute
+     * @param ClientAttributeDefinition $attribute
      * @return array
      */
-    public function transform(Definition $attribute)
+    public function transform(AttributeDefinition $attribute)
     {
         $fields = parent::transform($attribute);
         $fields['isDuplicateReference'] = $attribute->isDuplicateReference();

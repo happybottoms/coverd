@@ -4,7 +4,8 @@ namespace App\DataFixtures;
 
 use App\Entity\Client;
 use App\Entity\EAV\Attribute;
-use App\Entity\EAV\ClientDefinition;
+use App\Entity\EAV\AttributeDefinition;
+use App\Entity\EAV\ClientAttributeDefinition;
 use App\Entity\Partner;
 use App\Entity\ValueObjects\Name;
 use App\IdGenerator\RandomIdGenerator;
@@ -37,7 +38,7 @@ class ClientFixtures extends BaseFixture implements DependentFixtureInterface
 
     protected function loadData(ObjectManager $manager)
     {
-        $definitions = $manager->getRepository(ClientDefinition::class)->findAll();
+        $definitions = $manager->getRepository(ClientAttributeDefinition::class)->findAll();
 
         $statuses = [
             Client::STATUS_ACTIVE,
@@ -59,15 +60,14 @@ class ClientFixtures extends BaseFixture implements DependentFixtureInterface
             $client->setBirthdate($this->faker->dateTimeBetween('-5 years', 'now'));
 
             foreach ($definitions as $definition) {
-                $attribute = $definition->createAttribute();
-                if ($definition->getType() === Attribute::UI_ZIPCODE) {
+                $attribute = new Attribute($definition);
+                if ($definition->getType() === AttributeDefinition::TYPE_ZIPCODE) {
                     $attribute->setValue($this->getReference('zip_county.1'));
                 } else {
-                    $attribute->setValue($attribute->fixtureData());
+                    $attribute->populateFixture();
                 }
                 $client->addAttribute($attribute);
             }
-
 
             $manager->persist($client);
         }

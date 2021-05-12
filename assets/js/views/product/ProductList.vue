@@ -115,6 +115,18 @@
                 })
         },
         methods: {
+            saveSort() {
+                let me = this;
+                let ids = this.products.data.map(product => product.id);
+                axios
+                    .post('/api/products/order', {
+                        ids: ids,
+                    })
+                    .then(response => me.setProducts(response.data.data));
+            },
+            setProducts(products) {
+                this.products.data = products.sort((a, b) => a.orderIndex - b.orderIndex);
+            },
             doFilter () {
                 console.log('doFilter:', this.requestParams());
                 this.$events.fire('filter-set', this.requestParams());

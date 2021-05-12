@@ -12,7 +12,7 @@ use Symfony\Component\Workflow\Registry;
  * Class Partner
  * @package App\Entities
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\PartnerRepository")
  * @Gedmo\Loggable()
  */
 class Partner extends StorageLocation
@@ -220,6 +220,11 @@ class Partner extends StorageLocation
     }
 
     public function canPlaceOrders(): bool
+    {
+        return in_array($this->status, [self::STATUS_ACTIVE, self::STATUS_NEEDS_PROFILE_REVIEW]);
+    }
+
+    public function canCreateClient(): bool
     {
         return in_array($this->status, [self::STATUS_ACTIVE, self::STATUS_NEEDS_PROFILE_REVIEW]);
     }

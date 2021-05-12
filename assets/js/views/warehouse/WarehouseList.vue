@@ -83,11 +83,8 @@ export default {
         OptionListStatic,
         OptionList
     },
-    props:[],
     data() {
         return {
-            warehouses: {},
-            loading: true,
             columns: [
                 { name: '__checkbox', title: "#" },
                 { name: '__slot:link', title: "Warehouse Id", sortField: 'id' },

@@ -26,7 +26,7 @@ class PartnerOrderVoter extends Voter
         return true;
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
 
@@ -49,7 +49,7 @@ class PartnerOrderVoter extends Voter
         }
     }
 
-    private function canView(PartnerOrder $order, User $user)
+    private function canView(PartnerOrder $order, User $user): bool
     {
         // if they can edit, they can view
         if ($this->canEdit($order, $user)) {
@@ -61,10 +61,15 @@ class PartnerOrderVoter extends Voter
             return true;
         }
 
-        return false;
+        $activePartner = $user->getActivePartner();
+
+        // If they have the manage own role, have an active partner, and this order is that partner's, they can view
+        return $user->hasRole(Order::ROLE_MANAGE_OWN)
+            && $activePartner
+            && $order->getPartner()->getId() === $activePartner->getId();
     }
 
-    private function canEdit(PartnerOrder $order, User $user)
+    private function canEdit(PartnerOrder $order, User $user): bool
     {
         // Admin can do all the things
         if ($user->isAdmin()) {
@@ -81,6 +86,7 @@ class PartnerOrderVoter extends Voter
         // If they have the manage own role, have an active partner, and this order is that partner's, they can edit
         return $user->hasRole(Order::ROLE_MANAGE_OWN)
             && $activePartner
-            && $order->getPartner()->getId() === $activePartner->getId();
+            && $order->getPartner()->getId() === $activePartner->getId()
+            && $activePartner->canPlaceOrders();
     }
 }

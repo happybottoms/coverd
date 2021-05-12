@@ -4,14 +4,15 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Entity\ProductCategory;
+use App\Repository\ProductRepository;
 use App\Transformers\ProductTransformer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
  * Class ProductController
@@ -33,15 +34,12 @@ class ProductController extends BaseController
      */
     public function index(Request $request)
     {
-        $partnerOrderable = $request->get('partnerOrderable');
+        /** @var ProductRepository $repo */
+        $repo = $this->getRepository();
 
         if (!$request->get('page')) {
-            if ($partnerOrderable == null) {
-                $products = $this->getRepository()->findAllSorted();
-            } else {
-                $products = $this->getRepository()->findByPartnerOrderable($partnerOrderable);
-            }
-            return $this->serialize($request, $products);
+            $suppliers = $repo->findAll();
+            return $this->serialize($request, $suppliers);
         }
 
         $sort = $request->get('sort') ? explode('|', $request->get('sort')) : null;
@@ -50,7 +48,7 @@ class ProductController extends BaseController
 
         $params = $this->buildFilterParams($request);
 
-        $suppliers = $this->getRepository()->findAllPaged(
+        $suppliers = $repo->findAllPaged(
             $page,
             $limit,
             $sort ? $sort[0] : null,
@@ -58,7 +56,7 @@ class ProductController extends BaseController
             $params
         );
 
-        $total = $this->getRepository()->findAllCount($params);
+        $total = $repo->findAllCount($params);
 
         $meta = [
             'pagination' => [
@@ -72,6 +70,7 @@ class ProductController extends BaseController
                 'to' => ($page * $limit),
             ]
         ];
+
         return $this->serialize($request, $suppliers, null, $meta);
     }
 
@@ -241,30 +240,24 @@ class ProductController extends BaseController
         return $product;
     }
 
-    protected function getDefaultTransformer()
-    {
-        return new ProductTransformer();
-    }
-
     /**
      * @param Request $request
      * @return ParameterBag
      */
-    protected function buildFilterParams(Request $request)
+    protected function buildFilterParams(Request $request): ParameterBag
     {
         $params = new ParameterBag();
 
-        if ($request->get('status')) {
-            $params->set('status', $request->get('status'));
+        if ($request->get('partnerOrderable')) {
+            $params->set('partnerOrderable', $request->get('partnerOrderable'));
         }
-        if ($request->get('category')) {
-            $params->set('category', $request->get('category'));
-        }
-        if ($request->get('name')) {
-            $params->set('name', $request->get('name'));
-        }
-
 
         return $params;
+    }
+
+
+    protected function getDefaultTransformer()
+    {
+        return new ProductTransformer();
     }
 }
