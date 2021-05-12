@@ -8,6 +8,7 @@ services:
             dockerfile: Dockerfile
         volumes:
             - ./:/app
+            - var:/app/var
             - ./docker/config/app.php.ini:/usr/local/etc/php/conf.d/coverd-overrides.ini
         env_file: .env.local
         depends_on:
@@ -28,3 +29,6 @@ services:
             POSTGRES_DB: coverd
         ports:
             - 5432:5432
+
+volumes:
+    var:
