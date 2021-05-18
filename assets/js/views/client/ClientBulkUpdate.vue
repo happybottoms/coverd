@@ -5,17 +5,27 @@
         :confirm-action="updateClients"
         :confirm-enabled="isAvailableConfirm"
     >
+        <div
+            v-if="userHasRole('ROLE_CLIENT_EDIT_ALL') && !isSameStatus"
+            class="alert alert-warning"
+        >
+            <h4><i class="icon fa fa-warning"></i> Alert!</h4>
+            Selected clients must all be in the same status to bulk transition.
+        </div>
+
         <template slot="header">
             Update Clients
         </template>
         <optionliststatic
-            v-if="userHasRole('ROLE_CLIENT_EDIT_ALL') && isChangableStatus"
+            v-if="userHasRole('ROLE_CLIENT_EDIT_ALL')"
             v-model="status"
             label="Status"
             display-property="title"
+            :disabled="!isSameStatus"
             :preloaded-options="enabledClientStatus"
             empty-string="-- Status --"
         />
+
         <PartnerSelectionForm
             v-if="userHasRole('ROLE_CLIENT_MANAGE_OWN') || userHasRole('ROLE_CLIENT_EDIT_ALL')"
             v-model="partner"
@@ -53,9 +63,9 @@ export default {
     },
     computed: {
         ...mapGetters(["allPartners", "userHasRole"]),
-        isChangableStatus: function() {
-            if (this.selectedClients.length <= 1) return false;
-            return this.selectedClients.map(a => a.status).filter((c, i, t) => t.indexOf(c) === i).length === 1;
+        isSameStatus: function() {
+            let unique = new Set(this.selectedClients.map(client => client.status));
+            return unique.size === 1;
         },
         isAvailableConfirm: function() {
             if (this.userHasRole("ROLE_CLIENT_EDIT_ALL")) {
@@ -90,7 +100,7 @@ export default {
                 .catch(error => console.log("Error receiving clients %o", error));
         },
         fetchData: function() {
-            if (this.userHasRole("ROLE_CLIENT_EDIT_ALL") && this.isChangableStatus) {
+            if (this.userHasRole("ROLE_CLIENT_EDIT_ALL") && this.isSameStatus) {
                 this.getEnabledTransitions(this.selectedClients[0].id);
             }
         }
