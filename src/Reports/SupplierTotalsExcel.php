@@ -3,6 +3,7 @@
 namespace App\Reports;
 
 use App\Entity\Product;
+use Doctrine\Common\Collections\ArrayCollection;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\IWriter;
@@ -16,16 +17,16 @@ class SupplierTotalsExcel
     protected $reportData;
 
     /**
-     * @var Product[]
+     * @var Product[]|ArrayCollection
      */
     protected $products;
 
     /**
      * SupplierTotalsExcel constructor.
      * @param SupplierTotalsReport $reportData
-     * @param Product[] $products
+     * @param Product[]|ArrayCollection $products
      */
-    public function __construct(SupplierTotalsReport $reportData, array $products)
+    public function __construct(SupplierTotalsReport $reportData, $products)
     {
         $this->reportData = $reportData;
         $this->products = $products;

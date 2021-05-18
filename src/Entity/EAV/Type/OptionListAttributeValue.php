@@ -2,8 +2,8 @@
 
 namespace App\Entity\EAV\Type;
 
-use App\Entity\EAV\Attribute;
-use App\Entity\EAV\Option;
+use App\Entity\EAV\AttributeValue;
+use App\Entity\EAV\AttributeOption;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,13 +11,13 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity()
  */
-class OptionListAttribute extends Attribute
+class OptionListAttributeValue extends AttributeValue
 {
 
     /**
-     * @var Option
+     * @var AttributeOption|null
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\EAV\Option", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\EAV\AttributeOption")
      */
     private $value;
 
@@ -27,18 +27,18 @@ class OptionListAttribute extends Attribute
     }
 
     /**
-     * @param Option $value
+     * @param AttributeOption|integer $value
      *
-     * @return Attribute
+     * @return AttributeValue
      */
-    public function setValue($value): Attribute
+    public function setValue($value): AttributeValue
     {
-        if (!$value instanceof Option && !empty($value)) {
-            $value = $this->getDefinition()->getOptions()->filter(function (Option $option) use ($value) {
+        if (empty($value)) {
+            $this->value = null;
+        } elseif (is_numeric($value)) {
+            $value = $this->getDefinition()->getOptions()->filter(function (AttributeOption $option) use ($value) {
                 return $option->getId() == $value;
             })->first();
-        } elseif (empty($value) || $value === false) {
-            $value = null;
         }
 
         $this->value = $value;
@@ -47,7 +47,7 @@ class OptionListAttribute extends Attribute
     }
 
     /**
-     * @return Option
+     * @return AttributeOption|null
      */
     public function getValue()
     {
@@ -56,7 +56,7 @@ class OptionListAttribute extends Attribute
 
     public function getValueType(): string
     {
-        return Option::class;
+        return AttributeOption::class;
     }
 
     public function isEmpty(): bool
@@ -66,7 +66,7 @@ class OptionListAttribute extends Attribute
 
     public function getJsonValue()
     {
-        return $this->getValue() ? $this->getValue()->getId() : null;
+        return $this->getValue() !== null ? $this->getValue()->getId() : null;
     }
 
     public function fixtureData()
@@ -80,10 +80,16 @@ class OptionListAttribute extends Attribute
         return [
             self::UI_SELECT_SINGLE,
             self::UI_RADIO,
+            self::UI_CHECKBOX_GROUP,
         ];
     }
 
-    public function hasOptions(): bool
+    public static function hasOptions(): bool
+    {
+        return true;
+    }
+
+    public static function hasRelationship(): bool
     {
         return true;
     }

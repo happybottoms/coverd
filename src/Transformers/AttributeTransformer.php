@@ -3,8 +3,10 @@
 namespace App\Transformers;
 
 use App\Entity\EAV\Attribute;
-use App\Entity\EAV\Type\AddressAttribute;
-use App\Entity\EAV\Type\ZipCountyAttribute;
+use App\Entity\EAV\AttributeDefinition;
+use App\Entity\EAV\AttributeValue;
+use App\Entity\EAV\Type\AddressAttributeValue;
+use App\Entity\EAV\Type\ZipCountyAttributeValue;
 use League\Fractal\TransformerAbstract;
 
 class AttributeTransformer extends TransformerAbstract
@@ -34,19 +36,35 @@ class AttributeTransformer extends TransformerAbstract
 
     public function includeValue(Attribute $attribute)
     {
-        if ($attribute->getValue() === null) {
-            return $this->primitive(null);
+        $transformer = null;
+
+        if ($attribute->isEmpty() && $attribute->isMultivalued()) {
+            return $this->primitive([]);
         }
 
-        if ($attribute instanceof AddressAttribute) {
-            return $this->item($attribute->getValue(), new AddressTransformer());
+        if ($attribute->isEmpty() && !$attribute->isMultivalued()) {
+            return $attribute->hasRelationshipValue() ? $this->primitive(['id' => null]) : $this->primitive(null);
         }
 
-        if ($attribute instanceof ZipCountyAttribute) {
-            return $this->item($attribute->getValue(), new ZipCountyTransformer());
+        if ($attribute->getDefinition()->getType() == AttributeDefinition::TYPE_ADDRESS) {
+            $transformer = new AddressTransformer();
         }
 
-        return $this->primitive($attribute->getJsonValue());
+        if ($attribute->getDefinition()->getType() == AttributeDefinition::TYPE_ZIPCODE) {
+            $transformer = new ZipCountyTransformer();
+        }
+
+        if ($transformer === null) {
+            $jsonValues = $attribute->getJsonValues();
+
+            return $attribute->isMultivalued() ?
+                $this->primitive($jsonValues) :
+                $this->primitive(reset($jsonValues));
+        }
+
+        return $attribute->isMultivalued() ?
+            $this->collection($attribute->getValues(), $transformer) :
+            $this->item($attribute->getValues()->first(), $transformer);
     }
 
     public function includeOptions(Attribute $attribute)

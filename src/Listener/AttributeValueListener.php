@@ -2,22 +2,22 @@
 
 namespace App\Listener;
 
-use App\Entity\EAV\Attribute;
+use App\Entity\EAV\AttributeValue;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 
-class AttributeListener
+class AttributeValueListener
 {
-    public function preUpdate(Attribute $attribute, PreUpdateEventArgs $event)
+    public function preUpdate(AttributeValue $attribute, PreUpdateEventArgs $event): void
     {
-        if (!$attribute->getValue()) {
+        if ($attribute->isEmpty()) {
             $event->getEntityManager()->getUnitOfWork()->remove($attribute);
         }
     }
 
-    public function prePersist(Attribute $attribute, LifecycleEventArgs $event)
+    public function prePersist(AttributeValue $attribute, LifecycleEventArgs $event): void
     {
-        if (!$attribute->getValue()) {
+        if ($attribute->isEmpty()) {
             $event->getEntityManager()->getUnitOfWork()->remove($attribute);
         }
     }

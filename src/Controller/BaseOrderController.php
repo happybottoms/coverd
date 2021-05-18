@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Workflow\Registry;
-use Symfony\Component\Workflow\Transition;
 
 abstract class BaseOrderController extends BaseController
 {
@@ -117,8 +116,7 @@ abstract class BaseOrderController extends BaseController
         /** @var Order $order */
         $order = $this->getOrder($id);
 
-        // TODO: get permissions working (#1)
-        // $this->checkEditPermissions($order);
+        $this->denyAccessUnlessGranted($this->getEditVoter(), $order);
 
         $this->processLineItems($order, $params['lineItems']);
 
@@ -329,22 +327,11 @@ abstract class BaseOrderController extends BaseController
         if ($request->get('fulfillmentPeriod')) {
             $params->set('fulfillmentPeriod', $request->get('fulfillmentPeriod'));
         }
+        if ($request->get('distributionMonth')) {
+            $params->set('distributionMonth', $request->get('distributionMonth'));
+        }
 
         return $params;
-    }
-
-    protected function getEnabledTransitions(Registry $workflowRegistry, Order $order): array
-    {
-        $workflow = $workflowRegistry->get($order);
-        $enabledTransitions = $workflow->getEnabledTransitions($order);
-
-        return array_map(function (Transition $transition) use ($workflow) {
-            $title = $workflow->getMetadataStore()->getTransitionMetadata($transition)['title'];
-            return [
-                'transition' => $transition->getName(),
-                'title' => $title
-            ];
-        }, $enabledTransitions);
     }
 
     /**

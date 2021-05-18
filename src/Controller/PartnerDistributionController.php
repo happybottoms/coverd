@@ -52,8 +52,7 @@ class PartnerDistributionController extends BaseOrderController
 
         $order->applyChangesFromArray($params);
 
-        // TODO: get permissions working (#1)
-        // $this->checkEditPermissions($order);
+        $this->denyAccessUnlessGranted(BulkDistributionVoter::EDIT, $order);
 
         // Check if the partner has already submitted an order for the specified month.
         $existingOrder = $this->getRepository()->findOneBy([
@@ -93,8 +92,7 @@ class PartnerDistributionController extends BaseOrderController
         /** @var BulkDistribution $order */
         $order = $this->getOrder($id);
 
-        // TODO: get permissions working (#1)
-        // $this->checkEditPermissions($order);
+        $this->denyAccessUnlessGranted(BulkDistributionVoter::EDIT, $order);
 
         if (!$request->get('reason')) {
             $this->checkEditable($order);
@@ -183,8 +181,8 @@ class PartnerDistributionController extends BaseOrderController
     {
         $params = parent::buildFilterParams($request);
 
-        if ($request->get('orderPeriod')) {
-            $params->set('orderPeriod', new \DateTime($request->get('orderPeriod')));
+        if ($request->get('distributionPeriod')) {
+            $params->set('distributionPeriod', new \DateTime($request->get('distributionPeriod')));
         }
         if ($request->get('partner')) {
             $params->set('partner', $this->getRepository(Partner::class)->find($request->get('partner')));
@@ -203,7 +201,7 @@ class PartnerDistributionController extends BaseOrderController
 
     /**
      * @Route("/{id}/transition", methods={"PATCH"})
-     * @IsGranted({"ROLE_DISTRIBUTION_ORDER_EDIT"})
+     * @IsGranted({"ROLE_DISTRIBUTION_ORDER_EDIT", "ROLE_ORDER_MANAGE_OWN"})
      */
     public function transition(Request $request, Registry $workflowRegistry, int $id): JsonResponse
     {

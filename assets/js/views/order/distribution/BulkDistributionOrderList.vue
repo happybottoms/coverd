@@ -10,6 +10,42 @@
             Partner Distributions List
         </h3>
 
+        <!-- filter container -->
+        <div class="row">
+            <div class="col-xs-2">
+                <datefield
+                    v-model="filters.distributionPeriod"
+                    label="Distribution Period"
+                    format="YYYY-MM-01"
+                    timezone="Etc/UTC"
+                />
+            </div>
+            <div class="col-xs-3">
+                <partnerselectionform
+                    v-model="filters.partner"
+                    label="Partner"
+                    :options="allPartners"
+                />
+            </div>
+            <div class="col-xs-2">
+                <optionliststatic
+                    v-model="filters.status"
+                    label="Status"
+                    :preloaded-options="filterStatuses"
+                    empty-string="-- All Statuses --"
+                />
+                <!-- /.input group -->
+            </div>
+            <div class="col-xs-3">
+                <button
+                    class="btn btn-success btn-flat"
+                    @click="doFilter"
+                >
+                    <i class="fa fa-fw fa-filter" />Filter
+                </button>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
@@ -52,6 +88,7 @@
                             edit-route="/orders/distribution/"
                             link-display-property="sequence"
                             :sort-order="[{ field: 'id', direction: 'desc'}]"
+                            :params="requestParams()"
                             :per-page="50"
                         />
                     </div>
@@ -78,11 +115,19 @@
     import ModalConfirmBulkChange from '../../../components/ModalConfirmBulkChange.vue';
     import ModalConfirmBulkDelete from '../../../components/ModalConfirmBulkDelete.vue';
     import TablePaged from '../../../components/TablePaged.vue';
+    import DateField from "../../../components/DateField.vue";
+    import PartnerSelectionForm from "../../../components/PartnerSelectionForm.vue";
+    import OptionListStatic from "../../../components/OptionListStatic.vue";
+    import { mapGetters } from "vuex";
+
     export default {
         components: { 
             'modalbulkchange' : ModalConfirmBulkChange,
             'modalbulkdelete' : ModalConfirmBulkDelete,
-            'tablepaged' : TablePaged
+            'tablepaged' : TablePaged,
+            datefield: DateField,
+            optionliststatic: OptionListStatic,
+            partnerselectionform: PartnerSelectionForm,
         },
         props:[],
         data() {
@@ -101,11 +146,22 @@
                     {id: "COMPLETED", name: "Completed"},
                 ],
                 selection: [],
+                filterStatuses: [
+                    { id: "COMPLETED", name: "Completed" },
+                    { id: "PENDING", name: "Pending" }
+                ],
+                filters: {
+                    status: null,
+                    distributionPeriod: null,
+                    partner: {}
+                },
+
             };
         },
         mounted() {
             this.$events.$on('selection-change', eventData => this.onSelectionChange(eventData));
         },
+        computed: mapGetters(["allPartners"]),
         methods: {
             onSelectionChange (selection) {
                 this.selection = selection;
@@ -149,6 +205,17 @@
                         console.log(error);
                     });
             },
+            doFilter() {
+                console.log("doFilter:", this.requestParams());
+                this.$events.fire("filter-set", this.requestParams());
+            },
+            requestParams: function() {
+                return {
+                    status: this.filters.status || null,
+                    distributionPeriod: this.filters.distributionPeriod || null,
+                    partner: this.filters.partner.id || null
+                };
+            }
         },
     }
 </script>

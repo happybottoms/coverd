@@ -3,7 +3,7 @@
 namespace App\Transformers;
 
 use App\Entity\EAV\Attribute;
-use App\Entity\EAV\ClientDefinition;
+use App\Entity\EAV\ClientAttributeDefinition;
 
 class ClientAttributeTransformer extends AttributeTransformer
 {
@@ -13,7 +13,7 @@ class ClientAttributeTransformer extends AttributeTransformer
      */
     public function transform(Attribute $attribute): array
     {
-        /** @var ClientDefinition $definition */
+        /** @var ClientAttributeDefinition $definition */
         $definition = $attribute->getDefinition();
 
         $fields = parent::transform($attribute);

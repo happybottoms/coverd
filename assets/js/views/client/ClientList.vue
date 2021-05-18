@@ -1,6 +1,8 @@
 <template>
     <section class="content">
         <router-link
+            :disabled="isDisabledCreate"
+            :event="isDisabledCreate ? '' : 'click'"
             :to="{ name: 'client-new' }"
             class="btn btn-success btn-flat pull-right"
         >
@@ -161,7 +163,12 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["allPartners"]),
+        ...mapGetters(["allPartners", "userActivePartner", "isAdmin", "isPartner"]),
+        isDisabledCreate: function() {
+            if (this.isAdmin || !this.isPartner) return false
+            if (!this.userActivePartner) return true
+            return this.userActivePartner.status !== 'ACTIVE' && this.userActivePartner.status !== 'NEEDS_PROFILE_REVIEW'
+        },
         selection: function() {
             return this.selectedData.map(d => d.id);
         }

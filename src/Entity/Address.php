@@ -181,4 +181,9 @@ abstract class Address extends CoreEntity
     {
         return !empty($this->street1) && !empty($this->city) && !empty($this->state) && !empty($this->postalCode);
     }
+
+    public function isEmpty(): bool
+    {
+        return empty($this->street1) && empty($this->city) && empty($this->state) && empty($this->postalCode);
+    }
 }

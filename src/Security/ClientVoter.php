@@ -88,7 +88,8 @@ class ClientVoter extends Voter
         return $user->hasRole(Client::ROLE_MANAGE_OWN)
             && $activePartner
             && $clientPartner
-            && $clientPartner->getId() === $activePartner->getId();
+            && $clientPartner->getId() === $activePartner->getId()
+            && $clientPartner->canCreateClient();
     }
 
     private function canTransfer(Client $client, User $user): bool

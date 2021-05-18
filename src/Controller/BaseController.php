@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\CoreEntity;
 use App\Serializer\ApiSerializer;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
@@ -13,6 +14,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Workflow\Registry;
+use Symfony\Component\Workflow\Transition;
 
 abstract class BaseController extends AbstractController
 {
@@ -142,6 +145,20 @@ abstract class BaseController extends AbstractController
 
             throw new BadRequestHttpException($errorsString);
         }
+    }
+
+    protected function getEnabledTransitions(Registry $workflowRegistry, CoreEntity $entity): array
+    {
+        $workflow = $workflowRegistry->get($entity);
+        $enabledTransitions = $workflow->getEnabledTransitions($entity);
+
+        return array_map(static function (Transition $transition) use ($workflow) {
+            $title = $workflow->getMetadataStore()->getTransitionMetadata($transition)['title'];
+            return [
+                'transition' => $transition->getName(),
+                'title' => $title
+            ];
+        }, $enabledTransitions);
     }
 
     protected function getDefaultTransformer()

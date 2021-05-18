@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Client;
-use App\Entity\EAV\ClientDefinition;
+use App\Entity\EAV\ClientAttributeDefinition;
 use App\Entity\Orders\BulkDistributionLineItem;
 use App\Entity\Partner;
 use App\Entity\User;
@@ -24,7 +24,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Workflow\Registry;
-use Symfony\Component\Workflow\Transition;
 
 /**
  * @Route(path="/api/clients")
@@ -42,8 +41,6 @@ class ClientController extends BaseController
      */
     public function index(Request $request): JsonResponse
     {
-        //        $this->checkViewPermissions($clients);
-
         $sort = $request->get('sort') ? explode('|', $request->get('sort')) : null;
         $page = (int) $request->get('page', 1);
         $limit = (int) $request->get('per_page', 10);
@@ -53,7 +50,7 @@ class ClientController extends BaseController
         $total = (int) $this->getRepository()->findAllCount($params);
 
         if ($limit === -1) {
-            $limit = $total;
+            $limit = $total ?: 1;
         }
 
         $clients = $this->getRepository()->findAllPaged(
@@ -66,9 +63,9 @@ class ClientController extends BaseController
 
         $meta = [
             'pagination' => [
-                'total' => $total,
-                'per_page' => $limit,
-                'current_page' => $page,
+                'total' => (int) $total,
+                'per_page' => (int) $limit,
+                'current_page' => (int) $page,
                 'last_page' => ceil($total / $limit),
                 'next_page_url' => null,
                 'prev_page_url' => null,
@@ -113,7 +110,7 @@ class ClientController extends BaseController
      */
     public function newClientAttributes(Request $request): JsonResponse
     {
-        $fields = $this->getRepository(ClientDefinition::class)->findBy(['isDuplicateReference' => true]);
+        $fields = $this->getRepository(ClientAttributeDefinition::class)->findBy(['isDuplicateReference' => true]);
 
         $attributes = array_map(function ($definition) {
             return $definition->createAttribute();
@@ -130,7 +127,7 @@ class ClientController extends BaseController
      */
     public function clientAttributes(Request $request): JsonResponse
     {
-        $fields = $this->getRepository(ClientDefinition::class)->findAll();
+        $fields = $this->getRepository(ClientAttributeDefinition::class)->findAll();
 
         $attributes = array_map(function ($definition) {
             return $definition->createAttribute();
@@ -188,6 +185,7 @@ class ClientController extends BaseController
      * @Route(path="", methods={"POST"})
      * @IsGranted({"ROLE_CLIENT_EDIT_ALL","ROLE_CLIENT_MANAGE_OWN"})
      *
+     * @throws \Exception
      */
     public function store(
         Request $request,
@@ -203,6 +201,7 @@ class ClientController extends BaseController
             if (!$newPartner) {
                 throw new \Exception('Invalid Partner ID provided');
             }
+
             $client->setPartner($newPartner);
         }
 
@@ -210,7 +209,7 @@ class ClientController extends BaseController
 
         $client->applyChangesFromArray($params);
 
-        //        $this->checkEditPermissions($client);
+        $this->denyAccessUnlessGranted(ClientVoter::EDIT, $client);
 
         $this->getEm()->persist($client);
         $this->getEm()->flush();
@@ -471,25 +470,6 @@ class ClientController extends BaseController
         }
 
         return $client;
-    }
-
-    /**
-     * @param Registry $workflowRegistry
-     * @param Client $client
-     * @return array
-     */
-    protected function getEnabledTransitions(Registry $workflowRegistry, Client $client): array
-    {
-        $workflow = $workflowRegistry->get($client);
-        $enabledTransitions = $workflow->getEnabledTransitions($client);
-
-        return array_map(function (Transition $transition) use ($workflow) {
-            $title = $workflow->getMetadataStore()->getTransitionMetadata($transition)['title'];
-            return [
-                'transition' => $transition->getName(),
-                'title' => $title
-            ];
-        }, $enabledTransitions);
     }
 
     /**

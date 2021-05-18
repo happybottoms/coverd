@@ -256,16 +256,6 @@ parameters:
 			path: src/Controller/ProductCategoryController.php
 
 		-
-			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\:\\:findAllSorted\\(\\)\\.$#"
-			count: 2
-			path: src/Controller/ProductController.php
-
-		-
-			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\:\\:findByPartnerOrderable\\(\\)\\.$#"
-			count: 1
-			path: src/Controller/ProductController.php
-
-		-
 			message: "#^Method App\\\\Controller\\\\ProductController\\:\\:show\\(\\) has parameter \\$id with no typehint specified\\.$#"
 			count: 1
 			path: src/Controller/ProductController.php
@@ -359,86 +349,6 @@ parameters:
 			message: "#^Method App\\\\Controller\\\\ProductController\\:\\:getDefaultTransformer\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Controller/ProductController.php
-
-		-
-			message: "#^PHPDoc tag @var for variable \\$repo contains unknown class App\\\\Entity\\\\InventoryTransactionRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method findAllPaged\\(\\) on an unknown class App\\\\Entity\\\\InventoryTransactionRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method findAllCount\\(\\) on an unknown class App\\\\Entity\\\\InventoryTransactionRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^PHPDoc tag @var for variable \\$repo contains unknown class App\\\\Entity\\\\Orders\\\\SupplyOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method supplierTotals\\(\\) on an unknown class App\\\\Entity\\\\Orders\\\\SupplyOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method findSupplierTotalsCount\\(\\) on an unknown class App\\\\Entity\\\\Orders\\\\SupplyOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^PHPDoc tag @var for variable \\$repo contains unknown class App\\\\Entity\\\\Orders\\\\BulkDistributionOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method distributionTotals\\(\\) on an unknown class App\\\\Entity\\\\Orders\\\\BulkDistributionOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method findDistributionTotalsCount\\(\\) on an unknown class App\\\\Entity\\\\Orders\\\\BulkDistributionOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^PHPDoc tag @var for variable \\$repo contains unknown class App\\\\Entity\\\\Orders\\\\PartnerOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method partnerOrderTotals\\(\\) on an unknown class App\\\\Entity\\\\Orders\\\\PartnerOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method findPartnerOrderTotalsCount\\(\\) on an unknown class App\\\\Entity\\\\Orders\\\\PartnerOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^PHPDoc tag @var for variable \\$transactionRepo contains unknown class App\\\\Entity\\\\InventoryTransactionRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^PHPDoc tag @var for variable \\$distributionRepo contains unknown class App\\\\Entity\\\\Orders\\\\BulkDistributionOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method getStockLevels\\(\\) on an unknown class App\\\\Entity\\\\InventoryTransactionRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
-
-		-
-			message: "#^Call to method getDistributionsForForcasting\\(\\) on an unknown class App\\\\Entity\\\\Orders\\\\BulkDistributionOrderRepository\\.$#"
-			count: 1
-			path: src/Controller/ReportController.php
 
 		-
 			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\:\\:getStockLevels\\(\\)\\.$#"
@@ -642,11 +552,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\DataFixtures\\\\BaseFixture\\:\\:createContact\\(\\) has parameter \\$class with no typehint specified\\.$#"
-			count: 1
-			path: src/DataFixtures/BaseFixture.php
-
-		-
-			message: "#^Method App\\\\DataFixtures\\\\BaseFixture\\:\\:createMany\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/DataFixtures/BaseFixture.php
 
@@ -931,11 +836,6 @@ parameters:
 			path: src/Entity/Client.php
 
 		-
-			message: "#^Cannot call method createAttribute\\(\\) on App\\\\Entity\\\\EAV\\\\Definition\\|null\\.$#"
-			count: 1
-			path: src/Entity/Client.php
-
-		-
 			message: "#^Cannot call method isEmpty\\(\\) on App\\\\Entity\\\\EAV\\\\Attribute\\|null\\.$#"
 			count: 1
 			path: src/Entity/Client.php
@@ -1111,32 +1011,7 @@ parameters:
 			path: src/Entity/CoreEntity.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Attribute\\:\\:setValue\\(\\) has parameter \\$value with no typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/Attribute.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Attribute\\:\\:getValue\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/Attribute.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Attribute\\:\\:\\$definition \\(App\\\\Entity\\\\EAV\\\\Definition\\) does not accept App\\\\Entity\\\\EAV\\\\Definition\\|null\\.$#"
-			count: 1
-			path: src/Entity/EAV/Attribute.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Attribute\\:\\:fixtureData\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/Attribute.php
-
-		-
 			message: "#^Cannot call method setValue\\(\\) on App\\\\Entity\\\\EAV\\\\Attribute\\|null\\.$#"
-			count: 1
-			path: src/Entity/PartnerProfile.php
-
-		-
-			message: "#^Cannot call method createAttribute\\(\\) on App\\\\Entity\\\\EAV\\\\Definition\\|null\\.$#"
 			count: 1
 			path: src/Entity/PartnerProfile.php
 
@@ -1156,101 +1031,6 @@ parameters:
 			path: src/Entity/PartnerProfile.php
 
 		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\ClientDefinition\\:\\:\\$defaultEntityName has no typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/ClientDefinition.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Definition\\:\\:\\$description type mapping mismatch\\: database can contain string\\|null but property expects string\\.$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Definition\\:\\:\\$helpText type mapping mismatch\\: database can contain string\\|null but property expects string\\.$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Definition\\:\\:\\$unit type mapping mismatch\\: database can contain string\\|null but property expects string\\.$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Definition\\:\\:\\$orderIndex type mapping mismatch\\: database can contain int\\|null but property expects string\\.$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Definition\\:\\:\\$orderIndex type mapping mismatch\\: property can contain string but database expects int\\|null\\.$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Definition\\:\\:\\$options type mapping mismatch\\: property can contain Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but database expects Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\EAV\\\\Option\\>\\.$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Definition\\:\\:\\$attributes type mapping mismatch\\: database can contain Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\EAV\\\\Attribute\\> but property expects App\\\\Entity\\\\EAV\\\\Attribute\\.$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Definition\\:\\:\\$attributes type mapping mismatch\\: property can contain App\\\\Entity\\\\EAV\\\\Attribute but database expects Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\EAV\\\\Attribute\\>\\.$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Definition\\:\\:\\$attributes \\(App\\\\Entity\\\\EAV\\\\Attribute\\) does not accept Doctrine\\\\Common\\\\Collections\\\\ArrayCollection\\<mixed, mixed\\>\\.$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Definition\\:\\:setHelpText\\(\\) has parameter \\$helpText with no typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Definition\\:\\:\\$orderIndex \\(string\\) does not accept int\\.$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Definition\\:\\:getOrderIndex\\(\\) should return int but returns string\\.$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Definition\\:\\:removeOption\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
-			message: "#^Cannot access an offset on App\\\\Entity\\\\EAV\\\\Attribute\\.$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Definition\\:\\:removeAttribute\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
-			message: "#^Call to an undefined method App\\\\Entity\\\\EAV\\\\Attribute\\:\\:removeElement\\(\\)\\.$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Definition\\:\\:getAttributes\\(\\) should return Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but returns App\\\\Entity\\\\EAV\\\\Attribute\\.$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Definition\\:\\:createAttribute\\(\\) has parameter \\$value with no typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/Definition.php
-
-		-
 			message: "#^Property App\\\\Entity\\\\EAV\\\\EavAddress\\:\\:\\$title type mapping mismatch\\: database can contain string\\|null but property expects string\\.$#"
 			count: 1
 			path: src/Entity/EAV/EavAddress.php
@@ -1259,181 +1039,6 @@ parameters:
 			message: "#^Method App\\\\Entity\\\\EAV\\\\EavAddress\\:\\:setTitle\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Entity/EAV/EavAddress.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Option\\:\\:\\$definition type mapping mismatch\\: database can contain App\\\\Entity\\\\EAV\\\\Definition\\|null but property expects App\\\\Entity\\\\EAV\\\\Definition\\.$#"
-			count: 1
-			path: src/Entity/EAV/Option.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Option\\:\\:\\$definition \\(App\\\\Entity\\\\EAV\\\\Definition\\) does not accept App\\\\Entity\\\\EAV\\\\Definition\\|null\\.$#"
-			count: 1
-			path: src/Entity/EAV/Option.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\PartnerProfileDefinition\\:\\:\\$defaultEntityName has no typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/PartnerProfileDefinition.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Type\\\\AddressAttribute\\:\\:\\$value type mapping mismatch\\: database can contain App\\\\Entity\\\\EAV\\\\EavAddress\\|null but property expects App\\\\Entity\\\\EAV\\\\EavAddress\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/AddressAttribute.php
-
-		-
-			message: "#^Result of && is always false\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/AddressAttribute.php
-
-		-
-			message: "#^Parameter \\#2 \\$code of class TypeError constructor expects int, false given\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/AddressAttribute.php
-
-		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/AddressAttribute.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Type\\\\AddressAttribute\\:\\:fixtureData\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/AddressAttribute.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Type\\\\BooleanAttribute\\:\\:\\$value type mapping mismatch\\: database can contain bool\\|null but property expects bool\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/BooleanAttribute.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Type\\\\BooleanAttribute\\:\\:fixtureData\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/BooleanAttribute.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Type\\\\DatetimeAttribute\\:\\:\\$value type mapping mismatch\\: database can contain DateTimeImmutable\\|null but property expects DateTime\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/DatetimeAttribute.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Type\\\\DatetimeAttribute\\:\\:\\$value type mapping mismatch\\: property can contain DateTime but database expects DateTimeImmutable\\|null\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/DatetimeAttribute.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Type\\\\DatetimeAttribute\\:\\:\\$value \\(DateTime\\) does not accept DateTimeImmutable\\|string\\|false\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/DatetimeAttribute.php
-
-		-
-			message: "#^Ternary operator condition is always true\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/DatetimeAttribute.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Type\\\\DatetimeAttribute\\:\\:fixtureData\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/DatetimeAttribute.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Type\\\\FloatAttribute\\:\\:\\$value type mapping mismatch\\: database can contain float\\|null but property expects float\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/FloatAttribute.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Type\\\\FloatAttribute\\:\\:fixtureData\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/FloatAttribute.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Type\\\\IntegerAttribute\\:\\:\\$value type mapping mismatch\\: database can contain int\\|null but property expects int\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/IntegerAttribute.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Type\\\\IntegerAttribute\\:\\:fixtureData\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/IntegerAttribute.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Type\\\\OptionListAttribute\\:\\:\\$value type mapping mismatch\\: database can contain App\\\\Entity\\\\EAV\\\\Option\\|null but property expects App\\\\Entity\\\\EAV\\\\Option\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/OptionListAttribute.php
-
-		-
-			message: "#^Result of && is always false\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/OptionListAttribute.php
-
-		-
-			message: "#^Strict comparison using \\=\\=\\= between App\\\\Entity\\\\EAV\\\\Option and false will always evaluate to false\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/OptionListAttribute.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Type\\\\OptionListAttribute\\:\\:\\$value \\(App\\\\Entity\\\\EAV\\\\Option\\) does not accept App\\\\Entity\\\\EAV\\\\Option\\|null\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/OptionListAttribute.php
-
-		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/OptionListAttribute.php
-
-		-
-			message: "#^Ternary operator condition is always true\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/OptionListAttribute.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Type\\\\OptionListAttribute\\:\\:fixtureData\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/OptionListAttribute.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Type\\\\StringAttribute\\:\\:\\$value type mapping mismatch\\: database can contain string\\|null but property expects string\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/StringAttribute.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Type\\\\StringAttribute\\:\\:fixtureData\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/StringAttribute.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Type\\\\TextAttribute\\:\\:\\$value type mapping mismatch\\: database can contain string\\|null but property expects string\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/TextAttribute.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Type\\\\TextAttribute\\:\\:fixtureData\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/TextAttribute.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\EAV\\\\Type\\\\ZipCountyAttribute\\:\\:\\$value type mapping mismatch\\: database can contain App\\\\Entity\\\\ZipCounty\\|null but property expects App\\\\Entity\\\\ZipCounty\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/ZipCountyAttribute.php
-
-		-
-			message: "#^Result of && is always false\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/ZipCountyAttribute.php
-
-		-
-			message: "#^Parameter \\#2 \\$code of class TypeError constructor expects int, false given\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/ZipCountyAttribute.php
-
-		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/ZipCountyAttribute.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\EAV\\\\Type\\\\ZipCountyAttribute\\:\\:fixtureData\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/EAV/Type/ZipCountyAttribute.php
 
 		-
 			message: "#^Property App\\\\Entity\\\\Group\\:\\:\\$users type mapping mismatch\\: database can contain Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\User\\> but property expects App\\\\Entity\\\\User\\.$#"
@@ -2101,36 +1706,6 @@ parameters:
 			path: src/Entity/ProductCategory.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:findAllSorted\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/ProductRepository.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:getWarehouseInventory\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/ProductRepository.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:getNetworkInventory\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/ProductRepository.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:getPartnerInventory\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/ProductRepository.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:findByPartnerOrderable\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Entity/ProductRepository.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\ProductRepository\\:\\:findByPartnerOrderable\\(\\) has parameter \\$partnerOrderable with no typehint specified\\.$#"
-			count: 1
-			path: src/Entity/ProductRepository.php
-
-		-
 			message: "#^Method App\\\\Entity\\\\Sequence\\:\\:__construct\\(\\) has parameter \\$class with no typehint specified\\.$#"
 			count: 1
 			path: src/Entity/Sequence.php
@@ -2456,16 +2031,6 @@ parameters:
 			path: src/Helpers/Pack.php
 
 		-
-			message: "#^Method App\\\\Listener\\\\AttributeListener\\:\\:preUpdate\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Listener/AttributeListener.php
-
-		-
-			message: "#^Method App\\\\Listener\\\\AttributeListener\\:\\:prePersist\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Listener/AttributeListener.php
-
-		-
 			message: "#^Method App\\\\Listener\\\\ClientListener\\:\\:postLoad\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Listener/ClientListener.php
@@ -2594,11 +2159,6 @@ parameters:
 			message: "#^PHPDoc tag @param references unknown parameter\\: \\$product$#"
 			count: 1
 			path: src/Reports/PartnerInventoryRow.php
-
-		-
-			message: "#^PHPDoc tag @param for parameter \\$reportData with type App\\\\Reports\\\\DistributionTotalsReport is incompatible with native type App\\\\Reports\\\\PartnerOrderTotalsReport\\.$#"
-			count: 1
-			path: src/Reports/PartnerOrderTotalsExcel.php
 
 		-
 			message: "#^Property App\\\\Reports\\\\PartnerOrderTotalsExcel\\:\\:\\$reportData \\(App\\\\Reports\\\\DistributionTotalsReport\\) does not accept App\\\\Reports\\\\PartnerOrderTotalsReport\\.$#"
@@ -3031,26 +2591,6 @@ parameters:
 			path: src/Security/AdjustmentOrderVoter.php
 
 		-
-			message: "#^Method App\\\\Security\\\\BulkDistributionVoter\\:\\:canView\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Security/BulkDistributionVoter.php
-
-		-
-			message: "#^Method App\\\\Security\\\\BulkDistributionVoter\\:\\:canEdit\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Security/BulkDistributionVoter.php
-
-		-
-			message: "#^Method App\\\\Security\\\\PartnerOrderVoter\\:\\:canView\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Security/PartnerOrderVoter.php
-
-		-
-			message: "#^Method App\\\\Security\\\\PartnerOrderVoter\\:\\:canEdit\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Security/PartnerOrderVoter.php
-
-		-
 			message: "#^Method App\\\\Security\\\\SupplierVoter\\:\\:canView\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Security/SupplierVoter.php
@@ -3101,27 +2641,12 @@ parameters:
 			path: src/Service/EavAttributeProcessor.php
 
 		-
-			message: "#^Cannot call method createAttribute\\(\\) on App\\\\Entity\\\\EAV\\\\Definition\\|null\\.$#"
-			count: 1
-			path: src/Service/EavAttributeProcessor.php
-
-		-
 			message: "#^Unable to resolve the template type T in call to method Doctrine\\\\ORM\\\\EntityManagerInterface\\:\\:getReference\\(\\)$#"
-			count: 2
+			count: 1
 			path: src/Service/EavAttributeProcessor.php
 
 		-
 			message: "#^Parameter \\#1 \\$entityName of method Doctrine\\\\ORM\\\\EntityManagerInterface\\:\\:getReference\\(\\) expects class\\-string\\<mixed\\>, string given\\.$#"
-			count: 2
-			path: src/Service/EavAttributeProcessor.php
-
-		-
-			message: "#^Method App\\\\Service\\\\EavAttributeProcessor\\:\\:getPropertyAnnotations\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Service/EavAttributeProcessor.php
-
-		-
-			message: "#^Method App\\\\Service\\\\EavAttributeProcessor\\:\\:isPropertyParentRelationship\\(\\) has no return typehint specified\\.$#"
 			count: 1
 			path: src/Service/EavAttributeProcessor.php
 
@@ -3129,11 +2654,6 @@ parameters:
 			message: "#^Method App\\\\Service\\\\SequenceGenerator\\:\\:generateNext\\(\\) has parameter \\$entity with no typehint specified\\.$#"
 			count: 1
 			path: src/Service/SequenceGenerator.php
-
-		-
-			message: "#^Method App\\\\Transformers\\\\AddressTransformer\\:\\:transform\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Transformers/AddressTransformer.php
 
 		-
 			message: "#^Method App\\\\Transformers\\\\AdjustmentOrderTransformer\\:\\:includeStorageLocation\\(\\) has no return typehint specified\\.$#"

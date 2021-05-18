@@ -162,6 +162,7 @@ export default {
                 partner: { id: null },
                 isEditable: true,
                 isDeletable: false,
+                isComplete: false,
                 distributionPeriod: "",
                 reason: "",
                 status: "",
@@ -187,13 +188,6 @@ export default {
     },
     computed: {
         ...mapGetters(["allOrderableProducts", "allPartners"]),
-        statusIsCompleted: function() {
-            var self = this;
-            var status = this.statuses.filter(function(item) {
-                return self.order.status === item.id;
-            });
-            return status[0].commit === true;
-        }
     },
     watch: {
         "order.partner": {
@@ -275,7 +269,7 @@ export default {
                 $("#invalidModal").modal("show");
                 return false;
             }
-            if (this.statusIsCompleted) {
+            if (this.isComplete) {
                 $("#confirmCommitModal").modal("show");
             } else {
                 this.save();

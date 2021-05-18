@@ -10,7 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Moment\Moment;
 use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
-use Symfony\Component\Workflow\Exception\LogicException;
 use Symfony\Component\Workflow\Registry;
 
 /**
@@ -434,23 +433,6 @@ class Client extends CoreEntity implements AttributedEntityInterface
         $firstMoment = Moment::fromDateTime($first);
 
         $this->distributionExpiresAt = $firstMoment->addYears(3)->addMonths(1)->startOf('month');
-    }
-
-    public function applyTransition(string $transition): void
-    {
-        $stateMachine = $this->workflowRegistry->get($this);
-        try {
-            $stateMachine->apply($this, $transition);
-        } catch (LogicException $ex) {
-            // TODO log this instead
-            throw new \Exception(
-                sprintf(
-                    '%s is not a valid transition at this time. Exception thrown: %s',
-                    $transition,
-                    $ex->getMessage()
-                )
-            );
-        }
     }
 
     /**

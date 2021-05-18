@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use App\Configuration\AppConfiguration;
-use App\Entity\EAV\Definition;
+use App\Entity\EAV\Attribute;
+use App\Entity\EAV\AttributeDefinition;
 use App\Entity\Setting;
 use App\Transformers\UserTransformer;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SystemController extends BaseController
 {
     /**
-     * Get a list of Products
+     * Get a list of Attribute Types
      *
      * @Route(path="/attribute-types", methods={"GET"})
      *
@@ -26,15 +27,9 @@ class SystemController extends BaseController
      */
     public function attributeTypes(Request $request)
     {
-        $types = Definition::getAttributeTypes();
+        $types = AttributeDefinition::getAttributeTypes();
         $attributes = array_map(function ($type) {
-            $attribute = Definition::createNewAttributeFromType($type);
-            return [
-                'id' => $type,
-                'label' => $attribute->getTypeLabel(),
-                'hasOptions' => $attribute->hasOptions(),
-                'displayInterfaces' => $attribute->getDisplayInterfaces(),
-            ];
+            return Attribute::getTypeMetaData($type);
         }, $types);
 
         return new JsonResponse(['data' => $attributes]);
