@@ -166,14 +166,13 @@
             onCheckboxToggled () {
                 this.$events.fire('selection-change', this.$refs.vuetable.selectedTo);
                 this.$events.fire(
-                    "selection-change-details",
+                    "selection-change",
                     this.$refs.vuetable.tableData.filter(d => this.$refs.vuetable.selectedTo.includes(d.id))
                 );
             },
             clearSelected () {
                 this.$refs.vuetable.selectedTo = [];
                 this.$events.fire("selection-change", this.$refs.vuetable.selectedTo);
-                this.$events.fire("selection-change-details", []);
             },
         }
     };

@@ -178,7 +178,7 @@ export default {
         console.log("Component mounted.");
     },
     mounted() {
-        this.$events.$on("selection-change-details", eventData => this.onSelectionChange(eventData));
+        this.$events.$on("selection-change", eventData => this.onSelectionChange(eventData));
     },
     methods: {
         routerLink: function(id) {
