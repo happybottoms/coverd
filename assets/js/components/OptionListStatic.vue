@@ -10,6 +10,7 @@
                 :value="value"
                 class="form-control"
                 :class="{ loaded: loaded }"
+                :disabled="disabled"
                 @change="onChange"
             >
                 <option
@@ -30,6 +31,7 @@
                 :value="value"
                 class="form-control"
                 :class="{ loaded: loaded }"
+                :disabled="disabled"
                 @change="onChange"
             >
                 <option
@@ -42,6 +44,18 @@
                     :selected="value == item.id"
                     :value="item.id"
                     v-text="displayText(item)"
+                />
+            </select>
+        </template>
+        <template v-else-if="disabled">
+            <select
+                class="form-control"
+                :class="{ loaded: loaded }"
+                :disabled="disabled"
+            >
+                <option
+                    value=""
+                    v-text="emptyOption"
                 />
             </select>
         </template>
@@ -76,6 +90,7 @@ export default {
         emptyString: { type: String },
         alphabetize: { type: Boolean, default: true },
         chosen: { type: Boolean, default: true },
+        disabled: { type: Boolean, default: false }
     },
 
     data() {

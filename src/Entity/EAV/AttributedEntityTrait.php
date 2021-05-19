@@ -13,7 +13,6 @@ trait AttributedEntityTrait
      *
      * @ORM\ManyToMany(
      *     targetEntity="App\Entity\EAV\Attribute",
-     *     fetch="EAGER",
      *     cascade={"persist", "remove"},
      *     orphanRemoval=true
      * )

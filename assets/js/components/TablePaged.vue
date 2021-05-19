@@ -1,5 +1,5 @@
 <template>
-    <div :class="[{'vuetable-wrapper ui basic segment': true}, 'box-body table-responsive no-padding']">
+    <div :class="[{ 'vuetable-wrapper ui basic segment': true }, 'box-body table-responsive no-padding']">
         <div class="loadingArea">
             <pulse-loader
                 :loading="loading"
@@ -8,14 +8,10 @@
         </div>
         <div class="row">
             <div class="col-xs-6">
-                <slot
-                    name="toolbar-left"
-                />
+                <slot name="toolbar-left" />
             </div>
             <div class="col-xs-6 text-right">
-                <slot
-                    name="toolbar-right"
-                />
+                <slot name="toolbar-right" />
             </div>
         </div>
         <vuetable
@@ -39,12 +35,12 @@
             @vuetable:loading="showLoader"
             @vuetable:loaded="hideLoader"
         >
-            <template v-slot:link="{rowData}">
+            <template v-slot:link="{ rowData }">
                 <router-link :to="editRoute + rowData[linkIdProperty]">
                     <i class="fa fa-edit" /> {{ rowData[linkDisplayProperty] }}
                 </router-link>
             </template>
-            <template v-slot:actions="{rowData}">
+            <template v-slot:actions="{ rowData }">
                 <slot
                     name="actions"
                     :rowData="rowData"
@@ -73,7 +69,7 @@
                         first: 'fa fa-angle-double-left',
                         prev: 'fa fa-angle-left',
                         next: 'fa fa-angle-right',
-                        last: 'fa fa-angle-double-right',
+                        last: 'fa fa-angle-double-right'
                     }
                 }"
                 @vuetable-pagination:change-page="onChangePage"
@@ -169,11 +165,15 @@
             },
             onCheckboxToggled () {
                 this.$events.fire('selection-change', this.$refs.vuetable.selectedTo);
+                this.$events.fire(
+                    "selection-change",
+                    this.$refs.vuetable.tableData.filter(d => this.$refs.vuetable.selectedTo.includes(d.id))
+                );
             },
             clearSelected () {
                 this.$refs.vuetable.selectedTo = [];
-                this.$events.fire('selection-change', this.$refs.vuetable.selectedTo);
+                this.$events.fire("selection-change", this.$refs.vuetable.selectedTo);
             },
         }
-    }
+    };
 </script>
