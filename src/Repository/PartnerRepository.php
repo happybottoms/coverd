@@ -58,9 +58,10 @@ class PartnerRepository extends EntityRepository
                 ->setParameter('name', $params->get('name'));
         }
 
-        if ($params->has('type') && $params->get('type')) {
-            $qb->andWhere('p.type = :type')
-                ->setParameter('type', $params->get('type'));
+        if ($params->has('partnerType') && $params->get('partnerType')) {
+            dump('here');
+            $qb->andWhere('p.partnerType = :partnerType')
+                ->setParameter('partnerType', $params->get('partnerType'));
         }
 
         if ($params->has('fulfillmentPeriod') && $params->get('fulfillmentPeriod')) {

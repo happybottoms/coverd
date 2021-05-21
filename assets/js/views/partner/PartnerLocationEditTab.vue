@@ -122,7 +122,7 @@
                             <!-- /.box-body -->
                         </div>
                         <div
-                            v-else=""
+                            v-else
                             class="box box-danger bg-gray"
                         >
                             <div class="box-header">
