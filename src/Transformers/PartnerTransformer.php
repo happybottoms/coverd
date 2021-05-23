@@ -13,6 +13,7 @@ class PartnerTransformer extends StorageLocationTransformer
     {
         $availableIncludes = parent::getAvailableIncludes();
         $availableIncludes[] = 'users';
+        $availableIncludes[] = 'profile';
 
         return $availableIncludes;
     }
@@ -22,7 +23,6 @@ class PartnerTransformer extends StorageLocationTransformer
         $defaultIncludes = parent::getDefaultIncludes();
         $defaultIncludes[] = 'fulfillmentPeriod';
         $defaultIncludes[] = 'distributionMethod';
-        $defaultIncludes[] = 'profile';
 
         return $defaultIncludes;
     }

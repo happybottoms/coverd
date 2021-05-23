@@ -144,7 +144,7 @@ export default {
             } else {
                 axios
                     .get('/api/partners/' + this.$route.params.id, {
-                        params: { include: ['profile.attributes.options']}
+                        params: { include: ['profile', 'profile.attributes.options']}
                     }).then(response => {
                         self.partner = response.data.data;
                         self.partner.workflow = response.data.meta;

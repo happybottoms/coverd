@@ -43,7 +43,9 @@ class Attribute
      *     targetEntity="AttributeValue",
      *     mappedBy="attribute",
      *     orphanRemoval=true,
-     *     cascade={"persist", "remove"}
+     *     cascade={"persist", "remove"},
+     *     fetch="EAGER"
+     *
      * )
      */
     private $values;

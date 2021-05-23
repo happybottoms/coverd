@@ -9,11 +9,12 @@
         />
         <select
             v-if="!groupProperty"
+            v-model="value"
             v-chosen
-            :value="value"
             class="form-control"
             :class="{'loaded': loaded}"
-            @change="$emit('input', $event.target.value)"
+            :multiple="multiple"
+            @change="onChange"
         >
             <option
                 value=""
@@ -30,10 +31,11 @@
         <select
             v-else
             v-chosen
-            :value="value"
+            v-model="value"
             class="form-control"
             :class="{'loaded': loaded}"
-            @change="$emit('input', $event.target.value)"
+            :multiple="multiple"
+            @change="onChange"
         >
             <option
                 value=""
@@ -70,6 +72,7 @@
             groupProperty: { type: String, default: null },
             emptyString: { type: String },
             alphabetize: { type: Boolean, default: true },
+            multiple: { type: Boolean, default: false },
         },
         data() {
             return {
@@ -119,6 +122,14 @@
         },
 
         methods: {
+            onChange($event) {
+                if(this.multiple) {
+                    this.$emit('input',[...$event.target.selectedOptions]
+                        .map(option => option.value));
+                } else {
+                    this.$emit('input', $event.target.value);
+                }
+            }
         }
     }
 </script>

@@ -36,6 +36,14 @@
                     :help-text="attribute.helpText"
                     :preloaded-options="attribute.options"
                 />
+                <OptionListApi
+                    v-else-if="attribute.displayInterface === 'SELECT_MULTI'"
+                    v-model="attribute.value"
+                    :label="attribute.label"
+                    :help-text="attribute.helpText"
+                    :preloaded-options="attribute.options"
+                    :multiple="true"
+                />
                 <RadioField
                     v-else-if="attribute.displayInterface === 'RADIO'"
                     v-model="attribute.value"

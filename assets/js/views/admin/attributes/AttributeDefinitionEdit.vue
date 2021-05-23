@@ -163,7 +163,7 @@ export default {
                     TEXTAREA: 'Multiline Text Input',
                     NUMBER: 'Number Input',
                     DATETIME: 'Date Selector',
-                    SELECT_SINGLE: 'Dropdown',
+                    SELECT_SINGLE: 'Single Select List',
                     SELECT_MULTI: 'Multiple Select List',
                     RADIO: 'Radio Button Group',
                     CHECKBOX_GROUP: 'Checkbox Group',

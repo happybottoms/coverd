@@ -46,7 +46,7 @@ abstract class AttributeValue
     /**
      * @var Attribute|null
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\EAV\Attribute", inversedBy="values")
+     * @ORM\ManyToOne(targetEntity="App\Entity\EAV\Attribute", inversedBy="values", fetch="EAGER")
      */
     private $attribute;
 

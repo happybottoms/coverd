@@ -30,7 +30,7 @@
                 </div>
             </div>
         </Draggable>
-        <button @click="addBlankPair">
+        <button @click.prevent="addBlankPair">
             Add Option
         </button>
     </div>
