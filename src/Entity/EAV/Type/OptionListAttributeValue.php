@@ -79,6 +79,7 @@ class OptionListAttributeValue extends AttributeValue
     {
         return [
             self::UI_SELECT_SINGLE,
+            self::UI_SELECT_MULTI,
             self::UI_RADIO,
             self::UI_CHECKBOX_GROUP,
         ];

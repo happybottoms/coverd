@@ -291,7 +291,10 @@ abstract class AttributeDefinition extends CoreEntity
 
     public function isMultivalued(): bool
     {
-        return $this->getDisplayInterface() === OptionListAttributeValue::UI_CHECKBOX_GROUP ?: !!$this->isMultivalued;
+        return in_array($this->getDisplayInterface(), [
+            OptionListAttributeValue::UI_CHECKBOX_GROUP, OptionListAttributeValue::UI_SELECT_MULTI
+            ])
+            ?: !!$this->isMultivalued;
     }
 
     public function setIsMultivalued(bool $isMultivalued): void
