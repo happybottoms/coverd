@@ -9,7 +9,7 @@
             v-if="userHasRole('ROLE_CLIENT_EDIT_ALL') && !isSameStatus"
             class="alert alert-warning"
         >
-            <h4><i class="icon fas fa-exclamation-triangle"></i> Alert!</h4>
+            <h4><i class="icon fas fa-exclamation-triangle" /> Alert!</h4>
             Selected clients must all be in the same status to bulk change status.
         </div>
 
