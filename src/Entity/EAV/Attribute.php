@@ -5,6 +5,7 @@ namespace App\Entity\EAV;
 use App\Entity\EAV\Type\AddressAttributeValue;
 use App\Entity\EAV\Type\BooleanAttributeValue;
 use App\Entity\EAV\Type\DatetimeAttributeValue;
+use App\Entity\EAV\Type\FileAttributeValue;
 use App\Entity\EAV\Type\FloatAttributeValue;
 use App\Entity\EAV\Type\IntegerAttributeValue;
 use App\Entity\EAV\Type\OptionListAttributeValue;
@@ -188,6 +189,9 @@ class Attribute
                 break;
             case AttributeDefinition::TYPE_ADDRESS:
                 $value = new AddressAttributeValue();
+                break;
+            case AttributeDefinition::TYPE_FILE:
+                $value = new FileAttributeValue();
                 break;
             case AttributeDefinition::TYPE_ZIPCODE:
                 $value = new ZipCountyAttributeValue();
