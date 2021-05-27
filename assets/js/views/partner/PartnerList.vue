@@ -28,7 +28,7 @@
                     empty-string="-- All Statuses --"
                 />
             </div>
-            <div class="col-xs-4">
+            <div class="col-xs-2">
                 <option-list-static
                     v-model="filters.partnerType"
                     label="Type"
@@ -36,21 +36,27 @@
                     empty-string="-- All Types --"
                 />
             </div>
-            <div class="col-xs-4">
+            <div class="col-xs-2">
                 <option-list
-                    v-model="filters.fulfillmentPeriod"
-                    label="Fulfillment Period"
+                    v-model="filters"
+                    label="Partner Fulfillment Period"
                     api-path="partners/fulfillment-periods"
+                    property="fulfillmentPeriod"
+                    display-property="name"
+                    empty-string="-- All Periods --"
                 />
             </div>
-            <div class="col-xs-4">
+            <div class="col-xs-2">
                 <option-list
-                    v-model="filters.distributionMethod"
+                    v-model="filters"
                     label="Distribution Method"
                     api-path="partners/distribution-methods"
+                    property="distributionMethod"
+                    display-property="name"
+                    empty-string="-- All Methods --"
                 />
             </div>
-            <div class="col-xs-4">
+            <div class="col-xs-2">
                 <button
                     class="btn btn-success btn-flat"
                     @click="doFilter"
@@ -94,7 +100,7 @@ export default {
                     { name: '__checkbox', title: "#" },
                     { name: '__slot:link', title: "Partner Id", sortField: 'id' },
                     { name: 'title', title: "Title", sortField: 'title' },
-                    { name: 'partnerType', title: "Type", sortField: 'partnerType' },
+                    { name: 'partnerType', title: "Type", sortField: 'p.partnerType' },
                     { name: 'status', title: "Status", sortField: 'status' },
                     { name: 'fulfillmentPeriod.name', title: "Fulfillment Period", sortField: 'fulfillmentPeriod' },
                     { name: 'distributionMethod.name', title: "Distribution Method", sortField: 'distributionMethod' },
