@@ -13,7 +13,7 @@
         name: 'DisplayField',
         props: {
             label: { type: [String, Boolean], default: false },
-            value: { type: String },
+            value: { type: [String, Number] },
         }
     }
 </script>
