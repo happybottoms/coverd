@@ -15,8 +15,8 @@ services:
             - db
     nginx:
         image: nginx
-#        ports:
-#            - 8080:80
+        ports:
+            - 8080:80
         volumes:
             - ./:/app:ro,cached
             - ./docker/config/app.nginx.conf:/etc/nginx/conf.d/default.conf
