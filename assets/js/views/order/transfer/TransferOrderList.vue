@@ -10,27 +10,34 @@
             Transfer Orders Lists
         </h3>
         <div class="row">
-            <div class="col-xs-4">
+            <div class="col-xs-3">
                 <option-list
-                    v-model="filters"
+                    v-model="filters.source"
                     label="Source Location"
-                    api-path="warehouses"
-                    property="id"
-                    display-property="title"
-                    empty-string="-- All Locations --"
+                    api-path="orders/transfer"
+                    display-property="sourceLocation"
+                    empty-string="-- All Source Locations --"
                 />
             </div>
-            <div class="col-xs-4">
+            <div class="col-xs-3">
                 <option-list
-                    v-model="filters"
-                    label="Destination Location"
-                    api-path="warehouses"
+                    v-model="filters.target"
+                    label="Target Location"
+                    api-path="orders/transfer"
                     property="id"
-                    display-property="title"
-                    empty-string="-- All Locations --"
+                    display-property="targetLocation"
+                    empty-string="-- All Target Locations --"
                 />
             </div>
-            <div class="col-xs-4">
+            <div class="col-xs-3">
+                <option-list-static
+                    v-model="filters.status"
+                    label="Status"
+                    :preloaded-options="statuses"
+                    empty-string="-- All Statuses --"
+                />
+            </div>
+            <div class="col-xs-3">
                 <button
                     class="btn btn-success btn-flat"
                     @click="doFilter"
@@ -64,6 +71,8 @@
                             edit-route="/orders/transfer/"
                             :sort-order="[{ field: 'id', direction: 'desc'}]"
                             link-display-property="sequence"
+                            :params="requestParams()"
+                            :per-page="10"
                         />
                     </div>
                     <!-- /.box-body -->
@@ -98,8 +107,13 @@ export default {
             ],
             filters: {
                 status: null,
-                id: null
+                source: {},
+                target: {}
             },
+            statuses: [
+                { id: "CREATING", name: "Creating" },
+                { id: "COMPLETED", name: "Completed" }
+            ],
         };
     },
     methods: {
@@ -110,7 +124,8 @@ export default {
         requestParams: function () {
             return {
                 status: this.filters.status || null,
-                id: this.filters.id || null,
+                sourceLocation: this.filters.source.id || null,
+                targetLocation: this.filters.target.id || null,
             }
         },
     }
