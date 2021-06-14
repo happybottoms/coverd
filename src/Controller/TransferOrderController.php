@@ -147,10 +147,12 @@ class TransferOrderController extends BaseOrderController
             $params->set('status', $request->get('status'));
         }
         if ($request->get('sourceLocation')) {
-            $params->set('sourceLocation', $request->get('sourceLocation'));
+            $sourceLocation = $this->getRepository(StorageLocation::class)->find($request->get('sourceLocation'));
+            $params->set('sourceLocation', $sourceLocation);
         }
         if ($request->get('targetLocation')) {
-            $params->set('targetLocation', $request->get('targetLocation'));
+            $targetLocation = $this->getRepository(StorageLocation::class)->find($request->get('targetLocation'));
+            $params->set('targetLocation', $targetLocation);
         }
         return $params;
     }

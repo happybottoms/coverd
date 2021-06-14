@@ -16,18 +16,15 @@ class TransferOrderRepository extends OrderRepository
 
     protected function addCriteria(QueryBuilder $qb, ParameterBag $params)
     {
-        if ($params->has('status') && $params->get('status')) {
-            $qb->andWhere('o.status = :status')
-                ->setParameter('status', $params->get('status'));
-        }
+        // Add criteria that applies to all orders (e.g. Status)
+        parent::addCriteria($qb, $params);
 
         if ($params->has('sourceLocation') && $params->get('sourceLocation')) {
-            dump($qb->getQuery());
             $qb->andWhere('o.sourceLocation = :sourceLocation')
                 ->setParameter('sourceLocation', $params->get('sourceLocation'));
         }
-        
-        if ($params->has('targetLocation') && $params->get('status')) {
+
+        if ($params->has('targetLocation') && $params->get('targetLocation')) {
             $qb->andWhere('o.targetLocation = :targetLocation')
                 ->setParameter('targetLocation', $params->get('targetLocation'));
         }
