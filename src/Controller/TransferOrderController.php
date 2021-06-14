@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Workflow\Registry;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
  * @Route(path="/api/orders/transfer")
@@ -132,5 +133,25 @@ class TransferOrderController extends BaseOrderController
     protected function getViewVoter(): string
     {
         return TransferOrderVoter::VIEW;
+    }
+    
+    /**
+     * @param Request $request
+     * @return ParameterBag
+     */
+    protected function buildFilterParams(Request $request)
+    {
+        $params = new ParameterBag();
+
+        if ($request->get('status')) {
+            $params->set('status', $request->get('status'));
+        }
+        if ($request->get('sourceLocation')) {
+            $params->set('sourceLocation', $request->get('sourceLocation'));
+        }
+        if ($request->get('targetLocation')) {
+            $params->set('targetLocation', $request->get('targetLocation'));
+        }
+        return $params;
     }
 }

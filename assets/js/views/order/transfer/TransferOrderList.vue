@@ -11,23 +11,10 @@
         </h3>
         <div class="row">
             <div class="col-xs-3">
-                <option-list
-                    v-model="filters.source"
-                    label="Source Location"
-                    api-path="orders/transfer"
-                    display-property="sourceLocation"
-                    empty-string="-- All Source Locations --"
-                />
+                <storage-location-selection-form v-model="filters.source" label="Source Location" />
             </div>
             <div class="col-xs-3">
-                <option-list
-                    v-model="filters.target"
-                    label="Target Location"
-                    api-path="orders/transfer"
-                    property="id"
-                    display-property="targetLocation"
-                    empty-string="-- All Target Locations --"
-                />
+                <storage-location-selection-form v-model="filters.target" label="Target Location" />
             </div>
             <div class="col-xs-3">
                 <option-list-static
@@ -86,12 +73,13 @@
 <script>
 import TablePaged from '../../../components/TablePaged.vue';
 import OptionListStatic from '../../../components/OptionListStatic.vue';
-import OptionList from '../../../components/OptionListEntity.vue';
+import StorageLocationSelectionForm from '../../../components/StorageLocationSelectionForm';
+
 export default {
     components: {
         TablePaged,
         OptionListStatic,
-        OptionList
+        StorageLocationSelectionForm
     },
     data() {
         return {

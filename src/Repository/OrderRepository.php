@@ -59,16 +59,6 @@ class OrderRepository extends EntityRepository
             $qb->andWhere('f.id = :fulfillmentPeriod')
                 ->setParameter('fulfillmentPeriod', $params->get('fulfillmentPeriod'));
         }
-
-        if ($params->has('sourceLocation')) {
-            $qb->andWhere('o.sourceLocation = :sourceLocation')
-                ->setParameter('sourceLocation', $params->get('sourceLocation'));
-        }
-        
-        if ($params->has('targetLocation')) {
-            $qb->andWhere('o.targetLocation = :targetLocation')
-                ->setParameter('targetLocation', $params->get('targetLocation'));
-        }
     }
 
     protected function joinRelatedTables(QueryBuilder $qb)

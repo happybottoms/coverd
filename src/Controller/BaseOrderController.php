@@ -330,13 +330,6 @@ abstract class BaseOrderController extends BaseController
         if ($request->get('distributionMonth')) {
             $params->set('distributionMonth', $request->get('distributionMonth'));
         }
-        if ($request->get('sourceLocation')) {
-            $params->set('sourceLocation', $request->get('sourceLocation'));
-        }
-        if ($request->get('targetLocation')) {
-            $params->set('targetLocation', $request->get('targetLocation'));
-        }
-
         return $params;
     }
 
