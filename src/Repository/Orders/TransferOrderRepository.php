@@ -14,6 +14,11 @@ class TransferOrderRepository extends OrderRepository
             ->leftJoin('o.targetLocation', 'targetLocation');
     }
 
+    /**
+     * @param $qb
+     * @param ParameterBag $params
+     * @return void
+     */
     protected function addCriteria(QueryBuilder $qb, ParameterBag $params)
     {
         // Add criteria that applies to all orders (e.g. Status)
