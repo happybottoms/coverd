@@ -104,7 +104,6 @@ export default {
     },
     methods: {
         doFilter () {
-            console.log('doFilter:', this.requestParams(), this.filters);
             this.$events.fire('filter-set', this.requestParams());
         },
         requestParams: function () {

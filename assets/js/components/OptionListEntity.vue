@@ -20,7 +20,7 @@
                 :key="item.id"
                 :selected="value.id === item.id"
                 :value="item.id"
-                v-text="item[displayProperty]"
+                v-text="item[displayProperty].title ? item[displayProperty].title : item[displayProperty]"
             />
         </select>
         <select
