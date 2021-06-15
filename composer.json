@@ -13,6 +13,7 @@
         "php": "^7.3.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-json": "*",
         "composer/package-versions-deprecated": "^1.11",
         "doctrine/annotations": "^1.6",
         "doctrine/common": "^2",
@@ -45,7 +46,7 @@
         "twig/cssinliner-extra": "^3.3",
         "twig/extra-bundle": "^3.3",
         "twig/inky-extra": "^3.3",
-        "zenstruck/schedule-bundle": "^1.0"
+        "zenstruck/schedule-bundle": "^1.0",
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",

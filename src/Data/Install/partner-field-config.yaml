@@ -1,0 +1,6 @@
+fields:
+    shortname:
+        label: Short Name
+        type: text
+        interface:
+        helptext:

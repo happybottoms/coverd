@@ -4,16 +4,22 @@ namespace App\DataFixtures;
 
 use App\Entity\User;
 use App\Entity\ValueObjects\Name;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class UserFixtures extends BaseFixture implements DependentFixtureInterface
+class UserFixtures extends BaseFixture implements DependentFixtureInterface, FixtureGroupInterface
 {
     public function getDependencies(): array
     {
         return [
             GroupFixtures::class,
         ];
+    }
+
+    public static function getGroups(): array
+    {
+        return ['UserFixtures'];
     }
 
     public function loadData(ObjectManager $manager): void

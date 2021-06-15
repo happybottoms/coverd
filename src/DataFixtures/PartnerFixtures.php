@@ -8,10 +8,11 @@ use App\Entity\PartnerDistributionMethod;
 use App\Entity\PartnerFulfillmentPeriod;
 use App\Entity\StorageLocationAddress;
 use App\Entity\StorageLocationContact;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Workflow\Registry;
 
-class PartnerFixtures extends BaseFixture
+class PartnerFixtures extends BaseFixture implements FixtureGroupInterface
 {
     /** @var Registry */
     protected $workflowRegistry;
@@ -19,6 +20,11 @@ class PartnerFixtures extends BaseFixture
     public function __construct(Registry $workflowRegistry)
     {
         $this->workflowRegistry = $workflowRegistry;
+    }
+
+    public static function getGroups(): array
+    {
+        return ['MigratedFixtures'];
     }
 
     public function loadData(ObjectManager $manager)

@@ -10,11 +10,17 @@ use App\Entity\Product;
 use App\Entity\Supplier;
 use App\Entity\User;
 use App\Entity\Warehouse;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class GroupFixtures extends BaseFixture
+class GroupFixtures extends BaseFixture implements FixtureGroupInterface
 {
-    public function loadData(ObjectManager $em)
+    public static function getGroups(): array
+    {
+        return ['UserFixtures'];
+    }
+
+    public function loadData(ObjectManager $em): void
     {
         $sysAdmin = new Group();
         $sysAdmin->setName('System Administrator');
