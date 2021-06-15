@@ -12,7 +12,7 @@ use League\Fractal\TransformerAbstract;
  */
 class FileTransformer extends TransformerAbstract
 {
-    public function transform(File $file = null)
+    public function transform(File $file = null): array
     {
         if (!$file) {
             return [ 'id' => null ];
@@ -23,7 +23,7 @@ class FileTransformer extends TransformerAbstract
             'filename' => $file->getFilename(),
             'filesize' => $file->getFilesize(),
             'mimeType' => $file->getMimeType(),
-            'url' => '/file/'.$file->getPublicId(),
+            'url' => '/file/' . $file->getPublicId(),
         ];
     }
 }

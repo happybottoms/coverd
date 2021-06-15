@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controller;
 
 use App\Entity\File;
@@ -31,9 +30,9 @@ class FileController extends BaseController
 
         $tmpFileName = $filesystem->tempnam(sys_get_temp_dir(), 'sb_');
         $tmpFile = fopen($tmpFileName, 'wb+');
-//        if (!is_resource($tmpFile)) {
-//            throw new \RuntimeException('Unable to create a temporary file.');
-//        }
+        if (!$tmpFile) {
+            throw new \RuntimeException('Unable to create a temporary file.');
+        }
 
         file_put_contents($tmpFileName, fread($file->getContent(), $file->getFilesize()));
 

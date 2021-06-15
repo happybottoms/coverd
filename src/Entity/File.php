@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -45,7 +44,7 @@ class File extends CoreEntity
     protected $mimeType;
 
     /**
-     * @var string
+     * @var resource
      *
      * @ORM\Column(type="blob")
      */
@@ -123,15 +122,24 @@ class File extends CoreEntity
     }
 
     /**
-     * @param string $content
+     * @param string|resource $content
      */
-    public function setContent(string $content): void
+    public function setContent($content): void
     {
-        if (preg_match('/^data:.*;base64,(.*)$/', $content, $matches)) {
-            $b64Content = $matches[1];
-            $content = base64_decode($b64Content);
+        if (is_resource($content)) {
+            $this->content = $content;
+            return;
         }
-        $this->content = $content;
+
+        if (preg_match('/^data:.*;base64,(.*)$/', $content, $matches)) {
+            $content = base64_decode($matches[1]);
+        }
+
+        $fp = fopen("php://temp", "w+");
+        if ($fp) {
+            fwrite($fp, $content);
+            $this->content = $fp;
+        }
     }
 
     /**

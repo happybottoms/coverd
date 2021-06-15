@@ -20,7 +20,7 @@ class FileListener implements EventSubscriber
         $this->gen = $gen;
     }
 
-    public function prePersist(LifecycleEventArgs $event)
+    public function prePersist(LifecycleEventArgs $event): void
     {
         $file = $event->getEntity();
         if (!$file instanceof File) {
@@ -32,7 +32,7 @@ class FileListener implements EventSubscriber
         }
     }
 
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return [
             Events::prePersist,
