@@ -15,8 +15,6 @@ class TransferOrderRepository extends OrderRepository
     }
 
     /**
-     * @param $qb
-     * @param ParameterBag $params
      * @return void
      */
     protected function addCriteria(QueryBuilder $qb, ParameterBag $params)
