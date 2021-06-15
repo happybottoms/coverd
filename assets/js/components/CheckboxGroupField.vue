@@ -30,7 +30,7 @@
     export default {
         name: 'CheckboxGroupField',
         props: {
-            value: { type: String, required: true },
+            value: { type: [String, Array], required: true },
             name: { type: String, required: true },
             label: { type: String },
             helpText: { type: String, required: false, default: "" },

@@ -30,8 +30,8 @@
         </select>
         <select
             v-else
-            v-chosen
             v-model="value"
+            v-chosen
             class="form-control"
             :class="{'loaded': loaded}"
             :multiple="multiple"

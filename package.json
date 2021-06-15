@@ -49,6 +49,7 @@
         "@fortawesome/fontawesome-free": "^5.15.1",
         "admin-lte": "^2.4.18",
         "chosen-bootstrap-theme": "^1.0.5",
+        "filesize": "^6.3.0",
         "normalize-scss": "^6.0.0",
         "verte": "^0.0.12",
         "vue-spinner": "^1.0.3",

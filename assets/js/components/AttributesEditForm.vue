@@ -77,6 +77,12 @@
                     :label="attribute.label"
                     :help-text="attribute.helpText"
                 />
+                <FileUploadField
+                    v-else-if="attribute.displayInterface === 'FILE_UPLOAD'"
+                    v-model="attribute.value"
+                    :label="attribute.label"
+                    :help-text="attribute.helpText"
+                />
                 <TextField
                     v-else
                     v-model="attribute.value"
@@ -101,9 +107,11 @@
     import YesNoRadioField from "./YesNoRadioField";
     import AddressField from "./AddressField";
     import ZipCountyField from "./ZipCountyField";
+    import FileUploadField from "./FileUploadField";
     export default {
         name: 'AttributesEditForm',
         components: {
+            FileUploadField,
             CheckboxGroupField,
             ZipCountyField,
             AddressField,

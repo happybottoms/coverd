@@ -41,6 +41,11 @@ services:
         tags:
             - { name: doctrine.event_subscriber }
 
+    app.listener.file:
+        class: App\Listener\FileListener
+        tags:
+            - { name: doctrine.event_subscriber }
+
     sam_j_fractal.manager:
         class: SamJ\FractalBundle\ContainerAwareManager
         public: true
