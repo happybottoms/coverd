@@ -27,7 +27,7 @@
         "lodash": "^4.17.19",
         "moment": "^2.18.1",
         "moment-timezone": "^0.5.14",
-        "node-sass": "^4.10.0",
+        "node-sass": "^4.13.1",
         "regenerator-runtime": "^0.13.2",
         "sass-loader": "^8.0.0",
         "tinycolor2": "^1.4.1",
