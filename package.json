@@ -5,7 +5,7 @@
         "@beyonk/google-fonts-webpack-plugin": "^1.5.0",
         "@symfony/webpack-encore": "^0.30.0",
         "@vue/test-utils": "^1.0.0-beta.29",
-        "axios": "^0.18.1",
+        "axios": "^0.21.1",
         "babel-core": "^7.0.0-bridge.0",
         "babel-eslint": "^10.1.0",
         "babel-jest": "^24.9.0",
