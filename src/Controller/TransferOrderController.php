@@ -134,7 +134,7 @@ class TransferOrderController extends BaseOrderController
     {
         return TransferOrderVoter::VIEW;
     }
-    
+
     /**
      * @param Request $request
      * @return ParameterBag
