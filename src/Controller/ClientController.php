@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Client;
+use App\Entity\EAV\Attribute;
 use App\Entity\EAV\ClientAttributeDefinition;
 use App\Entity\Orders\BulkDistributionLineItem;
 use App\Entity\Partner;
@@ -113,7 +114,7 @@ class ClientController extends BaseController
         $fields = $this->getRepository(ClientAttributeDefinition::class)->findBy(['isDuplicateReference' => true]);
 
         $attributes = array_map(function ($definition) {
-            return $definition->createAttribute();
+            return new Attribute($definition);
         }, $fields);
 
         return $this->serialize($request, $attributes, new ClientAttributeTransformer());
@@ -130,7 +131,7 @@ class ClientController extends BaseController
         $fields = $this->getRepository(ClientAttributeDefinition::class)->findAll();
 
         $attributes = array_map(function ($definition) {
-            return $definition->createAttribute();
+            return new Attribute($definition);
         }, $fields);
 
         return $this->serialize($request, $attributes, new ClientAttributeTransformer());

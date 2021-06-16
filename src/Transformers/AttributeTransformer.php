@@ -46,6 +46,10 @@ class AttributeTransformer extends TransformerAbstract
             return $attribute->hasRelationshipValue() ? $this->primitive(['id' => null]) : $this->primitive(null);
         }
 
+        if ($attribute->getDefinition()->getType() == AttributeDefinition::TYPE_FILE) {
+            $transformer = new FileTransformer();
+        }
+
         if ($attribute->getDefinition()->getType() == AttributeDefinition::TYPE_ADDRESS) {
             $transformer = new AddressTransformer();
         }

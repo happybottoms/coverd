@@ -5,7 +5,7 @@
                 v-if="editable"
                 ref="storageLocationSelect"
                 v-model="value"
-                label="Storage Location:"
+                :label=label
                 :preloaded-options="allActiveStorageLocations"
                 display-property="title"
                 group-property="type"
@@ -39,7 +39,8 @@
         props: {
             value: { required: true, type: Object },
             editable: { type: Boolean, default: true },
-            v: { type: Object }
+            v: { type: Object },
+            label: { type: String, default: 'Storage Location:' }
         },
         computed: mapGetters([
             'allActiveStorageLocations'
