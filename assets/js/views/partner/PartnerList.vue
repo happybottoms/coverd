@@ -123,10 +123,6 @@ export default {
                     { id: "HOSPITAL", name: "Hospital" },
                     { id: "AGENCY", name: "Agency" },
                 ],
-                periods: [
-                    { id: "HOSPITAL", name: "Hospital" },
-                    { id: "AGENCY", name: "Agency" },
-                ],
             };
         },
     methods: {
