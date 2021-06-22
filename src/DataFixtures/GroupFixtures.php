@@ -17,7 +17,7 @@ class GroupFixtures extends BaseFixture implements FixtureGroupInterface
 {
     public static function getGroups(): array
     {
-        return ['UserFixtures'];
+        return ['MinimumFixtures'];
     }
 
     public function loadData(ObjectManager $em): void

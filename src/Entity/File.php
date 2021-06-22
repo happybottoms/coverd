@@ -138,8 +138,10 @@ class File extends CoreEntity
         $fp = fopen("php://temp", "w+");
         if ($fp) {
             fwrite($fp, $content);
+            rewind($fp);
             $this->content = $fp;
         }
+
     }
 
     /**
@@ -160,6 +162,6 @@ class File extends CoreEntity
 
     public function isEmpty(): bool
     {
-        return empty($this->content) && empty($this->filename);
+        return empty($this->content) || empty($this->filename);
     }
 }

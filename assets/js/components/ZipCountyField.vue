@@ -8,7 +8,7 @@
             display-property="label"
             empty-string="-- Select Zip Code --"
             :label="label"
-            @input="onSelectionChange"
+            @change="onSelectionChange"
         />
         <MultiOptionListEntity
             v-else
@@ -18,7 +18,7 @@
             display-property="label"
             empty-string="-- Select Zip Code --"
             :label="label"
-            @input="onSelectionChange"
+            @change="onSelectionChange"
         />
     </div>
 </template>
@@ -40,10 +40,15 @@
             helpText: { type: String, required: false, default: "" },
         },
         mounted: function () {
-            this.$refs.zipCountySelect.$on('change', eventData => this.onSelectionChange(eventData))
+            this.$refs.zipCountySelect.$on('change', (eventData) => {
+                console.log('mounted change Event', eventData);
+
+                return this.onSelectionChange(eventData)
+            })
         },
         methods: {
             onSelectionChange: function (eventData) {
+                console.log('change Event', eventData);
                 this.$emit('change', eventData);
             }
         }

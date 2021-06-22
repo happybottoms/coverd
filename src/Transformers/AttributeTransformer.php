@@ -55,7 +55,11 @@ class AttributeTransformer extends TransformerAbstract
         }
 
         if ($attribute->getDefinition()->getType() == AttributeDefinition::TYPE_ZIPCODE) {
-            $transformer = new ZipCountyTransformer();
+            $jsonValues = $attribute->getJsonValues();
+
+            return $attribute->isMultivalued() ?
+                $this->primitive($jsonValues) :
+                $this->primitive(reset($jsonValues));
         }
 
         if ($transformer === null) {

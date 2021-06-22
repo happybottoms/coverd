@@ -26,6 +26,7 @@ abstract class AttributeValue
     public const UI_ADDRESS = "ADDRESS";
     public const UI_URL = "URL";
     public const UI_ZIPCODE = "ZIPCODE";
+    public const UI_ZIPCODE_MULTI = "ZIPCODE_MULTI";
 
     /**
      * @var int
@@ -69,6 +70,14 @@ abstract class AttributeValue
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValueId()
+    {
+        return $this->getValue()->getId();
     }
 
     /**
@@ -140,6 +149,14 @@ abstract class AttributeValue
      * Whether this type references another entity as it's value
      */
     public static function hasRelationship(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Whether this type references external entity ids (e.g. ZipCode)
+     */
+    public static function hasReference(): bool
     {
         return false;
     }

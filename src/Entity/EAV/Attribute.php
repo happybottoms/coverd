@@ -140,17 +140,14 @@ class Attribute
         $this->values = $newAttributeValues;
     }
 
-    private function getValueById(int $id): AttributeValue
+    protected function getValueById($id): AttributeValue
     {
         if (!$this->hasRelationshipValue()) {
             throw new \Exception("Trying to find a value by ID on a non-relationship attribute");
         }
 
-        print_r("Trying to find this value id: " . $id . "\n");
-
         $result = $this->values->filter(function ($value) use ($id) {
-            print_r("Found: " . $value->getValue()->getId() . "\n");
-            return $value->getValue()->getId() === $id;
+            return $value->getValueId() === $id;
         });
 
         return $result->first();
@@ -244,6 +241,12 @@ class Attribute
     {
         $value = self::createNewValueFromDefinition($this->getDefinition());
         return $value->hasOptions();
+    }
+
+    public function hasReference()
+    {
+        $value = self::createNewValueFromDefinition($this->getDefinition());
+        return $value->hasReference();
     }
 
     public function getValueType(): string

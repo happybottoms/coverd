@@ -2,17 +2,23 @@
 
 namespace App\DataFixtures;
 
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Moment\Moment;
 
-class SettingFixtures extends BaseFixture implements DependentFixtureInterface
+class SettingFixtures extends BaseFixture implements DependentFixtureInterface, FixtureGroupInterface
 {
     public function getDependencies()
     {
         return [
             ProductCategoryFixtures::class
         ];
+    }
+
+    public static function getGroups(): array
+    {
+        return ['MinimumFixtures'];
     }
 
     public function loadData(ObjectManager $em)

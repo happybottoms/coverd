@@ -2,6 +2,7 @@
 
 namespace App\Entity\EAV\Type;
 
+use _HumbugBoxa9bfddcdef37\Nette\Neon\Exception;
 use App\Entity\EAV\AttributeValue;
 use App\Entity\EAV\AttributeOption;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,18 +28,27 @@ class OptionListAttributeValue extends AttributeValue
     }
 
     /**
-     * @param AttributeOption|integer $value
+     * @param AttributeOption|integer|string $value
      *
      * @return AttributeValue
      */
     public function setValue($value): AttributeValue
     {
-        if (empty($value)) {
+        $orig_value = $value;
+        if (!$value) {
             $this->value = null;
         } elseif (is_numeric($value)) {
             $value = $this->getDefinition()->getOptions()->filter(function (AttributeOption $option) use ($value) {
                 return $option->getId() == $value;
             })->first();
+        } elseif (is_string($value)) {
+            $value = $this->getDefinition()->getOptions()->filter(function (AttributeOption $option) use ($value) {
+                return $option->getValue() == $value;
+            })->first();
+        }
+
+        if(!$value) {
+            throw new \Exception(sprintf("couldn't find: %s for %s", $orig_value, $this->getDefinition()->getName()));
         }
 
         $this->value = $value;

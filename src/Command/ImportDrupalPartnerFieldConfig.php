@@ -28,7 +28,7 @@ class ImportDrupalPartnerFieldConfig extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription(
@@ -112,13 +112,6 @@ class ImportDrupalPartnerFieldConfig extends Command
                 'required' => true,
                 'type' => AttributeDefinition::TYPE_TEXT,
                 'interface' => AttributeValue::UI_TEXTAREA,
-            ],[
-                'name' => 'mailing_address',
-                'label' => 'Mailing Address',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_ADDRESS,
-                'interface' => AttributeValue::UI_ADDRESS,
             ],[ //TODO: TYPE_URL and UI_URL
                 'name' => 'website',
                 'label' => 'Website',
@@ -197,7 +190,7 @@ class ImportDrupalPartnerFieldConfig extends Command
                 'type' => AttributeDefinition::TYPE_BOOLEAN,
                 'interface' => AttributeValue::UI_YES_NO_RADIO,
             ],[
-                'name' => 'program_is_evidence_based',
+                'name' => 'program_evidence_based_description',
                 'label' => 'Describe how the program service model is evidence-based',
                 'description' => '',
                 'required' => false,
@@ -286,8 +279,8 @@ class ImportDrupalPartnerFieldConfig extends Command
                 'label' => 'If yes, which staff position will handle HappyBottoms\' responsibilities?',
                 'description' => '',
                 'required' => true,
-                'type' => AttributeDefinition::TYPE_BOOLEAN,
-                'interface' => AttributeValue::UI_YES_NO_RADIO,
+                'type' => AttributeDefinition::TYPE_TEXT,
+                'interface' => AttributeValue::UI_TEXT,
             ],[
                 'name' => 'internet_access',
                 'label' => 'Does the location where you would distribute diapers have internet access?',
@@ -472,55 +465,6 @@ class ImportDrupalPartnerFieldConfig extends Command
                 'type' => AttributeDefinition::TYPE_STRING,
                 'interface' => AttributeValue::UI_TEXT,
             ],[
-                'name' => 'exec_name',
-                'label' => 'Executive Director\'s Name',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_STRING,
-                'interface' => AttributeValue::UI_TEXT,
-            ],[
-                'name' => 'exec_phone',
-                'label' => 'Executive Director\'s Phone with extension',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_STRING,
-                'interface' => AttributeValue::UI_TEXT,
-            ],[
-                'name' => 'exec_email',
-                'label' => 'Executive Director\'s Email',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_STRING,
-                'interface' => AttributeValue::UI_TEXT,
-            ],[
-                'name' => 'contact_name',
-                'label' => 'Program Contact Person',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_STRING,
-                'interface' => AttributeValue::UI_TEXT,
-            ],[
-                'name' => 'contact_phone',
-                'label' => 'Phone Number with Direct Extension',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_STRING,
-                'interface' => AttributeValue::UI_TEXT,
-            ],[
-                'name' => 'contact_mobile',
-                'label' => 'Mobile Number',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_STRING,
-                'interface' => AttributeValue::UI_TEXT,
-            ],[
-                'name' => 'contact_email',
-                'label' => 'Email Address',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_STRING,
-                'interface' => AttributeValue::UI_TEXT,
-            ],[
                 'name' => 'pickup_method',
                 'label' => 'My agency will use the following to pick up our monthly diaper order',
                 'description' => '',
@@ -533,27 +477,6 @@ class ImportDrupalPartnerFieldConfig extends Command
                     'courier' => 'Courier Service',
                     'happybottoms' => 'HappyBottoms delivery service',
                 ],
-            ],[
-                'name' => 'pickup_name',
-                'label' => 'Diaper Pick Up Contact\'s Name',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_STRING,
-                'interface' => AttributeValue::UI_TEXT,
-            ],[
-                'name' => 'pickup_phone',
-                'label' => 'Diaper Pick Up Contact\'s Phone',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_STRING,
-                'interface' => AttributeValue::UI_TEXT,
-            ],[
-                'name' => 'pickup_email',
-                'label' => 'Diaper Pick Up Contact\'s Email',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_STRING,
-                'interface' => AttributeValue::UI_TEXT,
             ],[
                 'name' => 'distribute_times',
                 'label' => 'Please list the days and times you plan to distribute diapers',
@@ -616,7 +539,7 @@ class ImportDrupalPartnerFieldConfig extends Command
                 'options' => [
                     'retail' => 'Purchase retail',
                     'wholesale' => 'Purchase wholesale',
-                    'harvester' => 'Harvesters',
+                    'harvesters' => 'Harvesters',
                     'drives_self' => 'Diaper drives',
                     'drives_others' => 'Diaper drives conducted by others',
                     'other' => 'Other ',

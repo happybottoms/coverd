@@ -126,7 +126,8 @@
             onChange: function(event, values) {
             //     console.log({event: event});
             //     debugger;
-                this.$emit('input', values);
+                this.$emit('input',[...$event.target.selectedOptions]
+                    .map(option => option.value));
             }
         }
     }

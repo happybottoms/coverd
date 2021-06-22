@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Setting;
+use App\Entity\ZipCounty;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
 
 class ZipCountyRepository extends EntityRepository
@@ -20,6 +22,19 @@ class ZipCountyRepository extends EntityRepository
             ->where('z.stateCode in (:states)')
             ->setParameter('states', $states)
             ->orderBy('z.zipCode', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findByZipAndCounty(string $zip, string $county = null): array
+    {
+        $qb = $this->createQueryBuilder('z')
+            ->andWhere('z.zipCode = :zip')
+            ->setParameter('zip', $zip);
+        if ($county) {
+            $qb->andWhere('z.countyName like :county')
+                ->setParameter('county', '%' . $county . '%');
+        }
 
         return $qb->getQuery()->getResult();
     }

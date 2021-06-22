@@ -22,6 +22,11 @@ class FileAttributeValue extends AttributeValue
      */
     private $value;
 
+    public function getValueId()
+    {
+        return $this->value->getPublicId();
+    }
+
     public function getTypeLabel(): string
     {
         return "File Upload";

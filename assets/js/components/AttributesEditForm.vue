@@ -77,6 +77,15 @@
                     :label="attribute.label"
                     :help-text="attribute.helpText"
                 />
+                <MultiOptionListEntity
+                    v-else-if="attribute.displayInterface === 'ZIPCODE_MULTI'"
+                    v-model="attribute.value"
+                    :label="attribute.label"
+                    :help-text="attribute.helpText"
+                    api-path="zip-county"
+                    display-property="label"
+                    empty-string="-- Select Zip Code --"
+                />
                 <FileUploadField
                     v-else-if="attribute.displayInterface === 'FILE_UPLOAD'"
                     v-model="attribute.value"
@@ -108,6 +117,7 @@
     import AddressField from "./AddressField";
     import ZipCountyField from "./ZipCountyField";
     import FileUploadField from "./FileUploadField";
+    import MultiOptionListEntity from "./MultiOptionListEntity";
     export default {
         name: 'AttributesEditForm',
         components: {
@@ -116,6 +126,7 @@
             ZipCountyField,
             AddressField,
             YesNoRadioField,
+            MultiOptionListEntity,
             BooleanField, RadioField, TextareaField, OptionListApi, NumberField, TextField, DateField},
         props: {
             new: { type: Boolean },

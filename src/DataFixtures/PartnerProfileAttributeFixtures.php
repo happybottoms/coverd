@@ -51,7 +51,7 @@ class PartnerProfileAttributeFixtures extends BaseFixture
                     'religious' => 'Religious Organization',
                     'government' =>  'Government Organization',
                 ],
-            ],[ //TODO: TYPE_FIELD and UI_FILE_UPLOAD
+            ],[
                 'name' => 'designation_upload',
                 'label' => 'Proof of agency status',
                 'description' => 'Please attach one of the following:
@@ -69,13 +69,6 @@ class PartnerProfileAttributeFixtures extends BaseFixture
                 'required' => true,
                 'type' => AttributeDefinition::TYPE_TEXT,
                 'interface' => AttributeValue::UI_TEXTAREA,
-            ],[ //TODO: TYPE_ADDRESS and UI_ADDRESS
-                'name' => 'mailing_address',
-                'label' => 'Mailing Address',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_ADDRESS,
-                'interface' => AttributeValue::UI_ADDRESS,
             ],[ //TODO: TYPE_URL and UI_URL
                 'name' => 'website',
                 'label' => 'Website',
@@ -343,7 +336,7 @@ class PartnerProfileAttributeFixtures extends BaseFixture
                 'description' => '',
                 'required' => false,
                 'type' => AttributeDefinition::TYPE_ZIPCODE,
-                'interface' => AttributeValue::UI_ZIPCODE,
+                'interface' => AttributeValue::UI_ZIPCODE_MULTI,
             ],[
                 'name' => 'fpl_below',
                 'label' => 'Federal Poverty Level or below',
@@ -387,55 +380,6 @@ class PartnerProfileAttributeFixtures extends BaseFixture
                 'type' => AttributeDefinition::TYPE_STRING,
                 'interface' => AttributeValue::UI_TEXT,
             ],[
-                'name' => 'exec_name',
-                'label' => 'Executive Director\'s Name',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_STRING,
-                'interface' => AttributeValue::UI_TEXT,
-            ],[
-                'name' => 'exec_phone',
-                'label' => 'Executive Director\'s Phone with extension',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_STRING,
-                'interface' => AttributeValue::UI_TEXT,
-            ],[
-                'name' => 'exec_email',
-                'label' => 'Executive Director\'s Email',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_STRING,
-                'interface' => AttributeValue::UI_TEXT,
-            ],[
-                'name' => 'contact_name',
-                'label' => 'Program Contact Person',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_STRING,
-                'interface' => AttributeValue::UI_TEXT,
-            ],[
-                'name' => 'contact_phone',
-                'label' => 'Phone Number with Direct Extension',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_STRING,
-                'interface' => AttributeValue::UI_TEXT,
-            ],[
-                'name' => 'contact_mobile',
-                'label' => 'Mobile Number',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_STRING,
-                'interface' => AttributeValue::UI_TEXT,
-            ],[
-                'name' => 'contact_email',
-                'label' => 'Email Address',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_STRING,
-                'interface' => AttributeValue::UI_TEXT,
-            ],[
                 'name' => 'pickup_method',
                 'label' => 'My agency will use the following to pick up our monthly diaper order',
                 'description' => '',
@@ -448,27 +392,6 @@ class PartnerProfileAttributeFixtures extends BaseFixture
                     'courier' => 'Courier Service',
                     'happybottoms' => 'HappyBottoms delivery service',
                 ],
-            ],[
-                'name' => 'pickup_name',
-                'label' => 'Diaper Pick Up Contact\'s Name',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_STRING,
-                'interface' => AttributeValue::UI_TEXT,
-            ],[
-                'name' => 'pickup_phone',
-                'label' => 'Diaper Pick Up Contact\'s Phone',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_STRING,
-                'interface' => AttributeValue::UI_TEXT,
-            ],[
-                'name' => 'pickup_email',
-                'label' => 'Diaper Pick Up Contact\'s Email',
-                'description' => '',
-                'required' => true,
-                'type' => AttributeDefinition::TYPE_STRING,
-                'interface' => AttributeValue::UI_TEXT,
             ],[
                 'name' => 'days_distribute',
                 'label' => 'Please list the days and times you plan to distribute diapers',

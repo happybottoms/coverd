@@ -19,7 +19,7 @@ class UserFixtures extends BaseFixture implements DependentFixtureInterface, Fix
 
     public static function getGroups(): array
     {
-        return ['UserFixtures'];
+        return ['MinimumFixtures'];
     }
 
     public function loadData(ObjectManager $manager): void

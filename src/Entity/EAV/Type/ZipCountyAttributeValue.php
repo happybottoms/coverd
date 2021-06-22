@@ -81,6 +81,7 @@ class ZipCountyAttributeValue extends AttributeValue
     {
         return [
             self::UI_ZIPCODE,
+            self::UI_ZIPCODE_MULTI,
         ];
     }
 
@@ -93,4 +94,13 @@ class ZipCountyAttributeValue extends AttributeValue
     {
         return true;
     }
+
+    /**
+     * Whether this type references external entity ids (e.g. ZipCode)
+     */
+    public static function hasReference(): bool
+    {
+        return true;
+    }
+
 }

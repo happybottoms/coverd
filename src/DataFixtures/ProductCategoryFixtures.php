@@ -3,11 +3,17 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\ProductCategory;
 
-class ProductCategoryFixtures extends BaseFixture
+class ProductCategoryFixtures extends BaseFixture implements FixtureGroupInterface
 {
+    public static function getGroups(): array
+    {
+        return ['MinimumFixtures'];
+    }
+
     public function loadData(ObjectManager $manager)
     {
         $categories = [
