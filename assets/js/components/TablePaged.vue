@@ -1,6 +1,6 @@
 <template>
     <div class="box">
-        <div class="overlay" v-if="loading"><i class="fa fa-spinner fa-spin" /></div>
+        <div class="overlay" v-if="loading"><i class="fa fa-sync fa-spin" /></div>
         <div :class="[{ 'vuetable-wrapper ui basic segment': true }, 'box-body table-responsive no-padding']" style="min-height:550px">
             <div class="row">
                 <div class="col-xs-6">
