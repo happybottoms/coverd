@@ -269,6 +269,18 @@ class PartnerController extends BaseController
             $params->set('id', $request->get('id'));
         }
 
+        if ($request->get('fulfillmentPeriod')) {
+            $params->set('fulfillmentPeriod', $request->get('fulfillmentPeriod'));
+        }
+
+        if ($request->get('distributionMethod')) {
+            $params->set('distributionMethod', $request->get('distributionMethod'));
+        }
+
+        if ($request->get('partnerType')) {
+            $params->set('partnerType', $request->get('partnerType'));
+        }
+
         return $params;
     }
 }
