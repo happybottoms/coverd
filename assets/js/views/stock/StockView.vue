@@ -48,19 +48,10 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <div class="box">
+                <div class="box" style="min-height:500px">
+                    <div class="overlay" v-if="loading"><i class="fa fa-sync fa-spin" /></div>
                     <div class="box-body table-responsive no-padding">
-                        <div
-                            v-if="loading"
-                            class="loadingArea"
-                        >
-                            <pulse-loader
-                                :loading="loading"
-                                color="#3c8dbc"
-                            />
-                        </div>
                         <table
-                            v-else
                             class="table table-hover"
                         >
                             <thead>
@@ -121,10 +112,9 @@
 <script>
     import DateField from '../../components/DateField.vue';
     import StorageLocationSelectionForm from '../../components/StorageLocationSelectionForm.vue';
-    import PulseLoader from "vue-spinner/src/PulseLoader";
+
     export default {
         components: {
-            PulseLoader,
             'datefield' : DateField,
             'storagelocationselectionform' : StorageLocationSelectionForm
         },
@@ -138,7 +128,7 @@
                     location: {},
                     endingAt: moment().format('YYYY-MM-DD')
                 },
-                loading: true,
+                loading: false,
             };
         },
         created() {
@@ -151,13 +141,16 @@
                 this.getLevels();
             },
             getLevels: function() {
+                this.loading = true;
                 axios
                     .get('/api/stock-levels', { params: this.buildParams() })
-                    .then(response => this.products = response.data)
+                    .then(response => {
+                        this.products = response.data;
+                        this.loading = false;
+                    })
                     .catch(error => {
                         console.log(error)
-                    })
-                    .finally(() => this.loading = false);
+                    });
             },
             buildParams: function () {
                 return {

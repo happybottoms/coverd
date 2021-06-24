@@ -1,5 +1,6 @@
 <template>
-    <div class="table-responsive no-padding">
+    <div class="table-responsive no-padding box" style="min-height:500px">
+        <div class="overlay" v-if="loading"><i class="fa fa-sync fa-spin" /></div>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -58,6 +59,7 @@ export default {
     data() {
         return {
             products: {},
+            loading: false,
         };
     },
     created() {
@@ -65,9 +67,13 @@ export default {
     },
     methods: {
         getLevels: function() {
+            this.loading = true;
             axios
                 .get('/api/stock-levels', { params: this.buildParams() })
-                .then(response => (this.products = response.data));
+                .then(response => {
+                    this.products = response.data;                    
+                    this.loading = false;
+                });
         },
         buildParams: function() {
             return {

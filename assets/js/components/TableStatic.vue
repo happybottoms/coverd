@@ -1,45 +1,42 @@
 <template>
-    <div :class="[{'vuetable-wrapper ui basic segment': true}, 'box-body table-responsive no-padding']">
-        <div class="loadingArea">
-            <pulse-loader
-                :loading="loading"
-                color="#3c8dbc"
-            />
-        </div>
-        <vuetable
-            ref="vuetable"
-            :api-url="apiUrl"
-            :http-method="httpMethod"
-            data-path="data"
-            :fields="columns"
-            :css="{
-                tableClass: 'table table-hover',
-                ascendingIcon: 'fa fa-sort-amount-up',
-                descendingIcon: 'fa fa-sort-amount-down'
-            }"
-            :sort-order="sortOrder"
-            :append-params="params"
-            track-by="id"
-            @vuetable:checkbox-toggled="onCheckboxToggled"
-            @vuetable:checkbox-toggled-all="onCheckboxToggled"
-            @vuetable:loading="showLoader"
-            @vuetable:loaded="hideLoader"
-        >
-            <template
-                slot="link"
-                slot-scope="props"
+    <div class="box" style="min-height:500px">
+        <div class="overlay" v-if="loading"><i class="fa fa-sync fa-spin" /></div>
+        <div :class="[{'vuetable-wrapper ui basic segment': true}, 'box-body table-responsive no-padding']" style="min-height:500px">
+            <vuetable
+                ref="vuetable"
+                :api-url="apiUrl"
+                :http-method="httpMethod"
+                data-path="data"
+                :fields="columns"
+                :css="{
+                    tableClass: 'table table-hover',
+                    ascendingIcon: 'fa fa-sort-amount-up',
+                    descendingIcon: 'fa fa-sort-amount-down'
+                }"
+                :sort-order="sortOrder"
+                :append-params="params"
+                track-by="id"
+                @vuetable:checkbox-toggled="onCheckboxToggled"
+                @vuetable:checkbox-toggled-all="onCheckboxToggled"
+                @vuetable:loading="showLoader"
+                @vuetable:loaded="hideLoader"
             >
-                <router-link :to="editRoute + props.rowData.id">
-                    <i class="fa fa-edit" /> {{ props.rowData[linkDisplayProperty] }}
-                </router-link>
-            </template>
-            <template v-slot:actions="{rowData}">
-                <slot
-                    name="actions"
-                    :rowData="rowData"
-                />
-            </template>
-        </vuetable>
+                <template
+                    slot="link"
+                    slot-scope="props"
+                >
+                    <router-link :to="editRoute + props.rowData.id">
+                        <i class="fa fa-edit" /> {{ props.rowData[linkDisplayProperty] }}
+                    </router-link>
+                </template>
+                <template v-slot:actions="{rowData}">
+                    <slot
+                        name="actions"
+                        :rowData="rowData"
+                    />
+                </template>
+            </vuetable>
+        </div>
     </div>
 </template>
 
