@@ -76,18 +76,15 @@
 </template>
 
 <script>
-    import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import Vuetable from 'vuetable-2/src/components/Vuetable.vue'
     import VuetablePagination from 'vuetable-2/src/components/VuetablePagination.vue'
     import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo.vue'
-    import $ from 'jquery';
 
     export default {
         components: {
             Vuetable,
             VuetablePagination,
             VuetablePaginationInfo,
-            PulseLoader,
         },
         props:{
             columns: { type: Array, required: true },
