@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="box" style="min-height:500px">
-                <div class="overlay" v-if="loading"><i class="fa fa-sync fa-spin" /></div>
+                    <div class="overlay" v-if="loading"><i class="fa fa-sync fa-spin" /></div>
                     <div class="box-header">
                         <!--
                         <div class="box-tools">

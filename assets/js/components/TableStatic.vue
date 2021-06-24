@@ -41,14 +41,12 @@
 </template>
 
 <script>
-    import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import Vuetable from 'vuetable-2/src/components/Vuetable.vue'
 
     export default {
         name: "TableStatic",
         components: {
             Vuetable,
-            PulseLoader,
         },
         props:{
             columns: { type: Array, required: true },
