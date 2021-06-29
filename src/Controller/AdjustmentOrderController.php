@@ -118,7 +118,7 @@ class AdjustmentOrderController extends BaseOrderController
     {
         return AdjustmentOrderVoter::VIEW;
     }
-    
+
     /**
      * @param Request $request
      * @return ParameterBag
