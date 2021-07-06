@@ -9,6 +9,27 @@
         <h3 class="box-title">
             Stock Changes List
         </h3>
+        <div class="row">
+            <div class="col-xs-3">
+                <storage-location-selection-form v-model="filters.source" label="Source Location" />
+            </div>
+            <div class="col-xs-3">
+                <option-list-static
+                    v-model="filters.status"
+                    label="Status"
+                    :preloaded-options="statuses"
+                    empty-string="-- All Statuses --"
+                />
+            </div>
+            <div class="col-xs-3">
+                <button
+                    class="btn btn-success btn-flat"
+                    @click="doFilter"
+                >
+                    <i class="fa fa-fw fa-filter" />Filter
+                </button>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-xs-12">
@@ -28,12 +49,13 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
-                        <tablepaged
+                        <table-paged
                             :columns="columns"
                             api-url="/api/orders/adjustment"
                             edit-route="/orders/adjustment/"
                             :sort-order="[{ field: 'id', direction: 'desc'}]"
                             link-display-property="sequence"
+                            :params="requestParams()"
                         />
                     </div>
                     <!-- /.box-body -->
@@ -46,9 +68,14 @@
 
 <script>
     import TablePaged from '../../../components/TablePaged.vue';
+    import StorageLocationSelectionForm from '../../../components/StorageLocationSelectionForm';
+    import OptionListStatic from '../../../components/OptionListStatic.vue';
+
     export default {
         components: {
-            'tablepaged' : TablePaged
+            TablePaged,
+            StorageLocationSelectionForm,
+            OptionListStatic
         },
         props:[],
         data() {
@@ -61,8 +88,27 @@
                     { name: 'status', title: "Status", sortField: 'status' },
                     { name: 'createdAt', title: "Created", callback: 'dateTimeFormat', sortField: 'createdAt' },
                     { name: 'updatedAt', title: "Last Updated", callback: 'dateTimeFormat', sortField: 'updatedAt' },
-                ]
+                ],
+                filters: {
+                    status: null,
+                    source: {}
+                },
+                statuses: [
+                    { id: "CREATING", name: "Creating" },
+                    { id: "COMPLETED", name: "Completed" }
+                ],
             };
+        },
+        methods: {
+            doFilter () {
+                this.$events.fire('filter-set', this.requestParams());
+            },
+            requestParams() {
+                return {
+                    status: this.filters.status || null,
+                    storageLocation: this.filters.source.id || null,
+                }
+            },
         }
     }
 </script>

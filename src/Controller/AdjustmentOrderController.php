@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Workflow\Registry;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
  * @Route(path="/api/orders/adjustment")
@@ -116,5 +117,23 @@ class AdjustmentOrderController extends BaseOrderController
     protected function getViewVoter(): string
     {
         return AdjustmentOrderVoter::VIEW;
+    }
+
+    /**
+     * @param Request $request
+     * @return ParameterBag
+     */
+    protected function buildFilterParams(Request $request)
+    {
+        $params = new ParameterBag();
+
+        if ($request->get('status')) {
+            $params->set('status', $request->get('status'));
+        }
+        if ($request->get('storageLocation')) {
+            $sourceLocation = $this->getRepository(StorageLocation::class)->find($request->get('storageLocation'));
+            $params->set('storageLocation', $sourceLocation);
+        }
+        return $params;
     }
 }
