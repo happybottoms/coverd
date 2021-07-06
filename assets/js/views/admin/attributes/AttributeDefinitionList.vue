@@ -28,7 +28,8 @@
 
         <div class="row">
             <div class="col-xs-12">
-                <div class="box">
+                <div class="box" style="min-height:500px">
+                    <div class="overlay" v-if="loading"><i class="fa fa-sync fa-spin" /></div>
                     <div class="box-body table-responsive no-padding">
                         <table class="table table-hover">
                             <thead>
@@ -92,13 +93,18 @@ export default {
         data() {
             return {
                 definitions: [],
+                loading: false,
             };
         },
         created() {
             let me = this;
+            this.loading = true;
             axios
                 .get(this.getApi)
-                .then(response => me.setDefinitions(response.data.data));
+                .then(response => {
+                    me.setDefinitions(response.data.data);
+                    this.loading = false;
+                });
 
         },
         methods: {

@@ -12,7 +12,8 @@
 
         <div class="row">
             <div class="col-xs-12">
-                <div class="box">
+                <div class="box" style="min-height:500px">
+                    <div class="overlay" v-if="loading"><i class="fa fa-sync fa-spin" /></div>
                     <div class="box-header">
                         <!--
                         <div class="box-tools">
@@ -28,19 +29,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
-                        <div
-                            v-if="loading"
-                            class="loadingArea"
-                        >
-                            <pulse-loader
-                                :loading="loading"
-                                color="#3c8dbc"
-                            />
-                        </div>
-                        <table
-                            v-else
-                            class="table table-hover"
-                        >
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>{{ name }} ID</th>
@@ -77,27 +66,26 @@
 </template>
 
 <script>
-import PulseLoader from "vue-spinner/src/PulseLoader";
 
 export default {
-        components: {
-            PulseLoader,
-        },
         props:['name','apiPath'],
         data() {
             return {
                 listOptions: {},
-                loading: true,
+                loading: false,
             };
         },
         created() {
+            this.loading = true;
             axios
                 .get('/api/' + this.apiPath)
-                .then(response => this.listOptions = response.data)
+                .then(response => {
+                    this.listOptions = response.data;
+                     this.loading = false;
+                })
                 .catch(error => {
                     console.log(error)
-                })
-                .finally(() => this.loading = false);
+                });
             console.log('Component mounted.')
         }
     }
