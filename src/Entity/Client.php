@@ -221,9 +221,9 @@ class Client extends CoreEntity implements AttributedEntityInterface
         return $this->id;
     }
 
-    public function getPublicId(): ?string
+    public static function getPublicIdProperty(): string
     {
-        return $this->publicId;
+        return 'publicId';
     }
 
     public function setPublicId(?string $publicId): void

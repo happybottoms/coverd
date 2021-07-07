@@ -2,9 +2,7 @@
 
 namespace App\Repository;
 
-use Doctrine\ORM\EntityRepository;
-
-class ListOptionRepository extends EntityRepository
+class ListOptionRepository extends BaseRepository
 {
     public function findOneByName($name)
     {

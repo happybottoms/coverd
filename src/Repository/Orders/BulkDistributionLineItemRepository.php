@@ -4,11 +4,11 @@ namespace App\Repository\Orders;
 
 use App\Entity\Client;
 use App\Entity\Orders\BulkDistribution;
+use App\Repository\BaseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 
-class BulkDistributionLineItemRepository extends EntityRepository
+class BulkDistributionLineItemRepository extends BaseRepository
 {
     /**
      * @param Client $client

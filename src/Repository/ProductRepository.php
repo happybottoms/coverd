@@ -4,11 +4,10 @@ namespace App\Repository;
 
 use App\Entity\Product;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
-class ProductRepository extends EntityRepository
+class ProductRepository extends BaseRepository
 {
     public function findAllPaged(
         ?int $page = null,

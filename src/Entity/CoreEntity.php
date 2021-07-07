@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\PubliclyExposedEntity;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\ManyToMany;
@@ -22,6 +23,7 @@ abstract class CoreEntity
 {
     use TimestampableEntity;
     use SoftDeleteableEntity;
+    use PubliclyExposedEntity;
 
     /**
      * Every entity will have an id

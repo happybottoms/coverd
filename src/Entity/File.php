@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\FileRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
@@ -65,12 +65,9 @@ class File extends CoreEntity
         return $this->id;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPublicId(): ?string
+    public static function getPublicIdProperty(): string
     {
-        return $this->publicId;
+        return 'publicId';
     }
 
     /**

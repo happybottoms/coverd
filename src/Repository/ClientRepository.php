@@ -5,11 +5,10 @@ namespace App\Repository;
 use App\Entity\Client;
 use App\Entity\EAV\ClientAttributeDefinition;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
-class ClientRepository extends EntityRepository
+class ClientRepository extends BaseRepository
 {
     public function findOneByPublicId(string $id): ?Client
     {

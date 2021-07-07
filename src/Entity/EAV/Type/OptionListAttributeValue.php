@@ -2,7 +2,6 @@
 
 namespace App\Entity\EAV\Type;
 
-use _HumbugBoxa9bfddcdef37\Nette\Neon\Exception;
 use App\Entity\EAV\AttributeValue;
 use App\Entity\EAV\AttributeOption;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,7 +19,7 @@ class OptionListAttributeValue extends AttributeValue
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\EAV\AttributeOption")
      */
-    private $value;
+    private $attributeOption;
 
     public function getTypeLabel(): string
     {
@@ -36,7 +35,8 @@ class OptionListAttributeValue extends AttributeValue
     {
         $orig_value = $value;
         if (!$value) {
-            $this->value = null;
+            $this->attributeOption = null;
+            return $this;
         } elseif (is_numeric($value)) {
             $value = $this->getDefinition()->getOptions()->filter(function (AttributeOption $option) use ($value) {
                 return $option->getId() == $value;
@@ -47,11 +47,11 @@ class OptionListAttributeValue extends AttributeValue
             })->first();
         }
 
-        if(!$value) {
+        if (!$value) {
             throw new \Exception(sprintf("couldn't find: %s for %s", $orig_value, $this->getDefinition()->getName()));
         }
 
-        $this->value = $value;
+        $this->attributeOption = $value;
 
         return $this;
     }
@@ -61,7 +61,7 @@ class OptionListAttributeValue extends AttributeValue
      */
     public function getValue()
     {
-        return $this->value;
+        return $this->attributeOption;
     }
 
     public function getValueType(): string
@@ -96,11 +96,6 @@ class OptionListAttributeValue extends AttributeValue
     }
 
     public static function hasOptions(): bool
-    {
-        return true;
-    }
-
-    public static function hasRelationship(): bool
     {
         return true;
     }

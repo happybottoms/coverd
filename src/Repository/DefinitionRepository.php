@@ -2,9 +2,7 @@
 
 namespace App\Repository;
 
-use Doctrine\ORM\EntityRepository;
-
-class DefinitionRepository extends EntityRepository
+class DefinitionRepository extends BaseRepository
 {
     public function findAllSorted()
     {

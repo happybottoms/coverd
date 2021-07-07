@@ -131,6 +131,10 @@ class Attribute
                 $attributeValue->setValue($value);
             }
 
+            if ($attributeValue->isEmpty()) {
+                continue;
+            }
+
             $attributeValue->setDelta($delta);
             $newAttributeValues->add($attributeValue);
 
@@ -143,10 +147,11 @@ class Attribute
     protected function getValueById($id): AttributeValue
     {
         if (!$this->hasRelationshipValue()) {
-            throw new \Exception("Trying to find a value by ID on a non-relationship attribute");
+            $v = $this->createAttributeValue();
+            throw new \Exception(sprintf("Trying to find a value by ID on a non-relationship attribute: %s", get_class($v)));
         }
 
-        $result = $this->values->filter(function ($value) use ($id) {
+        $result = $this->values->filter(function (AttributeValue $value) use ($id) {
             return $value->getValueId() === $id;
         });
 

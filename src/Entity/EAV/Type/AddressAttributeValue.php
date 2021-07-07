@@ -72,6 +72,11 @@ class AddressAttributeValue extends AttributeValue
         return EavAddress::class;
     }
 
+    public static function isChild(): bool
+    {
+        return true;
+    }
+
     public static function hasRelationship(): bool
     {
         return true;

@@ -2,6 +2,7 @@
 
 namespace App\Entity\EAV;
 
+use App\Entity\Traits\PubliclyExposedEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 abstract class AttributeValue
 {
+    use PubliclyExposedEntity;
+
     public const UI_TEXT = "TEXT";
     public const UI_NUMBER = "NUMBER";
     public const UI_TEXTAREA = "TEXTAREA";
@@ -150,13 +153,21 @@ abstract class AttributeValue
      */
     public static function hasRelationship(): bool
     {
-        return false;
+        return self::hasOptions() || self::hasReference() || self::isChild();
     }
 
     /**
-     * Whether this type references external entity ids (e.g. ZipCode)
+     * Whether this type references non-child entity ids (e.g. ZipCode)
      */
     public static function hasReference(): bool
+    {
+        return self::hasOptions();
+    }
+
+    /**
+     * Whether the value is a child of the entity this attribute is attached to.
+     */
+    public static function isChild(): bool
     {
         return false;
     }

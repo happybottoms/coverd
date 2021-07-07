@@ -6,7 +6,7 @@ use App\Entity\File;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\FileRepository")
  */
 class EavFile extends File
 {

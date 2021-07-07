@@ -2,11 +2,10 @@
 
 namespace App\Repository;
 
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
-class PartnerRepository extends EntityRepository
+class PartnerRepository extends BaseRepository
 {
     public function findAllPaged(
         ?int $page = null,

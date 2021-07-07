@@ -90,15 +90,15 @@ class ZipCountyAttributeValue extends AttributeValue
         return !is_null($this->getValue()) ? $this->getValue()->getId() : null;
     }
 
-    public static function hasRelationship(): bool
-    {
-        return true;
-    }
-
     /**
      * Whether this type references external entity ids (e.g. ZipCode)
      */
     public static function hasReference(): bool
+    {
+        return true;
+    }
+
+    public static function hasRelationship(): bool
     {
         return true;
     }

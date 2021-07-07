@@ -9,6 +9,7 @@ doctrine:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        default_repository_class:  App\Repository\BaseRepository
         mappings:
             App:
                 is_bundle: false

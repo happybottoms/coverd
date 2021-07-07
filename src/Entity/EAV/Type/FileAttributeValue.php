@@ -39,11 +39,19 @@ class FileAttributeValue extends AttributeValue
      */
     public function setValue($value): AttributeValue
     {
+        if (!$value) {
+            return $this;
+        }
+
         if (is_array($value)) {
             $file = $this->getValue();
             $file->applyChangesFromArray($value);
         } else {
             $file = $value;
+        }
+
+        if ($file->isEmpty()) {
+            return $this;
         }
 
         $this->value = $file;
@@ -60,13 +68,17 @@ class FileAttributeValue extends AttributeValue
      */
     public function getValue()
     {
-
         return $this->value ?: new EavFile();
     }
 
     public function getValueType(): string
     {
         return EavFile::class;
+    }
+
+    public static function isChild(): bool
+    {
+        return true;
     }
 
     public static function hasRelationship(): bool

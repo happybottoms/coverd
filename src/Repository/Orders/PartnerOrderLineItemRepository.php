@@ -2,11 +2,11 @@
 
 namespace App\Repository\Orders;
 
-use Doctrine\ORM\EntityRepository;
+use App\Repository\BaseRepository;
 use Moment\Moment;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
-class PartnerOrderLineItemRepository extends EntityRepository
+class PartnerOrderLineItemRepository extends BaseRepository
 {
 
     public function getOrderProductTotals(ParameterBag $params)

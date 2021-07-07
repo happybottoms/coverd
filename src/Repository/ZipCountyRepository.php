@@ -3,11 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Setting;
-use App\Entity\ZipCounty;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityRepository;
 
-class ZipCountyRepository extends EntityRepository
+class ZipCountyRepository extends BaseRepository
 {
     public function findAllInConstraints(): array
     {

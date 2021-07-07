@@ -4,12 +4,11 @@ namespace App\Repository;
 
 use App\Entity\Product;
 use App\Entity\StorageLocation;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Moment\Moment;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
-class InventoryTransactionRepository extends EntityRepository
+class InventoryTransactionRepository extends BaseRepository
 {
 //    protected $_entityName = 'App\Entity\InventoryTransaction';
 
