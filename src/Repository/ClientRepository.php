@@ -153,6 +153,11 @@ class ClientRepository extends EntityRepository
                 ->setParameter('birthdate', $params->get('birthdate'));
         }
 
+        if ($params->has('status')) {
+            $qb->andWhere('c.status = :status')
+                ->setParameter('status', $params->get('status'));
+        }
+
         if ($params->has('partner')) {
             $qb->andWhere('c.partner = :partner')
                 ->setParameter('partner', $params->get('partner'));

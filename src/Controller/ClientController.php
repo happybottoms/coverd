@@ -436,6 +436,10 @@ class ClientController extends BaseController
             $params->set('keyword', $request->get('keyword'));
         }
 
+        if ($request->get('status')) {
+            $params->set('status', $request->get('status'));
+        }
+
         if ($request->get('partner')) {
             $partner = $this->getEm()->getRepository(Partner::class)->find($request->get('partner'));
             $params->set('partner', $partner);

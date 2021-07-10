@@ -20,6 +20,15 @@
                     label="Keyword"
                 />
             </div>
+
+            <div class="col-xs-2">
+                <option-list-static
+                    v-model="filters.status"
+                    label="Status"
+                    :preloaded-options="statuses"
+                />
+            </div>
+
             <div class="col-xs-3">
                 <PartnerSelectionForm
                     v-model="filters.partner"
@@ -131,6 +140,7 @@ import PartnerSelectionForm from "../../components/PartnerSelectionForm";
 import TablePaged from "../../components/TablePaged";
 import TextField from "../../components/TextField";
 import { mapGetters } from "vuex";
+import OptionListStatic from '../../components/OptionListStatic.vue';
 
 export default {
     components: {
@@ -138,7 +148,8 @@ export default {
         ClientMerge,
         ClientBulkUpdate,
         PartnerSelectionForm,
-        TablePaged
+        TablePaged,
+        OptionListStatic
     },
     props: [],
     data() {
@@ -157,7 +168,8 @@ export default {
             statuses: [{ id: "ACTIVE", name: "Active" }, { id: "INACTIVE", name: "Inactive" }],
             filters: {
                 keyword: null,
-                partner: { id: null }
+                partner: { id: null },
+                status: null,
             },
             selectedData: []
         };
